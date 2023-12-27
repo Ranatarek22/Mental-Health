@@ -1,0 +1,202 @@
+:root {
+  --main-color: #4caf50;
+  --second-color: #dbdbdb;
+  /* --main-transition:0.3s; */
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lato-Bold", Helvetica;
+}
+.page-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+#root {
+  background-color: var(--second-color);
+}
+/* Start LoginComponent */
+.login {
+  background-color: var(--second-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.right-side-wrapper {
+  width: 100%;
+}
+
+.login .right-side {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login .artwork-register {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  max-height: 62%;
+}
+.login .artwork-register > img {
+  object-fit: cover;
+  height: 90%;
+  width: 90%;
+}
+.login .txt {
+  color: transparent;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 36px;
+  text-align: center;
+  width: 100%;
+}
+
+.login .text-wrapper {
+  color: var(--main-color);
+  font-weight: 700;
+  line-height: 38px;
+}
+
+.login .text-wrapper-2 {
+  color: #0000008a;
+  font-size: 24px;
+}
+/* End LoginComponent */
+
+/* Start BoxComponent */
+.rectangle {
+  background-color: #f6f6f6;
+  border-radius: 40px;
+  width: 100%;
+  /* height: 55%; */
+  padding: 0.5rem;
+}
+
+.welcome-to-mental {
+  font-size: 2vw;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.text-wrapper-5 {
+  color: #000000;
+  font-size: 3vw;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.span {
+  color: var(--main-color);
+  font-weight: 600;
+}
+
+.group-3 {
+  background-color: transparent;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content a {
+  text-decoration: none;
+  color: var(--main-color);
+}
+.content-one {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content-one a {
+  text-decoration: none;
+  color: var(--main-color);
+}
+.signform {
+  align-items: flex-start;
+  flex-direction: column;
+  display: flex;
+  padding: 0.5rem;
+}
+
+.inputfield {
+  width: 100%;
+}
+.BTN {
+  align-self: flex-end;
+  width: 44%;
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+.btn-primary :hover {
+  background-color: red;
+}
+.hide {
+  display: flex;
+}
+.containerform {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.signup {
+  font-size: 1vw;
+}
+.error {
+  color: red;
+}
+/* End BoxComponent */
+
+/* Start MediaQueries */
+@media (max-width: 769px) {
+  .login .txt {
+    display: none;
+  }
+  .login .artwork-register {
+    display: none;
+  }
+  .rectangle {
+    justify-content: center;
+    width: 80%;
+    /* background-color: #A8C7A9; */
+  }
+  .welcome-to-mental {
+    font-size: 15px;
+  }
+  .text-wrapper-5 {
+    font-size: 27px;
+  }
+  .group-3 {
+    top: 167px;
+  }
+  .hide {
+    display: none;
+  }
+  .containerform {
+    width: 100% !important;
+  }
+  .BTN {
+    width: 100%;
+  }
+  .signup {
+    display: none;
+  }
+}
+@media screen and (min-device-width: 769px) {
+  .content-one {
+    display: none;
+  }
+}
+/* End MediaQueries */
