@@ -17,7 +17,7 @@ apiInstance.defaults.headers.post["Access-Control-Allow-Headers"] =
   "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization";
 apiInstance.defaults.headers.post["Access-Control-Allow-Methods"] =
   "GET,POST,PUT,PATCH,DELETE,OPTIONS";
-// apiInstance.defaults.headers.post['Content-Type'] = 'multipart/form-data,application/json'
+apiInstance.defaults.headers.post["Content-Type"] = "application/json";
 if (mental_auth_data) {
   apiInstance.defaults.headers.post["Authorization"] =
     `Bearer ` + mental_auth_data.token;

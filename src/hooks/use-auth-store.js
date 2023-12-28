@@ -15,14 +15,16 @@ export const useAuthStore = create((set) => ({
       roles: credentials.roles,
     })),
   removeActiveUser: () =>
-    set({ token: null, isAuthenticated: false, expiresOn: "", roles: [] }),
+    set(() => {
+      localStorage.removeItem("mental_auth");
+      return { token: null, isAuthenticated: false, expiresOn: "", roles: [] };
+    }),
   //Use it when we want to use it in any private route (call it in page) (side bar or footer)
   isValidToken: () =>
     set((state) => {
       const today = new Date();
       const expire_date = new Date(state.expiresOn);
-      if (today.getTime() < expire_date.getTime()) {
-        localStorage.removeItem("mental_auth");
+      if (today.getTime() > expire_date.getTime()) {
         state.removeActiveUser();
       }
       return state;

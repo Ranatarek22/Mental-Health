@@ -49,7 +49,7 @@ const SignUpForm = () => {
 
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
         updateActiveUser(user_token);
-        navigate("/login");
+        navigate("/");
         // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {

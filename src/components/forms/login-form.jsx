@@ -42,7 +42,7 @@ const LoginForm = () => {
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
         updateActiveUser(user_token);
         toast.success("Successfully logged");
-        navigate("/");
+        navigate("/user");
 
         //   window.location.reload();
       } catch (error) {
