@@ -3,16 +3,16 @@ import { Button } from "react-bootstrap";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useRoutes } from "react-router-dom";
 const Sidebar = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
-  // const navigate = useNavigate();
-  const route = useRoutes();
+  const navigate = useNavigate();
   const logOutHandler = () => {
     removeActiveUser();
     toast.success("Log out successfully");
     navigate("/");
+    window.location.reload();
   };
+
   return (
     <nav>
       Sidebar

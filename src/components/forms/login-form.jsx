@@ -44,7 +44,7 @@ const LoginForm = () => {
         toast.success("Successfully logged");
         navigate("/user");
 
-        //   window.location.reload();
+        window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");

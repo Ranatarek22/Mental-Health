@@ -1,11 +1,12 @@
 import { Suspense, lazy } from "react";
 import "../src/style.css";
+// // import LoginPage from "./components/LoginPage";
+// import SignUpPage from "./components/SignUpPage";
 import ToasterProvider from "./components/providers/toaster-provider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
 import Navbar from "./components/navigation/NavBar/navbar";
 import Sidebar from "./components/navigation/SideBar/sidebar";
-import { useEffect } from "react";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -15,15 +16,11 @@ const SignUpPage = lazy(() =>
   import("./components/pages/SignUpPage/SignUpPage")
 );
 const HomePage = lazy(() => import("./components/pages/HomePage/HomePage"));
-const UserPage = lazy(() => import("./components/pages/UserPage/User"));
+const UserPage = lazy(() => import("./components/pages/UserPage/UserPage"));
 
 function App() {
   const main_routes = ["/", "/login", "/signup"];
   const pathname = window.location.pathname;
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
   console.log(pathname);
   return (
     <Suspense fallback={<div>loading...</div>}>
