@@ -7,9 +7,11 @@ import { object, string } from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const updateActiveUser = useAuthStore((state) => state.updateActiveUser);
   const signupschema = object().shape({
     email: string("The email must be a string").required().email(),
     password: string().required(),
@@ -38,6 +40,7 @@ const LoginForm = () => {
         const user_token = tokenPromise.data;
 
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
+        updateActiveUser(user_token);
         toast.success("Successfully logged");
         navigate("/");
 

@@ -7,9 +7,11 @@ import { date, object, string } from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const updateActiveUser = useAuthStore((state) => state.updateActiveUser);
   const signupschema = object().shape({
     firstName: string("The email must be a string").required(),
     lastName: string("The email must be a string").required(),
@@ -35,7 +37,7 @@ const SignUpForm = () => {
         const tokenPromise = await apiInstance.post(`/auth/register`, values, {
           cancelToken: cancelToken.token,
         });
-        // console.log(tokenPromise)
+
         if (tokenPromise.status !== 201) {
           if (tokenPromise.response.data) {
             throw new Error(Object.values(tokenPromise.response.data)[0]);
@@ -46,8 +48,9 @@ const SignUpForm = () => {
         const user_token = tokenPromise.data;
 
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
+        updateActiveUser(user_token);
         navigate("/login");
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
