@@ -12,18 +12,19 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <nav>
-      Navbar
-      {isAuthenticated ? (
-        <Button type="button" onClick={logOutHandler}>
-          Log out
-        </Button>
-      ) : (
-        <Button type="button" onClick={() => navigate("/login")}>
-          Log in
-        </Button>
-      )}
-    </nav>
+    // <nav>
+    //   Navbar
+    //   {isAuthenticated ? (
+    //     <Button type="button" onClick={logOutHandler}>
+    //       Log out
+    //     </Button>
+    //   ) : (
+    //     <Button type="button" onClick={() => navigate("/login")}>
+    //       Log in
+    //     </Button>
+    //   )}
+    // </nav>
+    <></>
   );
 };
 
