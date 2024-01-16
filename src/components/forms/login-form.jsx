@@ -42,9 +42,9 @@ const LoginForm = () => {
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
         updateActiveUser(user_token);
         toast.success("Successfully logged");
-        navigate("/user");
+        navigate("/profile");
 
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");

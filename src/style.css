@@ -204,6 +204,8 @@
 .sidebar {
   background-color: #e6e6e6;
 }
+.container-sidebar + * {
+}
 .content-area {
   background-color: #dcdcdc;
 }
@@ -243,9 +245,15 @@
   background-color: #000000;
   border-radius: 5px;
 }
+.container-sidebar {
+  width: 300px;
+}
 @media (max-width: 768px) {
   .user-link {
     display: none;
+  }
+  .container-sidebar {
+    width: 80px;
   }
   .user-name,
   .user-email {

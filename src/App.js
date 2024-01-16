@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import "../src/style.css";
 // // import LoginPage from "./components/LoginPage";
 // import SignUpPage from "./components/SignUpPage";
@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
 import Navbar from "./components/navigation/NavBar/navbar";
 import Sidebar from "./components/navigation/SideBar/sidebar";
+import NavigateController from "./components/navigation/NavigateController/NavigateController";
+import { main_routes } from "./routes/routes";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -16,38 +18,49 @@ const SignUpPage = lazy(() =>
   import("./components/pages/SignUpPage/SignUpPage")
 );
 const HomePage = lazy(() => import("./components/pages/HomePage/HomePage"));
-const UserPage = lazy(() => import("./components/pages/UserPage/UserPage"));
+const ProfilePage = lazy(() =>
+  import("./components/pages/ProfilePage/ProfilePage")
+);
 
 function App() {
-  const main_routes = ["/", "/login", "/signup"];
-  const pathname = window.location.pathname;
-  console.log(pathname);
+  const [pathname, setPathname] = useState();
   return (
     <Suspense fallback={<div>loading...</div>}>
       <BrowserRouter>
-        {main_routes.includes(pathname) ? <Navbar /> : <Sidebar />}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/login"
-            element={
-              <BlockRoute>
-                <LoginPage />
-              </BlockRoute>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <BlockRoute>
-                <SignUpPage />
-              </BlockRoute>
-            }
-          />
-          <Route path="/user" element={<UserPage />} />
-          <Route path="/forums" element={<ForumsPage />} />
-          <Route path="*" element={<Navigate to={"/"} />} />
-        </Routes>
+        <div
+          className={`d-flex justify-content-center align-items-center w-100
+                        ${
+                          main_routes.includes(pathname)
+                            ? "flex-column"
+                            : "flex-row"
+                        }`}
+        >
+          <NavigateController setPathname={setPathname} />
+          <main className="flex-grow-1 p-2">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/login"
+                element={
+                  <BlockRoute>
+                    <LoginPage />
+                  </BlockRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <BlockRoute>
+                    <SignUpPage />
+                  </BlockRoute>
+                }
+              />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/forums" element={<ForumsPage />} />
+              {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
+            </Routes>
+          </main>
+        </div>
         <ToasterProvider />
       </BrowserRouter>
     </Suspense>
