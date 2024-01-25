@@ -18,6 +18,9 @@ const SignUpPage = lazy(() =>
   import("./components/pages/SignUpPage/SignUpPage")
 );
 const HomePage = lazy(() => import("./components/pages/HomePage/HomePage"));
+const ForumDetails = lazy(() =>
+  import("./components/pages/ForumsPage/helpers/ForumDetails")
+);
 const ProfilePage = lazy(() =>
   import("./components/pages/ProfilePage/ProfilePage")
 );
@@ -56,6 +59,7 @@ function App() {
                 }
               />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/forumdetails" element={<ForumDetails />} />
               <Route path="/forums" element={<ForumsPage />} />
               {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
             </Routes>

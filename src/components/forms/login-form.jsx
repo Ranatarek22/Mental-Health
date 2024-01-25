@@ -42,14 +42,13 @@ const LoginForm = () => {
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
         updateActiveUser(user_token);
         toast.success("Successfully logged");
-        navigate("/profile");
-
+        navigate("/forumdetails");
         // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
         } else {
-          console.error("Error details:", error);
+          // console.error("Error details:", error);
           if (typeof error === "object") {
             toast.error(Object.values(error.response.data));
           } else {
