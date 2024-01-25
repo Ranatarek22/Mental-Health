@@ -74,34 +74,37 @@ const SignUpForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit} className="signform">
-      <Form.Group className="mb-3 inputfield" controlId="firstName">
-        <Form.Label>Enter your first name</Form.Label>
-        <Form.Control
-          type="text"
-          name="firstName"
-          placeholder="Enter first name"
-          onChange={formik.handleChange}
-          value={formik.values.firstName}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched["firstName"] && Boolean(formik.errors["firstName"]) && (
-          <p className="error">{formik.errors["firstName"]}</p>
-        )}
-      </Form.Group>
-      <Form.Group className="mb-3 inputfield" controlId="lastName">
-        <Form.Label>Enter your last name</Form.Label>
-        <Form.Control
-          type="text"
-          name="lastName"
-          placeholder="Enter first name"
-          onChange={formik.handleChange}
-          value={formik.values.lastName}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched["lastName"] && Boolean(formik.errors["lastName"]) && (
-          <p className="error">{formik.errors["lastName"]}</p>
-        )}
-      </Form.Group>
+      <div className="name-group">
+        <Form.Group className="mb-3 inputfield" controlId="firstName">
+          <Form.Label>Enter your first name</Form.Label>
+          <Form.Control
+            type="text"
+            name="firstName"
+            placeholder="Enter first name"
+            onChange={formik.handleChange}
+            value={formik.values.firstName}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched["firstName"] &&
+            Boolean(formik.errors["firstName"]) && (
+              <p className="error">{formik.errors["firstName"]}</p>
+            )}
+        </Form.Group>
+        <Form.Group className="mb-3 inputfield" controlId="lastName">
+          <Form.Label>Enter your last name</Form.Label>
+          <Form.Control
+            type="text"
+            name="lastName"
+            placeholder="Enter last name"
+            onChange={formik.handleChange}
+            value={formik.values.lastName}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched["lastName"] && Boolean(formik.errors["lastName"]) && (
+            <p className="error">{formik.errors["lastName"]}</p>
+          )}
+        </Form.Group>
+      </div>
       <Form.Group className="mb-3 inputfield" controlId="email">
         <Form.Label>Enter your email</Form.Label>
         <Form.Control
