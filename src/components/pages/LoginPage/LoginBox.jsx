@@ -34,6 +34,7 @@ export const Box = () => {
             color: "black",
             width: "70%",
           }}
+          className="google"
         >
           Sign in with Google
         </Button>

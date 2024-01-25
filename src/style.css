@@ -169,7 +169,7 @@
   }
   .rectangle {
     justify-content: center;
-    width: 80%;
+    width: 100%;
     /* background-color: #A8C7A9; */
   }
   .welcome-to-mental {
@@ -184,6 +184,9 @@
   .hide {
     display: none;
   }
+  .google {
+    font-size: 14px;
+  }
   .containerform {
     width: 100% !important;
   }
@@ -192,6 +195,9 @@
   }
   .signup {
     display: none;
+  }
+  .signform {
+    font-size: 14px;
   }
 }
 @media screen and (min-device-width: 769px) {
