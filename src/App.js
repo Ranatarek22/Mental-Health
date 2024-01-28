@@ -18,13 +18,15 @@ const SignUpPage = lazy(() =>
   import("./components/pages/SignUpPage/SignUpPage")
 );
 const HomePage = lazy(() => import("./components/pages/HomePage/HomePage"));
-const ForumDetails = lazy(() =>
-  import("./components/pages/ForumsPage/helpers/ForumDetails")
+const CreateForumPage = lazy(() =>
+  import("./components/forms/CreateForumForm")
 );
 const ProfilePage = lazy(() =>
   import("./components/pages/ProfilePage/ProfilePage")
 );
-
+const SingleForumPage = lazy(() =>
+  import("./components/pages/singleForum/ForumItemPage")
+);
 function App() {
   const [pathname, setPathname] = useState();
   return (
@@ -59,8 +61,9 @@ function App() {
                 }
               />
               <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/forumdetails" element={<ForumDetails />} />
+              <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
+              <Route path="/forums/:postId" element={<SingleForumPage />} />
               {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
             </Routes>
           </main>

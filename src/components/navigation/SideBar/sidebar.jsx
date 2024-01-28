@@ -36,9 +36,10 @@ const Sidebar = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src="user.png"
+                    src="/user.png"
                     alt="hugenerd"
                     className="rounded-circle me-2 mt-2 user-img"
+                    srcSet="/user.png"
                   />
                   <div>
                     <span className=" pt-3 user-name">

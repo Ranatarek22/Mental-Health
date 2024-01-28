@@ -1,7 +1,7 @@
 // import React from 'react'
 import axios from "axios";
 
-export const BASE_URL = "http://mentalmediator.somee.com";
+export const BASE_URL = "https://mentalmediator.somee.com";
 export const API_URL = BASE_URL.concat("/api");
 
 export const mental_auth_data =

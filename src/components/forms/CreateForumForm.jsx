@@ -1,6 +1,10 @@
 import React from "react";
-
-const ForumDetails = () => {
+import { apiInstance } from "../../axios";
+import toast from "react-hot-toast";
+import { object, string, number } from "yup";
+import axios from "axios";
+import { useFormik } from "formik";
+const CreateForumForm = () => {
   return (
     <div className="d-flex flex-column p-3 m-3 forum-card ">
       <h1 className="d-flex justify-content-center p-2 m-1 fw-bold forum-details">
@@ -10,7 +14,6 @@ const ForumDetails = () => {
         <h5 className="fw-bold">What's on your mind ?</h5>
         <h6 className="m-1 forum-data">Enter all forum details</h6>
       </div>
-
       <form className="">
         <div className="horizontal">
           <div className="mb-3 input-groups">
@@ -47,4 +50,4 @@ const ForumDetails = () => {
   );
 };
 
-export default ForumDetails;
+export default CreateForumForm;

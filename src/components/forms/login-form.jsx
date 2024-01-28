@@ -42,7 +42,7 @@ const LoginForm = () => {
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
         updateActiveUser(user_token);
         toast.success("Successfully logged");
-        navigate("/forumdetails");
+        navigate("/createforum");
         // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -50,9 +50,10 @@ const LoginForm = () => {
         } else {
           // console.error("Error details:", error);
           if (typeof error === "object") {
-            toast.error(Object.values(error.response.data));
+            toast.error(Object.values(error.response.data)[0]);
           } else {
-            toast.error(String(error));
+            // toast.error(String(error));
+            console.error(error);
           }
         }
       }

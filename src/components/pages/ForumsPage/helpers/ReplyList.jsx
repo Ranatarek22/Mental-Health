@@ -2,32 +2,31 @@ import React, { useEffect, useState } from "react";
 import { apiInstance } from "../../../../axios";
 import toast from "react-hot-toast";
 import axios from "axios";
-import Comment from "./Comment";
-
-const CommentList = ({ postId }) => {
-  const [comments, setComments] = useState([]);
-  const fetchPostComments = async (postId) => {
+import Reply from "./Reply";
+const ReplyList = ({ postId, commentId }) => {
+  const [replies, setReplies] = useState([]);
+  const fetchCommentReplies = async (postId, commentId) => {
     const cancelToken = axios.CancelToken.source();
     try {
-      const commentPromise = await apiInstance.get(
-        `/posts/${postId}/comments`,
+      const repliesPromise = await apiInstance.get(
+        `/posts/${postId}/comments/${commentId}/replies`,
         {
           cancelToken: cancelToken.token,
         }
       );
 
       // console.log(tokenPromise)
-      if (commentPromise.status !== 200) {
-        if (commentPromise.response.data) {
-          throw new Error(Object.values(commentPromise.response.data)[0]);
+      if (repliesPromise.status !== 200) {
+        if (repliesPromise.response.data) {
+          throw new Error(Object.values(repliesPromise.response.data)[0]);
         } else {
-          throw new Error(commentPromise.statusText);
+          throw new Error(repliesPromise.statusText);
         }
       }
       // navigate("/forumdetails");
       // window.location.reload();
-      console.log(commentPromise.data);
-      return await commentPromise.data;
+    //   console.log(repliesPromise.data);
+      return await repliesPromise.data;
     } catch (error) {
       if (axios.isCancel(error)) {
         console.error("cancelled");
@@ -47,16 +46,21 @@ const CommentList = ({ postId }) => {
   };
 
   useEffect(() => {
-    fetchPostComments(postId).then((data) => setComments(data));
-  }, [postId]);
+    fetchCommentReplies(postId, commentId).then((data) => setReplies(data));
+  }, [postId, commentId]);
 
   return (
     <div>
-      {comments.map((comment) => (
-        <Comment comment={comment} postId={postId} key={comment.id} />
+      {replies.map((reply) => (
+        <Reply
+          reply={reply}
+          commentId={commentId}
+          postId={postId}
+          key={reply.id}
+        />
       ))}
     </div>
   );
 };
 
-export default CommentList;
+export default ReplyList;
