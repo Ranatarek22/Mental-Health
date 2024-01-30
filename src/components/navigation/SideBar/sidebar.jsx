@@ -3,6 +3,7 @@ import { Button, Container, Col } from "react-bootstrap";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaSignsPost } from "react-icons/fa6";
 import {
   BsFillPencilFill,
   BsFillHouseDoorFill,
@@ -91,7 +92,7 @@ const Sidebar = () => {
                 </li>
                 <li className="nav-item d-flex align-items-center w-100">
                   <a href="#" className="nav-link px-0 align-middle m-2 ">
-                    <BsFillHouseDoorFill className="fs-4 mx-3 me-1 text-black " />{" "}
+                    <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
                     <span className="ms-1  text-black user-link">Forums</span>{" "}
                   </a>
                 </li>

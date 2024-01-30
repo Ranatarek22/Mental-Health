@@ -70,7 +70,10 @@ const Comment = (props) => {
 
   return (
     <div>
-      <div className="d-flex gap-2 p-2 align-items-start justify-content-start">
+      <div
+        className="d-flex gap-2 p-2 align-items-start justify-content-start"
+        style={{ width: "200px" }}
+      >
         <div>
           <img src="/Avatars.png" />
         </div>
@@ -92,7 +95,7 @@ const Comment = (props) => {
         </div>
       </div>
       {replies && (
-        <div style={{ marginLeft: "8%" }}>
+        <div style={{ marginLeft: "23%" }}>
           {replies.map((reply) => (
             <Comment
               key={reply.id}
@@ -109,6 +112,7 @@ const Comment = (props) => {
           postId={postId}
           commentId={comment.id}
           onAddComment={onAddCommentReply}
+          style={{ marginLeft: "23%" }}
         />
       )}
     </div>

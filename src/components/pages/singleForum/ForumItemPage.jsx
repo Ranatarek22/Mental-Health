@@ -7,50 +7,10 @@ import { TfiCommentsSmiley } from "react-icons/tfi";
 import CommentSection from "../ForumsPage/helpers/CommentSection";
 
 const ForumItemPage = () => {
-  // const params = useParams();
-  // const [forum, setForum] = useState();
-  // const fetchPostData = async (postId) => {
-  //   const cancelToken = axios.CancelToken.source();
-  //   try {
-  //     const postPromise = await apiInstance.get(`/posts/${postId}`, {
-  //       cancelToken: cancelToken.token,
-  //     });
-
-  //     // console.log(tokenPromise)
-  //     if (postPromise.status !== 200) {
-  //       if (postPromise.response.data) {
-  //         throw new Error(Object.values(postPromise.response.data)[0]);
-  //       } else {
-  //         throw new Error(postPromise.statusText);
-  //       }
-  //     }
-  //     // navigate("/forumdetails");
-  //     // window.location.reload();
-  //     return await postPromise.data;
-  //   } catch (error) {
-  //     if (axios.isCancel(error)) {
-  //       console.error("cancelled");
-  //     } else {
-  //       // console.error("Error details:", error);
-  //       if (typeof error === "object") {
-  //         toast.error(Object.values(error.response.data));
-  //       } else {
-  //         toast.error(String(error));
-  //       }
-  //     }
-  //   }
-
-  //   return () => {
-  //     cancelToken.cancel("cancelled");
-  //   };
-  // };
-
-  // useEffect(() => {
-  //   fetchPostData(params.postId).then((data) => setForum(data));
-  // }, [params.postId]);
   const params = useParams();
   const [forum, setForum] = useState();
-  const [comments, setComments] = useState([]); // Add state for comments
+  const [comments, setComments] = useState([]);
+  const [commentsCount, setCommentsCount] = useState(0);
 
   useEffect(() => {
     const fetchPostData = async (postId) => {
@@ -81,6 +41,7 @@ const ForumItemPage = () => {
 
         if (commentPromise.status === 200) {
           setComments(commentPromise.data);
+          setCommentsCount(commentPromise.data.length);
         }
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -122,7 +83,11 @@ const ForumItemPage = () => {
       let durationString = "";
 
       if (seconds < minute) {
-        durationString = `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
+        if (seconds < 10) {
+          durationString = `just now`;
+        } else {
+          durationString = `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
+        }
       } else if (seconds < hour) {
         const minutes = Math.floor(seconds / minute);
         durationString = `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
@@ -149,7 +114,6 @@ const ForumItemPage = () => {
 
     calculateDuration();
   }, [postData]);
-
   return (
     <div>
       <div className="cont p-3 m-3">
@@ -170,7 +134,7 @@ const ForumItemPage = () => {
             <div className="py-2 mt-2">
               {" "}
               <TfiCommentsSmiley style={{ fontSize: "2rem" }} />
-              <span className="ms-2 fw-bold">{comments.length}</span>
+              <span className="ms-2 fw-bold">{commentsCount}</span>
             </div>
           </div>
         </div>
@@ -178,7 +142,7 @@ const ForumItemPage = () => {
 
       <div className="cont2 flex-column p-3 m-3">
         <div className="flex-row">
-          <p className="fw-bold p-2">Comments ({comments.length})</p>
+          <p className="fw-bold p-2">Comments ({commentsCount})</p>
         </div>
         <div className=" d-flex flex-row">
           <div className="flex-column flex-grow-1">
