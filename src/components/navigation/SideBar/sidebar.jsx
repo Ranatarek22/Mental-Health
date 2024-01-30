@@ -98,18 +98,20 @@ const Sidebar = () => {
               </ul>
             </div>
 
-            {isAuthenticated ? (
-              <div className="mt-auto w-100 p-3 ">
-                <div className=" logout d-flex align-items-center">
+            {!isAuthenticated ? (
+              <div className="mt-auto  p-3 logout d-flex align-items-center justify-content-center ">
+                <Button
+                  className="ms-2 text-white user-link "
+                  onClick={logOutHandler}
+                  style={{
+                    backgroundColor: "black",
+                    borderColor: "black",
+                    width: "98%",
+                  }}
+                >
                   <HiOutlineLogout className="fs-4 mx-3 me-1 text-white" />
-                  <Button
-                    className="ms-2 text-white user-link "
-                    onClick={logOutHandler}
-                    style={{ backgroundColor: "black", borderColor: "black" }}
-                  >
-                    <span className="user-link">Log Out</span>
-                  </Button>
-                </div>
+                  <span className="user-link ">Log Out</span>
+                </Button>
               </div>
             ) : (
               <Button type="button" onClick={() => navigate("/login")}>

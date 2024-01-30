@@ -1,63 +1,190 @@
 import React, { useEffect, useState } from "react";
-import CommentList from "../ForumsPage/helpers/CommentList";
 import { useParams } from "react-router-dom";
 import { apiInstance } from "../../../axios";
 import toast from "react-hot-toast";
 import axios from "axios";
-import CommentForm from "../../forms/CommentForm";
+import { TfiCommentsSmiley } from "react-icons/tfi";
+import CommentSection from "../ForumsPage/helpers/CommentSection";
+
 const ForumItemPage = () => {
+  // const params = useParams();
+  // const [forum, setForum] = useState();
+  // const fetchPostData = async (postId) => {
+  //   const cancelToken = axios.CancelToken.source();
+  //   try {
+  //     const postPromise = await apiInstance.get(`/posts/${postId}`, {
+  //       cancelToken: cancelToken.token,
+  //     });
+
+  //     // console.log(tokenPromise)
+  //     if (postPromise.status !== 200) {
+  //       if (postPromise.response.data) {
+  //         throw new Error(Object.values(postPromise.response.data)[0]);
+  //       } else {
+  //         throw new Error(postPromise.statusText);
+  //       }
+  //     }
+  //     // navigate("/forumdetails");
+  //     // window.location.reload();
+  //     return await postPromise.data;
+  //   } catch (error) {
+  //     if (axios.isCancel(error)) {
+  //       console.error("cancelled");
+  //     } else {
+  //       // console.error("Error details:", error);
+  //       if (typeof error === "object") {
+  //         toast.error(Object.values(error.response.data));
+  //       } else {
+  //         toast.error(String(error));
+  //       }
+  //     }
+  //   }
+
+  //   return () => {
+  //     cancelToken.cancel("cancelled");
+  //   };
+  // };
+
+  // useEffect(() => {
+  //   fetchPostData(params.postId).then((data) => setForum(data));
+  // }, [params.postId]);
   const params = useParams();
   const [forum, setForum] = useState();
-  const fetchPostData = async (postId) => {
-    const cancelToken = axios.CancelToken.source();
-    try {
-      const postPromise = await apiInstance.get(`/posts/${postId}`, {
-        cancelToken: cancelToken.token,
-      });
-
-      // console.log(tokenPromise)
-      if (postPromise.status !== 200) {
-        if (postPromise.response.data) {
-          throw new Error(Object.values(postPromise.response.data)[0]);
-        } else {
-          throw new Error(postPromise.statusText);
-        }
-      }
-      // navigate("/forumdetails");
-      // window.location.reload();
-      return await postPromise.data;
-    } catch (error) {
-      if (axios.isCancel(error)) {
-        console.error("cancelled");
-      } else {
-        // console.error("Error details:", error);
-        if (typeof error === "object") {
-          toast.error(Object.values(error.response.data));
-        } else {
-          toast.error(String(error));
-        }
-      }
-    }
-
-    return () => {
-      cancelToken.cancel("cancelled");
-    };
-  };
+  const [comments, setComments] = useState([]); // Add state for comments
 
   useEffect(() => {
-    fetchPostData(params.postId).then((data) => setForum(data));
+    const fetchPostData = async (postId) => {
+      const cancelToken = axios.CancelToken.source();
+      try {
+        const postPromise = await apiInstance.get(`/posts/${postId}`, {
+          cancelToken: cancelToken.token,
+        });
+
+        if (postPromise.status !== 200) {
+          if (postPromise.response.data) {
+            throw new Error(Object.values(postPromise.response.data)[0]);
+          } else {
+            throw new Error(postPromise.statusText);
+          }
+        }
+
+        const postData = await postPromise.data;
+        setForum(postData);
+
+        // Fetch comments and update the comments state
+        const commentPromise = await apiInstance.get(
+          `/posts/${postId}/comments`,
+          {
+            cancelToken: cancelToken.token,
+          }
+        );
+
+        if (commentPromise.status === 200) {
+          setComments(commentPromise.data);
+        }
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.error("cancelled");
+        } else {
+          if (typeof error === "object") {
+            toast.error(Object.values(error.response.data)[0]);
+          } else {
+            toast.error(String(error));
+          }
+        }
+      }
+
+      return () => {
+        cancelToken.cancel("cancelled");
+      };
+    };
+    fetchPostData(params.postId);
   }, [params.postId]);
+
+  const postData = forum?.postedOn;
+  // console.log(postData);
+  const [duration, setDuration] = useState("");
+
+  useEffect(() => {
+    const calculateDuration = () => {
+      const postDate = new Date(postData);
+      const currentDate = new Date();
+
+      const timeDifference = currentDate - postDate;
+      const seconds = Math.floor(timeDifference / 1000);
+
+      const minute = 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+      const month = day * 30;
+      const year = month * 12;
+
+      let durationString = "";
+
+      if (seconds < minute) {
+        durationString = `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
+      } else if (seconds < hour) {
+        const minutes = Math.floor(seconds / minute);
+        durationString = `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+      } else if (seconds < day) {
+        const hours = Math.floor(seconds / hour);
+        durationString = `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+      } else if (seconds < month) {
+        const days = Math.floor(seconds / day);
+        durationString = `${days} day${days !== 1 ? "s" : ""} ago`;
+      } else if (seconds < year) {
+        const months = Math.floor(seconds / month);
+        durationString = `${months} month${months !== 1 ? "s" : ""} ago`;
+      } else {
+        const formattedDate = postDate.toLocaleDateString();
+        const formattedTime = postDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        durationString = `on ${formattedDate} at ${formattedTime}`;
+      }
+
+      setDuration(durationString);
+    };
+
+    calculateDuration();
+  }, [postData]);
 
   return (
     <div>
-      <div>
-        <h1>{forum?.title}</h1>
+      <div className="cont p-3 m-3">
+        <div>
+          <img src="/Avatars.png" className="p-2" />
+        </div>
+        <div className="py-2">
+          <span style={{ fontWeight: "bold" }}>{forum?.username} </span>
+          <br />
+          <p className="text-muted">{duration}</p>
+          <div>
+            <h2 style={{ fontWeight: "bold" }} className="py-2">
+              {forum?.title}
+            </h2>
+          </div>
+          <div className="py-3 ">
+            {forum?.content}
+            <div className="py-2 mt-2">
+              {" "}
+              <TfiCommentsSmiley style={{ fontSize: "2rem" }} />
+              <span className="ms-2 fw-bold">{comments.length}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <CommentForm postId={params.postId} />
-      </div>
-      <div>
-        <CommentList postId={params.postId} />
+
+      <div className="cont2 flex-column p-3 m-3">
+        <div className="flex-row">
+          <p className="fw-bold p-2">Comments ({comments.length})</p>
+        </div>
+        <div className=" d-flex flex-row">
+          <div className="flex-column flex-grow-1">
+            <CommentSection postId={params.postId} />
+          </div>
+        </div>
       </div>
     </div>
   );
