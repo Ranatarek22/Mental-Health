@@ -70,10 +70,16 @@ const ForumItemPage = () => {
     const calculateDuration = () => {
       const postDate = new Date(postData);
       const currentDate = new Date();
-
-      const timeDifference = currentDate - postDate;
+      const offset = currentDate.getTimezoneOffset();
+      const local = new Date(currentDate.getTime() + offset * 60000);
+      console.log(postDate);
+      console.log(local);
+      const timeDifference = local - postDate;
+      console.log(timeDifference);
+      const timeDate = new Date(timeDifference);
+      console.log(timeDate);
       const seconds = Math.floor(timeDifference / 1000);
-
+      //  2024-01-31T19:49:58.1940569
       const minute = 60;
       const hour = minute * 60;
       const day = hour * 24;

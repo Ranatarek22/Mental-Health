@@ -5,14 +5,18 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const Comment = (props) => {
-  const { comment, postId, isReply } = props;
+  const { comment, postId, isReply, onDeleteComment } = props;
   const [showForm, setShowForm] = useState(false);
   const [replies, setReplies] = useState([]);
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
-
+  const onDeleteClick = () => {
+    if (onDeleteComment) {
+      onDeleteComment(comment.id);
+    }
+  };
   //api call
 
   const fetchCommentReplies = async (postId, commentId) => {
@@ -56,31 +60,28 @@ const Comment = (props) => {
   };
   useEffect(() => {
     // Fetch replies data from your API
-    if (postId && comment) {
+    if (postId && comment && !isReply) {
       fetchCommentReplies(postId, comment.id).then((data) =>
         setReplies(data || [])
       );
     }
-  }, [postId, comment?.id]);
+  }, [postId, comment?.id, isReply]);
 
   const onAddCommentReply = (reply) => {
     setShowForm(false);
     setReplies([...replies, reply]);
   };
-
+const isMyComment =comment.username.id
   return (
     <div>
-      <div
-        className="d-flex gap-2 p-2 align-items-start justify-content-start"
-        style={{ width: "200px" }}
-      >
+      <div className="d-flex gap-2 p-2 align-items-start justify-content-start">
         <div>
           <img src="/Avatars.png" />
         </div>
         <div>
           <h6 className="fw-bold m-0">{comment?.username}</h6>
           <p className="fw-normal">{comment?.content}</p>
-          {isReply && ( // Render the Reply button only for root comments
+          {isReply && (
             <button
               className="text-muted"
               onClick={toggleForm}
@@ -92,17 +93,27 @@ const Comment = (props) => {
               Reply
             </button>
           )}
+          <button
+            onClick={onDeleteClick}
+            className="text-muted p-1"
+            style={{
+              border: "none",
+              background: "none",
+            }}
+          >
+            Delete
+          </button>
         </div>
       </div>
       {replies && (
-        <div style={{ marginLeft: "23%" }}>
+        <div style={{ marginLeft: "8%" }}>
           {replies.map((reply) => (
             <Comment
               key={reply.id}
               comment={reply}
               postId={postId}
-              isReply={false}
-              // onAddComment={onAddCommentReply}
+              isReply
+              onDeleteComment={onDeleteComment}
             />
           ))}
         </div>

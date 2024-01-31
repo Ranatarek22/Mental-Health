@@ -46,6 +46,7 @@ const CommentSection = ({ postId }) => {
       cancelToken.cancel("Request canceled");
     };
   };
+
   useEffect(() => {
     // Fetch comments data from your API
     if (postId) {
@@ -56,6 +57,23 @@ const CommentSection = ({ postId }) => {
   const onAddComment = (comment) => {
     setCommentsData([...commentsData, comment]);
   };
+  const onDeleteComment = async (commentId) => {
+    try {
+      await apiInstance.delete(`/posts/${postId}/comments/${commentId}`);
+      setCommentsData((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId)
+      );
+      toast.success("Comment deleted");
+    } catch (error) {
+      console.error("Failed to delete comment:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Status code:", error.response.status);
+      }
+      toast.error("Failed to delete comment");
+    }
+  };
+
   return (
     <div
       style={{
@@ -82,7 +100,7 @@ const CommentSection = ({ postId }) => {
             key={comment.id}
             comment={comment}
             postId={postId}
-            isReply={true} // Pass isReply prop for top-level comments
+            onDeleteComment={onDeleteComment}
           />
         ))}
       </div>

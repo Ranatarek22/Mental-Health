@@ -39,7 +39,6 @@ function App() {
                             ? "flex-column"
                             : "flex-row"
                         }`}
-          // style={{ height: "100vh" }}
         >
           <NavigateController setPathname={setPathname} />
           <main className="flex-grow-1 p-2 ">

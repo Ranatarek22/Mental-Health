@@ -29,6 +29,8 @@ if (mental_auth_data) {
     `Bearer ` + mental_auth_data.token;
   apiInstance.defaults.headers.delete["Authorization"] =
     `Bearer` + mental_auth_data.token;
+  apiInstance.defaults.headers.common["Authorization"] =
+    `Bearer` + mental_auth_data.token;
 }
 
 export { apiInstance };
