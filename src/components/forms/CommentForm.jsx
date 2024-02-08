@@ -20,6 +20,67 @@ const CommentForm = ({
   const url = commentId
     ? `/posts/${postId}/comments/${commentId}/replies`
     : `/posts/${postId}/comments`;
+  // const formik = useFormik({
+  //   initialValues: {
+  //     content: "",
+  //   },
+  //   validationSchema: commentschema,
+  //   onSubmit: async (values) => {
+  //     // alert(JSON.stringify(values));
+  //     const cancelToken = axios.CancelToken.source();
+  //     let commentPromise;
+  //     try {
+  //       if (intialData) {
+  //         commentPromise = await apiInstance.put(
+  //           url.concat(`/${intialData.id}`),
+  //           {
+  //             headers: { Authorization: `Bearer ${token}` },
+  //           }
+  //         );
+  //       } else {
+  //         commentPromise = await apiInstance.post(url, values, {
+  //           cancelToken: cancelToken.token,
+  //         });
+  //       }
+
+  //       if (!commentPromise.ok) {
+  //         if (commentPromise.response.data) {
+  //           throw new Error(Object.values(commentPromise.response.data)[0]);
+  //         } else {
+  //           throw new Error(commentPromise.statusText);
+  //         }
+  //       }
+  //       const data = await commentPromise.data;
+  //       // console.log(commentPromise);
+  //       if (intialData) {
+  //         if (onAddComment) {
+  //           onAddComment(data);
+  //           toast.success("Comment created");
+  //         }
+  //       } else {
+  //         if (onUpdateComment) {
+  //           onUpdateComment(data);
+  //           toast.success("Comment Updated");
+  //         }
+  //       }
+  //     } catch (error) {
+  //       if (axios.isCancel(error)) {
+  //         console.error("cancelled");
+  //       } else {
+  //         if (typeof error === "object") {
+  //           toast.error(Object.values(error.response.data)[0]);
+  //         } else {
+  //           console.error(error);
+  //         }
+  //       }
+  //       console.error(error);
+  //     }
+
+  //     return () => {
+  //       cancelToken.cancel("cancelled by user");
+  //     };
+  //   },
+  // });
   const formik = useFormik({
     initialValues: {
       content: "",
@@ -27,53 +88,43 @@ const CommentForm = ({
     validationSchema: commentschema,
     onSubmit: async (values) => {
       // alert(JSON.stringify(values));
+      if (!values.content) {
+        formik.setFieldError("content", "Can't post empty commet!");
+        return;
+      }
       const cancelToken = axios.CancelToken.source();
-      let commentPromise;
       try {
-        if (intialData) {
-          commentPromise = await apiInstance.put(
-            url.concat(`/${intialData.id}`),
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-        } else {
-          commentPromise = await apiInstance.post(url, values, {
-            cancelToken: cancelToken.token,
-          });
-        }
-
-        if (!commentPromise.ok) {
+        const commentPromise = await apiInstance.post(url, values, {
+          cancelToken: cancelToken.token,
+        });
+        if (commentPromise.status !== 201) {
           if (commentPromise.response.data) {
             throw new Error(Object.values(commentPromise.response.data)[0]);
           } else {
             throw new Error(commentPromise.statusText);
           }
         }
-        const data = await commentPromise.data;
         // console.log(commentPromise);
-        if (intialData) {
-          if (onAddComment) {
-            onAddComment(data);
-            toast.success("Comment created");
-          }
-        } else {
-          if (onUpdateComment) {
-            onUpdateComment(data);
-            toast.success("Comment Updated");
-          }
+        if (onAddComment) {
+          const addedComment = await commentPromise.data;
+          onAddComment(addedComment);
         }
+        toast.success("Comment created");
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
         } else {
           if (typeof error === "object") {
-            toast.error(Object.values(error.response.data)[0]);
+            if (error.response.status === 401) {
+              toast.error("Unauthorized");
+            } else {
+              toast.error(Object.values(error.response.data)[0]);
+            }
           } else {
             console.error(error);
           }
         }
-        console.error(error);
+        // console.error(error);
       }
 
       return () => {

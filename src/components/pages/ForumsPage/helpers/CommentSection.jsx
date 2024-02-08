@@ -123,7 +123,7 @@ const CommentSection = ({ postId }) => {
           <CommentForm
             postId={postId}
             onAddComment={onAddComment}
-            onUpdateComment={onUpdateComment}
+            // onUpdateComment={onUpdateComment}
           />
         </div>
       </div>

@@ -172,7 +172,7 @@ const Comment = (props) => {
             postId={postId}
             commentId={comment.id}
             onAddComment={onAddCommentReply}
-            onUpdateComment={onUpdateCommentReply}
+            // onUpdateComment={onUpdateCommentReply}
             style={{ marginLeft: "23%" }}
           />
         )}

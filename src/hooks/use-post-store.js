@@ -53,16 +53,16 @@ export const usePostStore = create((set) => ({
         totalComments: state.comments.length + uniqueReplies?.length,
       };
     }),
-  updatePostComment: (comment) =>
-    set((state) => {
-      state.deletePostComment(comment.id);
-      state.addPostComment(comment);
-      return state;
-    }),
-  updatePostReply: (reply) =>
-    set((state) => {
-      state.deletePostReply(reply.id);
-      state.addPostReply(reply);
-      return state;
-    }),
+  // updatePostComment: (comment) =>
+  //   set((state) => {
+  //     state.deletePostComment(comment.id);
+  //     state.addPostComment(comment);
+  //     return state;
+  //   }),
+  // updatePostReply: (reply) =>
+  //   set((state) => {
+  //     state.deletePostReply(reply.id);
+  //     state.addPostReply(reply);
+  //     return state;
+  //   }),
 }));
