@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { apiInstance } from "../../../../axios";
 import { useNavigate } from "react-router-dom";
 import { usePostStore } from "../../../../hooks/use-post-store";
+import { css } from "@emotion/react";
+import { SyncLoader } from "react-spinners";
 
 function ForumList() {
   const [posts, setPosts] = useState([]);
@@ -38,6 +39,12 @@ function ForumList() {
     }
   };
 
+  const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+  `;
+
   return (
     <div>
       <div className="cont4 p-2 m-3">
@@ -50,7 +57,7 @@ function ForumList() {
         dataLength={posts.length}
         next={fetchPosts}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
         endMessage={<p>No more posts</p>}
       >
         {posts.map((post, index) => {
