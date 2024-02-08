@@ -18,7 +18,7 @@ const ForumItemPage = () => {
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editButtonVisible, setEditButtonVisible] = useState(true); // State to control the visibility of the edit button
+  const [editButtonVisible, setEditButtonVisible] = useState(true); 
 
   useEffect(() => {
     if (!forum && params.postId) {
@@ -128,16 +128,16 @@ const ForumItemPage = () => {
   };
 
   const handleEdit = () => {
-    setIsEditing(true); // Enter edit mode
-    setEditButtonVisible(false); // Hide edit button when editing starts
+    setIsEditing(true); 
+    setEditButtonVisible(false); 
   };
 
   const handleCancelEdit = () => {
-    // Reset edited title and content to original values
+  
     setEditedTitle(forum.title);
     setEditedContent(forum.content);
-    setIsEditing(false); // Exit edit mode
-    setEditButtonVisible(true); // Show edit button when editing is cancelled
+    setIsEditing(false); 
+    setEditButtonVisible(true); 
   };
 
   const handleUpdate = async () => {
@@ -155,7 +155,7 @@ const ForumItemPage = () => {
       setForum(response.data);
       setIsEditing(false);
       toast.success("Post updated successfully");
-      setEditButtonVisible(true); // Show edit button after updating
+      setEditButtonVisible(true); 
     } catch (error) {
       console.error("Error updating post:", error);
       toast.error("Failed to update post");
@@ -204,7 +204,6 @@ const ForumItemPage = () => {
               <p className="text-muted">{duration}</p>
               <div>
                 {isEditing ? (
-                  // Edit form for title
                   <input
                     type="text"
                     value={editedTitle}
