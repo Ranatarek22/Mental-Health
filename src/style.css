@@ -374,12 +374,7 @@ textarea {
   width: 80%;
   border-radius: 20px;
 }
-div.cont4 + div {
-  background-color: #f5f9f6;
-  display: flex;
-  border-radius: 15px;
-  overflow-y: auto;
-}
+
 .cont4 > button {
   border-radius: 20px;
   background-color: #ffffff;
