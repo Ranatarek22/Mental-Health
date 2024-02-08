@@ -7,27 +7,36 @@ function ForumList() {
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const pageSize = 4; 
+  const pageSize = 10;
 
   useEffect(() => {
- 
     fetchPosts();
   }, []);
 
   const fetchPosts = async () => {
     try {
       const response = await apiInstance.get(
-        `/posts?page=${page}&pageSize=${pageSize}`
+        `/posts?PageNumber=${page}&PageSize=${pageSize}`
       );
-      const newPosts = response.data; 
-      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      const newPosts = response.data;
+
+    
+      if (page === 1) {
+        setPosts(newPosts);
+      } else {
+        
+        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      }
+      console.log(newPosts);
+    
       setPage((prevPage) => prevPage + 1);
+
       setHasMore(newPosts.length === pageSize);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
-
+  console.log(posts);
   return (
     <div>
       <div className="cont4 p-2 m-3">
@@ -59,11 +68,9 @@ function ForumList() {
                     <div className="flex-grow-1">
                       <span className="fw-bold m-0">{post.username}</span>
                       <br />
-                      {/* Adjust date format according to your data */}
                       <p className="text-muted">Date: {post.postedOn}</p>
                     </div>
                     <div>
-                      {/* Adjust comments count according to your data */}
                       <span className="pt-2 mt-3">
                         Comments: {post.commentsCount}
                       </span>
