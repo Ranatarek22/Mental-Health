@@ -18,7 +18,7 @@ const ForumItemPage = () => {
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editButtonVisible, setEditButtonVisible] = useState(true); 
+  const [editButtonVisible, setEditButtonVisible] = useState(true);
 
   useEffect(() => {
     if (!forum && params.postId) {
@@ -128,16 +128,15 @@ const ForumItemPage = () => {
   };
 
   const handleEdit = () => {
-    setIsEditing(true); 
-    setEditButtonVisible(false); 
+    setIsEditing(true);
+    setEditButtonVisible(false);
   };
 
   const handleCancelEdit = () => {
-  
     setEditedTitle(forum.title);
     setEditedContent(forum.content);
-    setIsEditing(false); 
-    setEditButtonVisible(true); 
+    setIsEditing(false);
+    setEditButtonVisible(true);
   };
 
   const handleUpdate = async () => {
@@ -155,7 +154,7 @@ const ForumItemPage = () => {
       setForum(response.data);
       setIsEditing(false);
       toast.success("Post updated successfully");
-      setEditButtonVisible(true); 
+      setEditButtonVisible(true);
     } catch (error) {
       console.error("Error updating post:", error);
       toast.error("Failed to update post");
@@ -183,10 +182,15 @@ const ForumItemPage = () => {
       handleDelete(params.postId);
     }
   };
-
   return (
     <div>
-      {forum ? (
+      {forum === null ? (
+        <div className="centered-container">
+          <div className="cont3 pt-3 ">
+            <p className="fw-bold ">Post has been deleted.</p>
+          </div>
+        </div>
+      ) : (
         <>
           <div className="cont p-3 m-3">
             <div>
@@ -199,7 +203,9 @@ const ForumItemPage = () => {
                 width: "100%",
               }}
             >
-              <span style={{ fontWeight: "bold" }}>{forum.username} </span>
+              {forum && forum.username && (
+                <span style={{ fontWeight: "bold" }}>{forum.username} </span>
+              )}
               <br />
               <p className="text-muted">{duration}</p>
               <div>
@@ -213,7 +219,7 @@ const ForumItemPage = () => {
                 ) : (
                   // Display post title
                   <h2 style={{ fontWeight: "bold" }} className="py-2">
-                    {forum.title}
+                    {forum?.title}
                   </h2>
                 )}
               </div>
@@ -244,7 +250,7 @@ const ForumItemPage = () => {
                   </>
                 ) : (
                   // Display post content
-                  forum.content
+                  forum?.content
                 )}
 
                 <div className="py-2 mt-2">
@@ -300,12 +306,6 @@ const ForumItemPage = () => {
             </div>
           </div>
         </>
-      ) : (
-        <div className="centered-container">
-          <div className="cont3 pt-3 ">
-            <p className="fw-bold ">Post has been deleted.</p>
-          </div>
-        </div>
       )}
     </div>
   );

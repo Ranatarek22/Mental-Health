@@ -352,6 +352,15 @@ textarea {
   height: 100vh;
   text-align: center; /* Set the height of the container to full viewport height */
 }
+.post-container {
+  transition: transform 0.3s ease;
+}
+
+.post-container:hover {
+  transform: scale(1.1) translateX(2%);
+  width: 95%;
+  z-index: 1;
+}
 .cont3 {
   background-color: #f5f9f6;
   display: flex;

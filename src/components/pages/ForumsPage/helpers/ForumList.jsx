@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { apiInstance } from "../../../../axios";
+import { useNavigate } from "react-router-dom";
+import { usePostStore } from "../../../../hooks/use-post-store";
 
 function ForumList() {
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const pageSize = 10;
+  const navigate = useNavigate();
+  const commentsCount = usePostStore((state) => state.totalComments);
 
   useEffect(() => {
     fetchPosts();
@@ -20,15 +24,12 @@ function ForumList() {
       );
       const newPosts = response.data;
 
-    
       if (page === 1) {
         setPosts(newPosts);
       } else {
-        
         setPosts((prevPosts) => [...prevPosts, ...newPosts]);
       }
-      console.log(newPosts);
-    
+
       setPage((prevPage) => prevPage + 1);
 
       setHasMore(newPosts.length === pageSize);
@@ -36,12 +37,14 @@ function ForumList() {
       console.error("Error fetching posts:", error);
     }
   };
-  console.log(posts);
+
   return (
     <div>
       <div className="cont4 p-2 m-3">
         <input type="text" className="p-2 m-2" placeholder="Search for forum" />
-        <button className="p-2 m-2">Create Forum</button>
+        <button className="p-2 m-2" onClick={() => navigate(`/createforum`)}>
+          Create Forum
+        </button>
       </div>
       <InfiniteScroll
         dataLength={posts.length}
@@ -52,7 +55,11 @@ function ForumList() {
       >
         {posts.map((post, index) => {
           return (
-            <div key={index}>
+            <div
+              key={index}
+              className="post-container"
+              onClick={() => navigate(`/forums/${post.id}`)}
+            >
               <div className="cont p-2 m-3 align-items-center">
                 <div className="flex-grow-1">
                   <div className="cont p-2 m-2">
@@ -72,7 +79,8 @@ function ForumList() {
                     </div>
                     <div>
                       <span className="pt-2 mt-3">
-                        Comments: {post.commentsCount}
+                        Comments:
+                        {/* {commentsCount} */}
                       </span>
                     </div>
                   </div>
