@@ -14,6 +14,9 @@ import { useRef, useState, useEffect } from "react";
 const Sidebar = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
+  const userName = useAuthStore((state) => state.userName);
+  const email = useAuthStore((state) => state.email);
+  // console.log(email);
 
   const logOutHandler = () => {
     removeActiveUser();
@@ -44,12 +47,10 @@ const Sidebar = () => {
                   />
                   <div>
                     <span className=" pt-3 user-name">
-                      Rana Tarek
+                      {userName}
                       <BsFillPencilFill className="ms-2 pr-3 dropdown-toggle" />
                     </span>
-                    <span className=" text-muted user-email">
-                      RanaTarek@yahoo.com
-                    </span>
+                    <span className=" text-muted user-email">{email}</span>
                   </div>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark custom-dropdown-menu text-small shadow">
@@ -77,7 +78,12 @@ const Sidebar = () => {
                 <li className="nav-item d-flex align-items-center w-100">
                   <a href="#" className="nav-link align-middle px-0 m-2">
                     <BsFillHouseDoorFill className="fs-4 mx-3 me-1 text-black" />{" "}
-                    <span className=" ms-2  text-black user-link">Home</span>
+                    <span
+                      className=" ms-2  text-black user-link"
+                      onClick={() => navigate("/")}
+                    >
+                      Home
+                    </span>
                   </a>
                 </li>
 
@@ -93,7 +99,12 @@ const Sidebar = () => {
                 <li className="nav-item d-flex align-items-center w-100">
                   <a href="#" className="nav-link px-0 align-middle m-2 ">
                     <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
-                    <span className="ms-1  text-black user-link">Forums</span>{" "}
+                    <span
+                      className="ms-1  text-black user-link"
+                      onClick={() => navigate("/forums/forumlist")}
+                    >
+                      Forums
+                    </span>{" "}
                   </a>
                 </li>
               </ul>
@@ -110,7 +121,7 @@ const Sidebar = () => {
                     width: "98%",
                   }}
                 >
-                  <HiOutlineLogout className="fs-4 mx-3 me-1 text-white" />
+                  <HiOutlineLogout className="fs-4 text-white" />
                   <span className="user-link ">Log Out</span>
                 </Button>
               </div>

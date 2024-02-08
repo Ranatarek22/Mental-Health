@@ -4,8 +4,16 @@ import toast from "react-hot-toast";
 import { object, string, number } from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
-const CommentForm = ({ commentId, postId, onAddComment }) => {
+const CommentForm = ({
+  commentId,
+  postId,
+  onAddComment,
+  intialData,
+  onUpdateComment,
+}) => {
+  const token = useAuthStore((state) => state.token);
   const commentschema = object().shape({
     content: string(),
   });
@@ -20,23 +28,41 @@ const CommentForm = ({ commentId, postId, onAddComment }) => {
     onSubmit: async (values) => {
       // alert(JSON.stringify(values));
       const cancelToken = axios.CancelToken.source();
+      let commentPromise;
       try {
-        const commentPromise = await apiInstance.post(url, values, {
-          cancelToken: cancelToken.token,
-        });
-        if (commentPromise.status !== 201) {
+        if (intialData) {
+          commentPromise = await apiInstance.put(
+            url.concat(`/${intialData.id}`),
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+        } else {
+          commentPromise = await apiInstance.post(url, values, {
+            cancelToken: cancelToken.token,
+          });
+        }
+
+        if (!commentPromise.ok) {
           if (commentPromise.response.data) {
             throw new Error(Object.values(commentPromise.response.data)[0]);
           } else {
             throw new Error(commentPromise.statusText);
           }
         }
-        console.log(commentPromise);
-        if (onAddComment) {
-          const addedComment = await commentPromise.data;
-          onAddComment(addedComment);
+        const data = await commentPromise.data;
+        // console.log(commentPromise);
+        if (intialData) {
+          if (onAddComment) {
+            onAddComment(data);
+            toast.success("Comment created");
+          }
+        } else {
+          if (onUpdateComment) {
+            onUpdateComment(data);
+            toast.success("Comment Updated");
+          }
         }
-        toast.success("Comment created");
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");

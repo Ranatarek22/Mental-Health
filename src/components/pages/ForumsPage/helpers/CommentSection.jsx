@@ -4,9 +4,16 @@ import { apiInstance } from "../../../../axios";
 import Comment from "./Comment";
 import toast from "react-hot-toast";
 import CommentForm from "../../../forms/CommentForm";
+import { usePostStore } from "../../../../hooks/use-post-store";
+import { useAuthStore } from "../../../../hooks/use-auth-store";
 const CommentSection = ({ postId }) => {
   const [commentsData, setCommentsData] = useState([]);
-
+  const intialActivePost = usePostStore((state) => state.intialActivePost);
+  const addPostComment = usePostStore((state) => state.addPostComment);
+  const deletePostComment = usePostStore((state) => state.deletePostComment);
+  const token = useAuthStore((state) => state.token);
+  const updatePostComment = usePostStore((state) => state.updatePostComment);
+  const updatePostReply = usePostStore((state) => state.updatePostReply);
   const fetchPostComments = async (postId) => {
     const cancelToken = axios.CancelToken.source();
     try {
@@ -50,19 +57,32 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     // Fetch comments data from your API
     if (postId) {
-      fetchPostComments(postId).then((data) => setCommentsData(data || []));
+      fetchPostComments(postId).then((data) => {
+        setCommentsData(data || []);
+        intialActivePost({ postId: postId, comments: data || [] });
+      });
     }
   }, [postId]);
 
   const onAddComment = (comment) => {
     setCommentsData([...commentsData, comment]);
+    addPostComment(comment);
   };
   const onDeleteComment = async (commentId) => {
+    // console.log(apiInstance);
     try {
-      await apiInstance.delete(`/posts/${postId}/comments/${commentId}`);
+      const promise = await apiInstance.delete(
+        `/posts/${postId}/comments/${commentId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       setCommentsData((prevComments) =>
         prevComments.filter((comment) => comment.id !== commentId)
       );
+      // console.log(promise);
+      deletePostComment(commentId);
       toast.success("Comment deleted");
     } catch (error) {
       console.error("Failed to delete comment:", error);
@@ -71,9 +91,19 @@ const CommentSection = ({ postId }) => {
         console.error("Status code:", error.response.status);
       }
       toast.error("Failed to delete comment");
+      // console.log(commentId);
     }
   };
+  const onUpdateComment = async (data) => {
+    setCommentsData((prevComments) => {
+      const pastComments = prevComments.filter(
+        (comment) => comment.id !== data.id
+      );
+      return [...pastComments, data];
+    });
 
+    updatePostComment(data);
+  };
   return (
     <div
       style={{
@@ -90,7 +120,11 @@ const CommentSection = ({ postId }) => {
           <img src="/Avatars.png" className="h-100 w-100" />
         </div>
         <div className="flex-grow-1">
-          <CommentForm postId={postId} onAddComment={onAddComment} />
+          <CommentForm
+            postId={postId}
+            onAddComment={onAddComment}
+            onUpdateComment={onUpdateComment}
+          />
         </div>
       </div>
       {/* Display the list of comments */}

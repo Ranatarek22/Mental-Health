@@ -334,6 +334,7 @@ textarea {
   display: flex;
   border-radius: 20px;
   overflow-y: auto;
+  /* text-align: center; */
 }
 
 .cont2 {
@@ -344,5 +345,45 @@ textarea {
 .input-field {
   flex-grow: 1;
 }
-
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center; /* Set the height of the container to full viewport height */
+}
+.cont3 {
+  background-color: #f5f9f6;
+  display: flex;
+  border-radius: 20px;
+  overflow-y: auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.cont4 {
+  background-color: #4caf50;
+  display: flex;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+.cont4 > input {
+  display: flex;
+  background-color: white;
+  width: 80%;
+  border-radius: 20px;
+}
+div.cont4 + div {
+  background-color: #f5f9f6;
+  display: flex;
+  border-radius: 15px;
+  overflow-y: auto;
+}
+.cont4 > button {
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #4caf50;
+  border-color: #ffffff;
+}
 /*End Forum Item single page*/
