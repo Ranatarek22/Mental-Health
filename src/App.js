@@ -36,7 +36,7 @@ function App() {
                         }`}
         >
           <NavigateController setPathname={setPathname} />
-          <main className="flex-grow-1 p-2">
+          <main className="w-100 flex-grow-1 p-2">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route
