@@ -99,6 +99,8 @@ const CommentSection = ({ postId }) => {
       const pastComments = prevComments.filter(
         (comment) => comment.id !== data.id
       );
+      console.log(pastComments);
+      console.log(data.id);
       return [...pastComments, data];
     });
 
@@ -135,6 +137,7 @@ const CommentSection = ({ postId }) => {
             comment={comment}
             postId={postId}
             onDeleteComment={onDeleteComment}
+            onUpdateComment={onUpdateComment}
           />
         ))}
       </div>

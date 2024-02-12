@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { apiInstance } from "../../axios";
 import toast from "react-hot-toast";
 import { object, string, number } from "yup";
@@ -12,78 +12,18 @@ const CommentForm = ({
   onAddComment,
   intialData,
   onUpdateComment,
+  parentId,
 }) => {
   const token = useAuthStore((state) => state.token);
   const commentschema = object().shape({
     content: string(),
   });
-  const url = commentId
-    ? `/posts/${postId}/comments/${commentId}/replies`
+  const url = parentId
+    ? `/posts/${postId}/comments/${parentId}/replies`
     : `/posts/${postId}/comments`;
-  // const formik = useFormik({
-  //   initialValues: {
-  //     content: "",
-  //   },
-  //   validationSchema: commentschema,
-  //   onSubmit: async (values) => {
-  //     // alert(JSON.stringify(values));
-  //     const cancelToken = axios.CancelToken.source();
-  //     let commentPromise;
-  //     try {
-  //       if (intialData) {
-  //         commentPromise = await apiInstance.put(
-  //           url.concat(`/${intialData.id}`),
-  //           {
-  //             headers: { Authorization: `Bearer ${token}` },
-  //           }
-  //         );
-  //       } else {
-  //         commentPromise = await apiInstance.post(url, values, {
-  //           cancelToken: cancelToken.token,
-  //         });
-  //       }
-
-  //       if (!commentPromise.ok) {
-  //         if (commentPromise.response.data) {
-  //           throw new Error(Object.values(commentPromise.response.data)[0]);
-  //         } else {
-  //           throw new Error(commentPromise.statusText);
-  //         }
-  //       }
-  //       const data = await commentPromise.data;
-  //       // console.log(commentPromise);
-  //       if (intialData) {
-  //         if (onAddComment) {
-  //           onAddComment(data);
-  //           toast.success("Comment created");
-  //         }
-  //       } else {
-  //         if (onUpdateComment) {
-  //           onUpdateComment(data);
-  //           toast.success("Comment Updated");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       if (axios.isCancel(error)) {
-  //         console.error("cancelled");
-  //       } else {
-  //         if (typeof error === "object") {
-  //           toast.error(Object.values(error.response.data)[0]);
-  //         } else {
-  //           console.error(error);
-  //         }
-  //       }
-  //       console.error(error);
-  //     }
-
-  //     return () => {
-  //       cancelToken.cancel("cancelled by user");
-  //     };
-  //   },
-  // });
   const formik = useFormik({
     initialValues: {
-      content: "",
+      ...intialData,
     },
     validationSchema: commentschema,
     onSubmit: async (values) => {
@@ -94,27 +34,47 @@ const CommentForm = ({
       }
       const cancelToken = axios.CancelToken.source();
       try {
-        const commentPromise = await apiInstance.post(url, values, {
-          cancelToken: cancelToken.token,
-        });
-        if (commentPromise.status !== 201) {
-          if (commentPromise.response.data) {
+        let commentPromise;
+        if (intialData) {
+          commentPromise = await apiInstance.put(
+            url.concat(`/${commentId}`),
+            values,
+            {
+              cancelToken: cancelToken.token,
+            }
+          );
+        } else {
+          commentPromise = await apiInstance.post(url, values, {
+            cancelToken: cancelToken.token,
+          });
+        }
+        console.log(commentPromise);
+        if (![201, 200].includes(commentPromise.status)) {
+          if (commentPromise.response?.data) {
             throw new Error(Object.values(commentPromise.response.data)[0]);
           } else {
             throw new Error(commentPromise.statusText);
           }
         }
         // console.log(commentPromise);
-        if (onAddComment) {
-          const addedComment = await commentPromise.data;
-          onAddComment(addedComment);
+        if (intialData) {
+          if (onUpdateComment) {
+            const updatedComment = await commentPromise.data;
+            onUpdateComment(updatedComment);
+          }
+          toast.success("Comment Updated");
+        } else {
+          if (onAddComment) {
+            const addedComment = await commentPromise.data;
+            onAddComment(addedComment);
+          }
+          toast.success("Comment created");
         }
-        toast.success("Comment created");
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
         } else {
-          if (typeof error === "object") {
+          if (typeof error === "object" && error.response) {
             if (error.response.status === 401) {
               toast.error("Unauthorized");
             } else {
@@ -133,7 +93,17 @@ const CommentForm = ({
     },
   });
 
+  // console.log(intialData);
   const isSubmiting = formik.isSubmitting;
+  useEffect(() => {
+    if (intialData) {
+      formik.setFieldValue("content", intialData.content);
+
+      console.log(intialData);
+    }
+  }, [intialData]);
+
+  // console.log(intialData);
   return (
     <div className="w-100 ">
       <form

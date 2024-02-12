@@ -5,12 +5,24 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { usePostStore } from "../../../../hooks/use-post-store";
 import { useAuthStore } from "../../../../hooks/use-auth-store";
+import useForceRerender from "../../../../hooks/useForceRerender";
 
 const Comment = (props) => {
-  const { comment, postId, isReply, onDeleteComment, parentId } = props;
+  const {
+    comment,
+    postId,
+    isReply,
+    onDeleteComment,
+    parentId,
+    onUpdateComment,
+  } = props;
   const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [replies, setReplies] = useState([]);
   const updatePostReply = usePostStore((state) => state.updatePostReply);
+  const updatePostComment = usePostStore((state) => state.updatePostComment);
+  const forceRerender = useForceRerender();
+
   const intialActiveReplies = usePostStore(
     (state) => state.intialActiveReplies
   );
@@ -20,6 +32,10 @@ const Comment = (props) => {
   const token = useAuthStore((state) => state.token);
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  const toggleEditForm = () => {
+    setShowEditForm((prev) => !prev);
   };
   //api call
   const onDeleteClick = () => {
@@ -85,10 +101,28 @@ const Comment = (props) => {
     addPostReply(reply);
   };
   const onUpdateCommentReply = (reply) => {
-    setShowForm(false);
-    setReplies([...replies, reply]);
-    updatePostReply(reply);
+    const filteredReplies = replies.filter((temp) => temp.id !== reply.id);
+    console.log(filteredReplies);
+    console.log(reply.id);
+    setReplies([...filteredReplies, reply]);
+    // setReplies((prevReplies) => [
+    //   ...prevReplies.filter((temp) => temp.id !== reply.id),
+    //   reply,
+    // ]);
+
+    // updatePostReply(reply);
   };
+
+  const UpdateComment = (reply) => {
+    setShowEditForm(false);
+
+    if (onUpdateComment) {
+      onUpdateComment(reply);
+    }
+  };
+  useEffect(() => {
+    forceRerender();
+  }, [replies]);
   const onDeleteReply = async (commentId, replyId) => {
     // console.log(apiInstance);
     try {
@@ -118,6 +152,7 @@ const Comment = (props) => {
   const isMyComment = comment.appUserId === userId;
 
   // console.log(comment.appUserId);
+  // console.log(comment);
   return (
     <div>
       <div className="d-flex gap-2 p-2 align-items-start justify-content-start">
@@ -153,7 +188,7 @@ const Comment = (props) => {
           )}
           {isMyComment && (
             <button
-              onClick={onDeleteClick}
+              onClick={toggleEditForm}
               className="text-muted p-1"
               style={{
                 border: "none",
@@ -167,12 +202,24 @@ const Comment = (props) => {
       </div>
 
       <div style={{ marginLeft: "8%" }}>
-        {showForm && (
+        {showForm && !showEditForm && (
+          <CommentForm
+            postId={postId}
+            // commentId={comment.id}
+            onAddComment={onAddCommentReply}
+            parentId={comment.id}
+            // onUpdateComment={onUpdateCommentReply}
+            style={{ marginLeft: "23%" }}
+          />
+        )}
+        {!showForm && showEditForm && comment && (
           <CommentForm
             postId={postId}
             commentId={comment.id}
-            onAddComment={onAddCommentReply}
-            // onUpdateComment={onUpdateCommentReply}
+            // onAddComment={onAddCommentReply}
+            onUpdateComment={UpdateComment}
+            intialData={comment}
+            parentId={parentId}
             style={{ marginLeft: "23%" }}
           />
         )}
@@ -187,6 +234,7 @@ const Comment = (props) => {
               isReply
               parentId={comment.id}
               onDeleteComment={onDeleteReply}
+              onUpdateComment={onUpdateCommentReply}
             />
           ))}
         </div>

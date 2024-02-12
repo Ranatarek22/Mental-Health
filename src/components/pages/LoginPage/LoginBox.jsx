@@ -3,10 +3,13 @@ import React from "react";
 // import { Google } from "./Google";
 import Button from "react-bootstrap/Button";
 import LoginForm from "../../forms/login-form";
-
 import { Link } from "react-router-dom";
 
 export const Box = () => {
+  const SignInWithGoogle = () => {
+    window.location.href =
+      "https://mentalmediator.somee.com/api/auth/external-login";
+  };
   return (
     <div className="rectangle">
       <div className="content p-4">
@@ -35,6 +38,7 @@ export const Box = () => {
             width: "70%",
           }}
           className="google"
+          onClick={SignInWithGoogle}
         >
           Sign in with Google
         </Button>
