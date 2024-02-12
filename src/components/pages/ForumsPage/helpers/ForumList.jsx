@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { usePostStore } from "../../../../hooks/use-post-store";
 import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners";
+import { calculateDuration } from "../Date";
 
 function ForumList() {
   const [posts, setPosts] = useState([]);
@@ -46,7 +47,7 @@ function ForumList() {
   `;
 
   return (
-    <div>
+    <>
       <div className="cont4 p-2 m-3">
         <input type="text" className="p-2 m-2" placeholder="Search for forum" />
         <button className="p-2 m-2" onClick={() => navigate(`/createforum`)}>
@@ -58,9 +59,11 @@ function ForumList() {
         next={fetchPosts}
         hasMore={hasMore}
         loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
+        style={{ overflow: "hidden" }}
         endMessage={<p>No more posts</p>}
       >
         {posts.map((post, index) => {
+          const postDate = calculateDuration(post.postedOn);
           return (
             <div
               key={index}
@@ -71,9 +74,9 @@ function ForumList() {
                 <div className="flex-grow-1">
                   <div className="cont p-2 m-2">
                     <div className="fw-bold flex-grow-1">{post.title}</div>
-                    <div className="flex-column">
+                    {/* <div className="flex-column">
                       <span>like</span>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="cont m-2">
                     <div>
@@ -82,11 +85,11 @@ function ForumList() {
                     <div className="flex-grow-1">
                       <span className="fw-bold m-0">{post.username}</span>
                       <br />
-                      <p className="text-muted">Date: {post.postedOn}</p>
+                      <p className="text-muted"> {postDate}</p>
                     </div>
                     <div>
                       <span className="pt-2 mt-3">
-                        Comments:
+                        Comments
                         {/* {commentsCount} */}
                       </span>
                     </div>
@@ -97,7 +100,7 @@ function ForumList() {
           );
         })}
       </InfiniteScroll>
-    </div>
+    </>
   );
 }
 

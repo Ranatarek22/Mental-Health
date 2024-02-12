@@ -7,6 +7,7 @@ import { TfiCommentsSmiley } from "react-icons/tfi";
 import CommentSection from "../ForumsPage/helpers/CommentSection";
 import { usePostStore } from "../../../hooks/use-post-store";
 import { useAuthStore } from "../../../hooks/use-auth-store";
+import { calculateDuration } from "../ForumsPage/Date";
 import { useNavigate } from "react-router-dom";
 
 const ForumItemPage = () => {
@@ -47,7 +48,7 @@ const ForumItemPage = () => {
           } else {
             if (typeof error === "object") {
               toast.error(Object.values(error.response.data)[0]);
-              console.log(error);
+              // console.log(error);
             } else {
               toast.error(String(error));
             }
@@ -68,57 +69,14 @@ const ForumItemPage = () => {
   const [duration, setDuration] = useState("");
 
   useEffect(() => {
-    const calculateDuration = () => {
-      const postDate = new Date(postData);
-      const currentDate = new Date();
-      const offset = currentDate.getTimezoneOffset();
-      const local = new Date(currentDate.getTime() + offset * 60000);
+    if (postData) {
+      const intervalId = setInterval(() => {
+        const calculatedDuration = calculateDuration(postData);
+        setDuration(calculatedDuration);
+      }, 3000);
 
-      const timeDifference = local - postDate;
-
-      const seconds = Math.floor(timeDifference / 1000);
-      const minute = 60;
-      const hour = minute * 60;
-      const day = hour * 24;
-      const month = day * 30;
-      const year = month * 12;
-
-      let durationString = "";
-
-      if (seconds < minute) {
-        if (seconds < 10) {
-          durationString = `just now`;
-        } else {
-          durationString = `${seconds} second${seconds !== 1 ? "s" : ""} ago`;
-        }
-      } else if (seconds < hour) {
-        const minutes = Math.floor(seconds / minute);
-        durationString = `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
-      } else if (seconds < day) {
-        const hours = Math.floor(seconds / hour);
-        durationString = `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-      } else if (seconds < month) {
-        const days = Math.floor(seconds / day);
-        durationString = `${days} day${days !== 1 ? "s" : ""} ago`;
-      } else if (seconds < year) {
-        const months = Math.floor(seconds / month);
-        durationString = `${months} month${months !== 1 ? "s" : ""} ago`;
-      } else {
-        const formattedDate = postDate.toLocaleDateString();
-        const formattedTime = postDate.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-        durationString = `on ${formattedDate} at ${formattedTime}`;
-      }
-
-      setDuration(durationString);
-    };
-
-    const intervalId = setInterval(() => calculateDuration(), 3000);
-    return () => {
-      clearInterval(intervalId);
-    };
+      return () => clearInterval(intervalId);
+    }
   }, [postData]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -182,15 +140,10 @@ const ForumItemPage = () => {
       handleDelete(params.postId);
     }
   };
+
   return (
     <div>
-      {forum === null ? (
-        <div className="centered-container">
-          <div className="cont3 pt-3 ">
-            <p className="fw-bold ">Post has been deleted.</p>
-          </div>
-        </div>
-      ) : (
+      {forum ? (
         <>
           <div className="cont p-3 m-3">
             <div>
@@ -203,9 +156,7 @@ const ForumItemPage = () => {
                 width: "100%",
               }}
             >
-              {forum && forum.username && (
-                <span style={{ fontWeight: "bold" }}>{forum.username} </span>
-              )}
+              <span style={{ fontWeight: "bold" }}>{forum.username} </span>
               <br />
               <p className="text-muted">{duration}</p>
               <div>
@@ -219,7 +170,7 @@ const ForumItemPage = () => {
                 ) : (
                   // Display post title
                   <h2 style={{ fontWeight: "bold" }} className="py-2">
-                    {forum?.title}
+                    {forum.title}
                   </h2>
                 )}
               </div>
@@ -250,7 +201,7 @@ const ForumItemPage = () => {
                   </>
                 ) : (
                   // Display post content
-                  forum?.content
+                  forum.content
                 )}
 
                 <div className="py-2 mt-2">
@@ -305,6 +256,12 @@ const ForumItemPage = () => {
               </div>
             </div>
           </div>
+        </>
+      ) : (
+        <>
+          {/* <div className="cont3 pt-3 ">
+            <p className="fw-bold ">Post has been deleted.</p>
+          </div> */}
         </>
       )}
     </div>
