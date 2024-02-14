@@ -3,7 +3,7 @@ import { mental_auth_data } from "../axios";
 
 export const useAuthStore = create((set) => ({
   token: mental_auth_data?.token || null,
-  isAuthenticated: mental_auth_data?.isAuthenticated || false,
+  isAuthenticated: Boolean(mental_auth_data),
   expiresOn: mental_auth_data?.expiresOn || "",
   userId: mental_auth_data?.userId || "",
   userName: mental_auth_data?.userName || "",
@@ -14,7 +14,7 @@ export const useAuthStore = create((set) => ({
   updateActiveUser: (credentials) =>
     set(() => ({
       token: credentials.token,
-      isAuthenticated: credentials.isAuthenticated,
+      isAuthenticated: true,
       expiresOn: credentials.expiresOn,
       roles: credentials.roles,
       userId: credentials.userId,

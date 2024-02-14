@@ -57,7 +57,7 @@ const SignUpForm = () => {
         } else {
           console.error("Error details:", error);
           if (typeof error === "object") {
-            toast.error(Object.values(error.response.data));
+            toast.error(Object.values(error.response.data.errors[0])[1]);
           } else {
             toast.error(String(error));
           }
@@ -155,8 +155,8 @@ const SignUpForm = () => {
           label="Female"
           name="gender"
           id="female"
-          value="Female"
-          checked={formik.values.gender === "Female"}
+          value="female"
+          checked={formik.values.gender === "female"}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           inline
@@ -166,8 +166,8 @@ const SignUpForm = () => {
           label="Male"
           name="gender"
           id="male"
-          value="Male"
-          checked={formik.values.gender === "Male"}
+          value="male"
+          checked={formik.values.gender === "male"}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           inline

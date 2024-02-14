@@ -5,7 +5,7 @@ import "../src/style.css";
 import ToasterProvider from "./components/providers/toaster-provider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
-import Navbar from "./components/navigation/NavBar/navbar";
+import AppHeader from "./components/navigation/NavBar/navbar";
 import Sidebar from "./components/navigation/SideBar/sidebar";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
@@ -37,14 +37,13 @@ function App() {
       <BrowserRouter>
         <div
           className={`d-flex justify-content-center align-items-center w-100
-                        ${
-                          main_routes.includes(pathname)
-                            ? "flex-column"
-                            : "flex-row"
-                        }`}
+                        ${main_routes.includes(pathname)
+              ? "flex-column"
+              : "flex-row"
+            }`}
         >
           <NavigateController setPathname={setPathname} />
-          <main className="flex-grow-1 p-2 ">
+          <main className="w-100 flex-grow-1 p-2 ">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route
@@ -68,7 +67,7 @@ function App() {
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsList />} />
               <Route path="/forums/:postId" element={<SingleForumPage />} />
-              {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
+              <Route path="*" element={<Navigate to={"/"} />} />
             </Routes>
           </main>
         </div>

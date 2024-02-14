@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function useForceRerender() {
-  const [rerenderIndex, setRerenderIndex] = useState(0);
+  const [_index, setRerenderIndex] = useState(0);
 
   // Function to force rerender
   const forceRerender = () => {

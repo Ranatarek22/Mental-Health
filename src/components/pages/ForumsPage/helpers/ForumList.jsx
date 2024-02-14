@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { apiInstance } from "../../../../axios";
 import { useNavigate } from "react-router-dom";
-import { usePostStore } from "../../../../hooks/use-post-store";
+// import { usePostStore } from "../../../../hooks/use-post-store";
 import { css } from "@emotion/react";
 import { SyncLoader } from "react-spinners";
 import { calculateDuration } from "../Date";
@@ -13,13 +13,9 @@ function ForumList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const navigate = useNavigate();
-  const commentsCount = usePostStore((state) => state.totalComments);
+  // const commentsCount = usePostStore((state) => state.totalComments);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       const response = await apiInstance.get(
         `/posts?PageNumber=${page}&PageSize=${pageSize}`
@@ -38,7 +34,11 @@ function ForumList() {
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
-  };
+  }, [page, pageSize]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   const override = css`
     display: block;

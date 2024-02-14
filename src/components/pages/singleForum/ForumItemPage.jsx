@@ -8,7 +8,7 @@ import CommentSection from "../ForumsPage/helpers/CommentSection";
 import { usePostStore } from "../../../hooks/use-post-store";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { calculateDuration } from "../ForumsPage/Date";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const ForumItemPage = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -64,7 +64,7 @@ const ForumItemPage = () => {
   }, [forum, params.postId]);
 
   const postData = forum?.postedOn;
-  const isMyPost = forum?.appUserId == userId;
+  const isMyPost = forum?.appUserId === userId;
 
   const [duration, setDuration] = useState("");
 

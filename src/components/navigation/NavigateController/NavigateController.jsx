@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Navbar from "../NavBar/navbar";
+import AppHeader from "../NavBar/navbar";
 import Sidebar from "../SideBar/sidebar";
 import { useLocation } from "react-router-dom";
 import { main_routes } from "../../../routes/routes";
@@ -12,7 +12,7 @@ const NavigateController = (props) => {
   useEffect(() => {
     setPathname(loc.pathname);
   }, [loc.pathname]);
-  return <>{main_routes.includes(pathname) ? <Navbar /> : <Sidebar />}</>;
+  return <>{main_routes.includes(pathname) ? <AppHeader /> : <Sidebar />}</>;
 };
 
 export default NavigateController;

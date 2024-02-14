@@ -50,7 +50,7 @@ const LoginForm = () => {
         } else {
           // console.error("Error details:", error);
           if (typeof error === "object") {
-            toast.error(Object.values(error.response.data)[0]);
+            toast.error(Object.values(error.response.data.errors[0])[1]);
           } else {
             // toast.error(String(error));
             console.error(error);

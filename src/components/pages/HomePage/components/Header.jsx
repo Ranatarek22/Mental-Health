@@ -1,8 +1,7 @@
 import React from "react";
 import Logo from "./Logo";
-import NavBar from "./NavBar";
 
-export default function Header() {
+const Header = () => {
   return (
     <header className="text-gray-700">
       <section className="container mx-auto p-4 flex justify-between items-center overflow-hidden">
@@ -41,8 +40,9 @@ export default function Header() {
             </button>
           </a>
         </div>
-        <NavBar />
+        {/* <NavBar /> */}
       </section>
     </header>
   );
-}
+};
+export default Header;

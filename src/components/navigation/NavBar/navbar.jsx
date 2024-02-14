@@ -1,9 +1,12 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-const Navbar = () => {
+const AppHeader = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
   const logOutHandler = () => {
@@ -12,19 +15,34 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <nav>
-      Navbar
-      {isAuthenticated ? (
-        <Button type="button" onClick={logOutHandler}>
-          Log out
-        </Button>
-      ) : (
-        <Button type="button" onClick={() => navigate("/login")}>
-          Log in
-        </Button>
-      )}
-    </nav>
+    <Navbar className="w-100 mt-2" expand="md">
+      <Container>
+        <Navbar.Brand href="/">
+          <h1 className="logo">MENTAL</h1>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="#about">About us</Nav.Link>
+            <Nav.Link href="#services">Services</Nav.Link>
+            <Nav.Link href="#works">Doctors</Nav.Link>
+            <Nav.Link href="#teams">Articles</Nav.Link>
+            <Nav.Link href="#testimonials">Contact</Nav.Link>
+          </Nav>
+          {isAuthenticated ? (
+            <Button type="button" onClick={logOutHandler}>
+              Log out
+            </Button>
+          ) : (
+            <Button type="button" onClick={() => navigate("/login")}>
+              Log in
+            </Button>
+          )}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default AppHeader;

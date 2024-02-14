@@ -76,8 +76,8 @@ const Sidebar = () => {
                 id="menu"
               >
                 <li className="nav-item d-flex align-items-center w-100">
-                  <a href="#" className="nav-link align-middle px-0 m-2">
-                    <BsFillHouseDoorFill className="fs-4 mx-3 me-1 text-black" />{" "}
+                  <a href="/" className="nav-link align-middle px-0 m-2">
+                    <BsFillHouseDoorFill className="fs-4 mx-3 me-1 text-black" />
                     <span
                       className=" ms-2  text-black user-link"
                       onClick={() => navigate("/")}
@@ -110,7 +110,7 @@ const Sidebar = () => {
               </ul>
             </div>
 
-            {!isAuthenticated ? (
+            {isAuthenticated ? (
               <div className="mt-auto  p-3 logout d-flex align-items-center justify-content-center ">
                 <Button
                   className="ms-2 text-white user-link "

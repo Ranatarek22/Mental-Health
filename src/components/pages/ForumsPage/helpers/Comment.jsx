@@ -159,9 +159,9 @@ const Comment = (props) => {
         <div>
           <img src="/Avatars.png" />
         </div>
-        <div>
+        <div className="text-truncate">
           <h6 className="fw-bold m-0">{comment?.username}</h6>
-          <p className="fw-normal">{comment?.content}</p>
+          <p className="fw-normal text-break text-wrap">{comment?.content}</p>
           {!isReply && (
             <button
               className="text-muted"
