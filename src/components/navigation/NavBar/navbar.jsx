@@ -15,7 +15,7 @@ const AppHeader = () => {
     navigate("/");
   };
   return (
-    <Navbar className="w-100 mt-2" expand="md">
+    <Navbar className="w-100 mt-2" id="home" expand="md">
       <Container>
         <Navbar.Brand href="/">
           <h1 className="logo">MENTAL</h1>
@@ -24,11 +24,11 @@ const AppHeader = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#about">About us</Nav.Link>
-            <Nav.Link href="#services">Services</Nav.Link>
-            <Nav.Link href="#works">Doctors</Nav.Link>
-            <Nav.Link href="#teams">Articles</Nav.Link>
-            <Nav.Link href="#testimonials">Contact</Nav.Link>
+            {/* <Nav.Link href="#about">About us</Nav.Link> */}
+            <Nav.Link href="/#services">Services</Nav.Link>
+            <Nav.Link href="/#doctors">Doctors</Nav.Link>
+            <Nav.Link href="/#articles">Articles</Nav.Link>
+            <Nav.Link href="/#contact">Contact</Nav.Link>
           </Nav>
           {isAuthenticated ? (
             <Button type="button" onClick={logOutHandler}>

@@ -118,11 +118,13 @@ const CreateForumForm = () => {
             <p className="error">{formik.errors.content}</p>
           )}
         </div>
+        <div className="image-upload">Upload Image</div>
 
         <button
           type="submit"
           disabled={formik.isSubmitting}
           style={{
+            padding: "10px 20px",
             backgroundColor: "#0B570E",
             color: "#FFFFFF",
             marginTop: "10px",

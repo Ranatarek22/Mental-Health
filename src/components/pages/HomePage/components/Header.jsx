@@ -3,26 +3,26 @@ import Logo from "./Logo";
 
 const Header = () => {
   return (
-    <header className="text-gray-700">
+    <header id="home" className="text-gray-700">
       <section className="container mx-auto p-4 flex justify-between items-center overflow-hidden">
         <Logo />
         <ul className="hidden md:flex gap-4 items-center justify-center ">
-          <a href={"#About"}>
+          <a href={"/#About"}>
             <li className="hover:text-gray-700 transition-all md:text-xl">
               About
             </li>
           </a>
-          <a href={"#Services"}>
+          <a href={"/#Services"}>
             <li className="hover:text-gray-700 transition-all md:text-xl">
               Services
             </li>
           </a>
-          <a href={"#Doctors"}>
+          <a href={"/#Doctors"}>
             <li className="hover:text-gray-700 transition-all md:text-xl">
               Doctors
             </li>
           </a>
-          <a href={"#Articles"}>
+          <a href={"/#Articles"}>
             <li className="hover:text-gray-700 transition-all md:text-xl">
               Articles
             </li>
