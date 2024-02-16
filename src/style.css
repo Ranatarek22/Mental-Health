@@ -560,6 +560,7 @@ textarea {
   color: #000000;
   text-align: center;
 }
+
 /* flex justify-center items-center gap-20 */
 .services .cards {
   display: flex;

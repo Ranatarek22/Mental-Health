@@ -61,7 +61,7 @@ const ForumItemPage = () => {
       };
       fetchPostData(params.postId);
     }
-  }, [forum, params.postId]);
+  }, [forum, params.postId, userId]);
 
   const postData = forum?.postedOn;
   const isMyPost = forum?.appUserId === userId;

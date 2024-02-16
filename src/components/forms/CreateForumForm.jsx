@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { apiInstance } from "../../axios";
 import toast from "react-hot-toast";
 import { object, string, number } from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../hooks/use-auth-store";
 
 const CreateForumForm = () => {
+  const userId = useAuthStore((state) => state.userId);
   const initialValues = {
     title: "",
     // tags: "",
@@ -20,6 +22,7 @@ const CreateForumForm = () => {
   });
   const history = useNavigate();
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
+    // window.location.reload();
     try {
       const response = await apiInstance.post("/posts", values);
 
@@ -32,6 +35,7 @@ const CreateForumForm = () => {
         if (postDetailsResponse.status === 200) {
           // Do something with the post details, for example, log to console
           console.log("Post Details:", postDetailsResponse.data);
+          // forum?.appUserId === userId
           history(`/forums/${postId}`);
         }
         resetForm();

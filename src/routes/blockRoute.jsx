@@ -9,7 +9,7 @@ const BlockRoute = ({ children }) => {
 
   const isAuth = isAuthenticated;
   //wraping components(component inside another component) <Route></Route>
-  return <>{!isAuth ? children : <Navigate to={"/createforum"} />}</>;
+  return <>{!isAuth ? children : <Navigate to={"/"} />}</>;
 };
 
 export default BlockRoute;
