@@ -118,7 +118,7 @@ const CreateForumForm = () => {
             <p className="error">{formik.errors.content}</p>
           )}
         </div>
-        <div className="image-upload">Upload Image</div>
+        {/* <div className="image-upload">Upload Image</div> */}
 
         <button
           type="submit"

@@ -13,7 +13,9 @@ function Hero() {
                 Leading the Way <br /> in Medical Excellence
               </p>
             </div>
-            <button>Get Started</button>
+            <a href={"/signup"}>
+              <button style={{ width: "100%" }}>Get Started</button>
+            </a>
           </div>
           <img src={"/landingImages/hero.png"} alt="hero" />
         </div>
