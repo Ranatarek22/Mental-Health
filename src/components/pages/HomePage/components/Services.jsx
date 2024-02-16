@@ -28,7 +28,7 @@ export default function Services() {
           <div className="card">
             <div className="image">
               <img
-                src={"/landingImages/services-2.png"}
+                src={"/landingImages/services-3.png"}
                 width={50}
                 height={50}
                 alt="services"
@@ -44,7 +44,7 @@ export default function Services() {
           <div className="card">
             <div className="image">
               <img
-                src={"/landingImages/services-3.png"}
+                src={"/landingImages/services-2.png"}
                 width={50}
                 height={50}
                 alt="services"

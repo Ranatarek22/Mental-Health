@@ -657,10 +657,24 @@ textarea {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-.doctors .card .image {
+.doctors .card:nth-child(1) .image {
   width: 100%;
   background-image: url(/public/landingImages/doctor-1.png);
-  height: 300px;
+  height: 400px;
+  background-position: top;
+  background-size: cover;
+}
+.doctors .card:nth-child(2) .image {
+  width: 100%;
+  background-image: url(/public/landingImages/doctor-2.png);
+  height: 400px;
+  background-position: top;
+  background-size: cover;
+}
+.doctors .card:nth-child(3) .image {
+  width: 100%;
+  background-image: url(/public/landingImages/doctor-3.png);
+  height: 400px;
   background-position: top;
   background-size: cover;
 }

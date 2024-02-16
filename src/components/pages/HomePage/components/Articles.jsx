@@ -14,19 +14,20 @@ export function Articles() {
             <div className="image"></div>
             <div className="info">
               <div className="description">
-                Monday 05, September 2021 | By Author
+                Sunday 01, September 2021 | By Dr.Mohamed
               </div>
               <div className="name">
-                This Article’s Title goes Here, but not too long.
+                Mind Matters: Navigating Mental Health Challenges with
+                Resilience
               </div>
               <div className="likes">
                 <div className="">
                   <img src="/landingImages/like.png" alt="like" />
-                  <p>69</p>
+                  <p>60</p>
                 </div>
                 <div className="">
                   <img src="/landingImages/view.png" alt="view" />
-                  <p>69</p>
+                  <p>269</p>
                 </div>
               </div>
             </div>
@@ -35,19 +36,19 @@ export function Articles() {
             <div className="image"></div>
             <div className="info">
               <div className="description">
-                Monday 05, September 2021 | By Author
+                Monday 05, September 2023 | By Dr.Ali
               </div>
               <div className="name">
-                This Article’s Title goes Here, but not too long.
+                Unlocking Inner Peace: Exploring Mental Wellness Strategies
               </div>
               <div className="likes">
                 <div className="">
                   <img src="/landingImages/like.png" alt="like" />
-                  <p>69</p>
+                  <p>19</p>
                 </div>
                 <div className="">
                   <img src="/landingImages/view.png" alt="view" />
-                  <p>69</p>
+                  <p>169</p>
                 </div>
               </div>
             </div>
@@ -58,19 +59,20 @@ export function Articles() {
             <div className="image"></div>
             <div className="info">
               <div className="description">
-                Monday 05, September 2021 | By Author
+                Friday 15, March 2023 | By Dr.Sara
               </div>
               <div className="name">
-                This Article’s Title goes Here, but not too long.
+                Breaking the Stigma: Understanding Mental Health in Today's
+                World
               </div>
               <div className="likes">
                 <div className="">
                   <img src="/landingImages/like.png" alt="like" />
-                  <p>69</p>
+                  <p>39</p>
                 </div>
                 <div className="">
                   <img src="/landingImages/view.png" alt="view" />
-                  <p>69</p>
+                  <p>289</p>
                 </div>
               </div>
             </div>
@@ -79,19 +81,19 @@ export function Articles() {
             <div className="image"></div>
             <div className="info">
               <div className="description">
-                Monday 05, September 2021 | By Author
+                Monday 15, September 2023 | By Dr.Alaa
               </div>
               <div className="name">
-                This Article’s Title goes Here, but not too long.
+                Embracing Balance: Cultivating Mental Wellbeing in Everyday Life
               </div>
               <div className="likes">
                 <div className="">
                   <img src="/landingImages/like.png" alt="like" />
-                  <p>69</p>
+                  <p>88</p>
                 </div>
                 <div className="">
                   <img src="/landingImages/view.png" alt="view" />
-                  <p>69</p>
+                  <p>469</p>
                 </div>
               </div>
             </div>
