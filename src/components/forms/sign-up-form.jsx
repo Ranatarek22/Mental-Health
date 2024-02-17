@@ -48,7 +48,7 @@ const SignUpForm = () => {
         const user_token = tokenPromise.data;
 
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
-        updateActiveUser(user_token);
+        // updateActiveUser(user_token);
         navigate("/login");
         // window.location.reload();
       } catch (error) {
