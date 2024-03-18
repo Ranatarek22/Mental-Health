@@ -65,6 +65,10 @@ const LoginForm = () => {
   });
 
   const isSubmiting = formik.isSubmitting;
+  const handleForgotPassword = () => {
+    navigate("/forgetpassword");
+  };
+
   return (
     <Form onSubmit={formik.handleSubmit} className="signform">
       <Form.Group className="mb-3 inputfield" controlId="email">
@@ -95,6 +99,13 @@ const LoginForm = () => {
           <p className="error">{formik.errors["password"]}</p>
         )}
       </Form.Group>
+      <Button
+        variant="link"
+        onClick={handleForgotPassword}
+        className="forgot-password-link BTN"
+      >
+        Forgot Password?
+      </Button>
       <Button
         className="BTN"
         style={{ backgroundColor: "#4caf50", borderColor: "#4caf50" }}

@@ -1,12 +1,9 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import "../src/style.css";
-// // import LoginPage from "./components/LoginPage";
-// import SignUpPage from "./components/SignUpPage";
 import ToasterProvider from "./components/providers/toaster-provider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
 import AppHeader from "./components/navigation/NavBar/navbar";
-import Sidebar from "./components/navigation/SideBar/sidebar";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
 
@@ -30,20 +27,46 @@ const ProfilePage = lazy(() =>
 const SingleForumPage = lazy(() =>
   import("./components/pages/singleForum/ForumItemPage")
 );
+const ForgetPasswordPage = lazy(() =>
+  import("./components/pages/ForgetPasswordPage/ForgetPasswordPage")
+);
+const ResetPasswordPage = lazy(() =>
+  import("./components/pages/ResetPasswordPage/ResetPasswordPage")
+);
+
 function App() {
   const [pathname, setPathname] = useState();
+  const [navbarHeight, setNavbarHeight] = useState(0);
+
+  useEffect(() => {
+    const navbar = document.getElementById("app-navbar");
+    if (navbar) {
+      setNavbarHeight(navbar.offsetHeight);
+    }
+  }, []);
+
   return (
     <Suspense fallback={<div>loading...</div>}>
       <BrowserRouter>
         <div
-          className={`d-flex justify-content-center align-items-center w-100
-                        ${main_routes.includes(pathname)
-              ? "flex-column"
-              : "flex-row"
-            }`}
+          className={`d-flex justify-content-center align-items-center 
+                        ${
+                          main_routes.includes(pathname)
+                            ? "flex-column"
+                            : "flex-row"
+                        }`}
+          style={{ height: "100vh" }}
         >
           <NavigateController setPathname={setPathname} />
-          <main className="w-100 flex-grow-1 p-2 ">
+          <main
+            className=" flex-grow-1 "
+            style={{
+              height: `calc(-70px + 100vh)`,
+              // display: "flex",
+              // justifyContent: "center",
+              // justifyItems: "center",
+            }}
+          >
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route
@@ -67,6 +90,11 @@ function App() {
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsList />} />
               <Route path="/forums/:postId" element={<SingleForumPage />} />
+              <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
+              <Route
+                path="/forgetpassword/resetpassword"
+                element={<ResetPasswordPage />}
+              />
               <Route path="*" element={<Navigate to={"/"} />} />
             </Routes>
           </main>
