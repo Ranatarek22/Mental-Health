@@ -36,28 +36,29 @@ const ResetPasswordForm = () => {
         const searchParams = new URLSearchParams();
 
         searchParams.append("password", values.password);
-        const forgetPasswordPromise = await apiInstance.post(
+        const resetPasswordPromise = await apiInstance.post(
           `/auth/reset-password`,
           {
             email: email,
             token: token,
-            password: values.password,
+            newPassword: values.password,
           },
           {
             cancelToken: cancelToken.token,
           }
         );
-        if (forgetPasswordPromise.status !== (200 || 204)) {
-          if (forgetPasswordPromise.response.data) {
+        if (resetPasswordPromise.status !== (200 || 204)) {
+          if (resetPasswordPromise.response.data) {
             throw new Error(
-              Object.values(forgetPasswordPromise.response.data)[0]
+              Object.values(resetPasswordPromise.response.data)[0]
             );
           } else {
-            throw new Error(forgetPasswordPromise.statusText);
+            throw new Error(resetPasswordPromise.statusText);
           }
         }
 
-        toast.success(forgetPasswordPromise.data);
+        toast.success(resetPasswordPromise.data);
+        navigate("/login");
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
