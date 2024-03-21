@@ -9,6 +9,7 @@ export const useAuthStore = create((set) => ({
   userName: mental_auth_data?.userName || "",
   email: mental_auth_data?.email || "",
   roles: mental_auth_data?.roles || [],
+  photoUrl: mental_auth_data?.photoUrl || "",
   activeUser: null,
 
   updateActiveUser: (credentials) =>
@@ -19,6 +20,7 @@ export const useAuthStore = create((set) => ({
       roles: credentials.roles,
       userId: credentials.userId,
       userName: credentials.userName,
+      photoUrl: credentials.photoUrl,
       email: credentials.email,
     })),
   removeActiveUser: () =>
