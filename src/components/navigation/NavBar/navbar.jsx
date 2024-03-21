@@ -31,9 +31,7 @@ const AppHeader = () => {
             <Nav.Link href="/#articles">Articles</Nav.Link>
             <Nav.Link href="/#contact">Contact</Nav.Link>
 
-            {isAuthenticated && (
-              <Nav.Link href="/createforum">Profile</Nav.Link>
-            )}
+            {isAuthenticated && <Nav.Link href="/profile">Profile</Nav.Link>}
           </Nav>
           {isAuthenticated ? (
             <Button type="button" onClick={logOutHandler}>

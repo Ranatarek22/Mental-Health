@@ -16,6 +16,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const userName = useAuthStore((state) => state.userName);
   const email = useAuthStore((state) => state.email);
+  const image = useAuthStore((state) => state.photoUrl);
   // console.log(email);
 
   const logOutHandler = () => {
@@ -40,10 +41,10 @@ const Sidebar = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src="/user.png"
-                    alt="hugenerd"
+                    src={image ? image : "/user.png"}
+                    alt="user profile"
                     className="rounded-circle me-2 mt-2 user-img"
-                    srcSet="/user.png"
+                    srcSet={image ? image : "/user.png"}
                   />
                   <div>
                     <span className=" pt-3 user-name">
@@ -55,8 +56,8 @@ const Sidebar = () => {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark custom-dropdown-menu text-small shadow">
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Settings
+                    <a className="dropdown-item" href="/profile">
+                      Profile Settings
                     </a>
                   </li>
                   <li>
