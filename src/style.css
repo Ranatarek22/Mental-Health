@@ -924,3 +924,140 @@ textarea {
     flex-direction: row;
   }
 }
+/* start profile style */
+.profile-card {
+  border-radius: 20px;
+  margin-inline: 30px;
+  background-color: white;
+  padding: 40px;
+  height: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
+  box-shadow: 0px 9px 20px 4px #a3a3a345;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.profile-card h2 {
+  font-weight: bold;
+}
+.profile-card > div {
+  flex-direction: column;
+  gap: 40px;
+  display: flex;
+  height: 100%;
+}
+.profile-card > div form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.profile-card > div form > div {
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+}
+.profile-card > div form .form-row {
+  flex-direction: column;
+  gap: 6px;
+  display: flex;
+}
+.profile-card > div form .form-row.name {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.profile-card > div form .form-row.name div {
+  flex-direction: column;
+  gap: 6px;
+  display: flex;
+}
+.profile-card > div form .form-row label {
+  font-size: 22px;
+}
+.profile-card > div form .form-row input {
+  color: #585858;
+  background-color: rgb(240, 240, 240);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 18px;
+  width: 100%;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.profile-card > div form .form-row.name div > input {
+  width: 200px;
+}
+.profile-card > div form .form-row input.email {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.profile-card button {
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 22px;
+  outline: none;
+  border: none;
+  padding: 8px 2px;
+  box-shadow: 0px 9px 20px 4px #a3a3a345;
+  background: var(--second-color);
+  transition: 0.4s ease-in-out;
+  color: #fff;
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.4s ease-in-out;
+  -ms-transition: 0.4s ease-in-out;
+  -o-transition: 0.4s ease-in-out;
+}
+.profile-card button:hover {
+  background: var(--main-color);
+}
+.profile-card form .form-row.image {
+  justify-content: center;
+  align-items: center;
+}
+.profile-card form .form-row.image input {
+  display: none;
+}
+.profile-card .image-label {
+  cursor: pointer;
+  padding: 30px;
+  background-color: rgb(194, 194, 194);
+  border-radius: 50%;
+  width: fit-content;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.profile-card label.image {
+  flex-direction: column;
+  gap: 4px;
+  display: flex;
+  align-items: center;
+}
+.profile-card label.image p {
+  cursor: pointer;
+  font-size: 18px;
+  margin: 0px;
+}
+.profile-card label.image .user-image {
+  background-size: cover;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.gender-holder {
+  display: flex;
+  gap: 10px;
+}
+.gender-holder > div {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 4px;
+}
+/* end profile style */
