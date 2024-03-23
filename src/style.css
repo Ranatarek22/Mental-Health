@@ -930,7 +930,7 @@ textarea {
   margin-inline: 30px;
   background-color: white;
   padding: 40px;
-  height: 100%;
+  min-height: 100%;
   width: -moz-fit-content;
   width: fit-content;
   box-shadow: 0px 9px 20px 4px #a3a3a345;
@@ -938,6 +938,15 @@ textarea {
   flex-direction: column;
   gap: 40px;
 }
+@media (max-width: 767px) {
+  .profile-card {
+    padding: 12px;
+    padding-block: 24px;
+    margin-inline: 6px;
+    width: 94%;
+  }
+}
+
 .profile-card h2 {
   font-weight: bold;
 }
@@ -946,6 +955,7 @@ textarea {
   gap: 40px;
   display: flex;
   height: 100%;
+  flex: 1;
 }
 .profile-card > div form {
   display: flex;
@@ -968,6 +978,13 @@ textarea {
   flex-direction: row;
   gap: 10px;
 }
+@media (max-width: 767px) {
+  .profile-card > div form .form-row.name {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 .profile-card > div form .form-row.name div {
   flex-direction: column;
   gap: 6px;
@@ -976,6 +993,12 @@ textarea {
 .profile-card > div form .form-row label {
   font-size: 22px;
 }
+@media (max-width: 767px) {
+  .profile-card > div form .form-row label {
+    font-size: 18px;
+  }
+}
+
 .profile-card > div form .form-row input {
   color: #585858;
   background-color: rgb(240, 240, 240);
@@ -988,8 +1011,18 @@ textarea {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
+@media (max-width: 767px) {
+  .profile-card > div form .form-row input {
+    font-size: 16px;
+  }
+}
 .profile-card > div form .form-row.name div > input {
   width: 200px;
+}
+@media (max-width: 767px) {
+  .profile-card > div form .form-row.name div > input {
+    width: 100%;
+  }
 }
 .profile-card > div form .form-row input.email {
   cursor: not-allowed;
@@ -1010,6 +1043,12 @@ textarea {
   -moz-transition: 0.4s ease-in-out;
   -ms-transition: 0.4s ease-in-out;
   -o-transition: 0.4s ease-in-out;
+}
+@media (max-width: 767px) {
+  .profile-card button {
+    font-size: 18px;
+    padding: 4px 2px;
+  }
 }
 .profile-card button:hover {
   background: var(--main-color);
