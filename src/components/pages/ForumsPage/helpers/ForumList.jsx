@@ -9,24 +9,21 @@ import { calculateDuration } from "../Date";
 
 function ForumList() {
   const [posts, setPosts] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 30;
   const navigate = useNavigate();
   // const commentsCount = usePostStore((state) => state.totalComments);
 
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = async () => {
     try {
       const response = await apiInstance.get(
         `/posts?PageNumber=${page}&PageSize=${pageSize}`
       );
       const newPosts = response.data;
+      console.log(newPosts);
 
-      if (page === 1) {
-        setPosts(newPosts);
-      } else {
-        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-      }
+      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
 
       setPage((prevPage) => prevPage + 1);
 
@@ -34,11 +31,11 @@ function ForumList() {
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
-  }, [page, pageSize]);
+  };
 
   useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, []);
 
   const override = css`
     display: block;
@@ -47,13 +44,17 @@ function ForumList() {
   `;
 
   return (
-    <>
-      <div className="cont4 p-2 m-3">
+    <div className="d-flex flex-column" style={{ backgroundColor: "#9cd8e7" }}>
+      <div
+        className="cont4 p-2 m-3 "
+        style={{ position: "sticky", top: 0, zIndex: "10" }}
+      >
         <input type="text" className="p-2 m-2" placeholder="Search for forum" />
         <button className="p-2 m-2" onClick={() => navigate(`/createforum`)}>
           Create Forum
         </button>
       </div>
+
       <InfiniteScroll
         dataLength={posts.length}
         next={fetchPosts}
@@ -100,7 +101,7 @@ function ForumList() {
           );
         })}
       </InfiniteScroll>
-    </>
+    </div>
   );
 }
 

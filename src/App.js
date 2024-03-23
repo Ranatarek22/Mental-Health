@@ -61,7 +61,7 @@ function App() {
           <main
             className=" flex-grow-1 "
             style={{
-              height: `calc(-70px + 100vh)`,
+              minHeight: `calc(-70px + 100vh)`,
               // display: "flex",
               // justifyContent: "center",
               // justifyItems: "center",

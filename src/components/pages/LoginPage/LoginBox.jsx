@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export const Box = () => {
   const SignInWithGoogle = () => {
     window.location.href =
-      "https://mentalmediator.somee.com/api/auth/external-login";
+      "https://nexus-api-h3ik.onrender.com/api/auth/external-login";
   };
   return (
     <div className="rectangle">
