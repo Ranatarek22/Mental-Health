@@ -55,7 +55,7 @@ function App() {
                             ? "flex-column"
                             : "flex-row"
                         }`}
-          style={{ height: "100vh" }}
+          style={{ minHeight: "100vh" }}
         >
           <NavigateController setPathname={setPathname} />
           <main
