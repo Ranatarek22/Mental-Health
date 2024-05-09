@@ -4,35 +4,27 @@
   box-sizing: border-box;
   font-family: "Lato-Bold", Helvetica;
 }
-
 :root {
   --main-color: #01579b;
   --second-color: #9cd8e7;
+  --third-color: #3699a2;
+  --fourth-color: #cae7ef;
   /* --main-transition:0.3s; */
 }
-
-/* Styles for the scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Width of the scrollbar */
+  width: 10px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
-  /* Color of the track */
   background-color: var(--second-color);
 }
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scroll thumb */
+  background: #888;
   border-radius: 4px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color of the scroll thumb on hover */
+  background: #555;
 }
-
 .page-container {
   width: 100%;
   height: 100%;
@@ -41,9 +33,6 @@
 #root {
   background-color: var(--second-color);
 }
-/* main{
-  margin: 0;
-} */
 /* Start LoginComponent */
 .login {
   /* background-color: var(--second-color); */
@@ -235,16 +224,17 @@
 /* End MediaQueries */
 /* Start SideBar */
 .sidebar {
-  background-color: #f5f9f6;
+  background-color: white;
 }
 .container-sidebar + * {
+  margin-left: 250px;
 }
 .content-area {
   background-color: #dcdcdc;
 }
 .user,
 .dropdown-menu {
-  background-color: #d2dfd2;
+  background-color: var(--fourth-color);
   width: 100%;
   height: 100%;
 }
@@ -265,6 +255,10 @@
   height: 100%;
   margin-top: 5%;
 }
+.links ul li:hover {
+  background-color: var(--second-color);
+  border-radius: 15px;
+}
 .user-link {
   display: inline;
 }
@@ -277,15 +271,12 @@
   border-radius: 5px;
 }
 .container-sidebar {
-  width: 350px;
+  /* width: 350px; */
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   max-height: 100vh;
-}
-.container-sidebar + * {
-  margin-left: 350px;
 }
 
 .name-group {
@@ -338,13 +329,113 @@ main {
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
+.rounded-toggle-button .btn {
+  border-radius: 50px;
+  padding: 10px 20px;
+  width: 10%;
+  align-self: flex-end;
+}
+
+.rounded-toggle-button .btn.active {
+  box-shadow: none;
+}
+
+.rounded-toggle-button .btn.active {
+  background-color: var(--third-color);
+  border-color: var(--third-color);
+  color: #fff;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 29px;
+  align-self: flex-end;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--third-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 .forum-card {
-  height: 90vh;
-  background-color: #f5f9f6;
-  border-radius: 17px;
+  margin-top: 10%;
+  border-radius: 20px;
+  margin-inline: 11px;
+  background-color: white;
+  padding: 40px 10px 17px 10px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 40px;
+}
+#title,
+#content {
+  background: transparent;
+  border: 2px solid var(--third-color);
+}
+#title::placeholder,
+#content::placeholder {
+  color: var(--third-color);
+}
+@media (max-width: 768px) {
+  .forum-card {
+    width: 90%;
+  }
 }
 .forum-details {
-  color: var(--main-color);
+  color: var(--third-color);
+  font-size: 18px;
 }
 .forum-data {
   color: #474747;
@@ -355,7 +446,7 @@ main {
 .input-groups {
   margin-bottom: 30px;
   width: 95%;
-  margin-left: 5%;
+  margin-left: 3%;
 }
 input,
 textarea {
@@ -376,7 +467,8 @@ textarea {
 /* End ForumDetails */
 /*Start Forum Item single page*/
 .cont {
-  background-color: #f5f9f6;
+  width: 100%;
+  background-color: #ffffff;
   display: flex;
   border-radius: 20px;
   /* overflow-y: auto; */
@@ -384,13 +476,24 @@ textarea {
 }
 
 .cont2 {
-  background-color: #f5f9f6;
+  width: 100%;
+  background-color: #ffffff;
   display: flex;
   border-radius: 20px;
 }
 .input-field {
   flex-grow: 1;
 }
+.vertical-line {
+  border-left: 2px solid var(--fourth-color);
+  height: 80px;
+  margin-top: -39px;
+}
+.hr {
+  border: 1px solid var(--fourth-color);
+  margin-top: -39px;
+}
+
 .centered-container {
   display: flex;
   justify-content: center;
@@ -422,11 +525,11 @@ textarea {
   width: 100%;
 }
 .cont4 {
-  background-color: #4caf50;
+  background-color: var(--third-color);
   display: flex;
   border-radius: 20px;
   overflow-y: hidden;
-  width: 87%;
+  width: 90%;
 }
 .cont4 > input {
   display: flex;
@@ -438,7 +541,7 @@ textarea {
 .cont4 > button {
   border-radius: 20px;
   background-color: #ffffff;
-  color: #4caf50;
+  color: var(--third-color);
   border: none;
 }
 /*End Forum Item single page*/
@@ -489,7 +592,7 @@ textarea {
   gap: 1rem 2rem;
 
   padding: 0.5rem 2rem;
-  background-color: #4caf50;
+  background-color: var(--third-color);
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -528,7 +631,8 @@ textarea {
 .up-section .text button {
   border: none;
   outline: none;
-  background-color: #a8c7a9;
+  color: white;
+  background-color: var(--main-color);
   padding: 1rem 2rem;
   border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -591,7 +695,7 @@ textarea {
 }
 /* bg-[#A8C7A9] p-6 rounded-full */
 .services .card .image {
-  background-color: #a8c7a9;
+  background-color: var(--second-color);
   border-radius: 50%;
   padding: 16px;
   -webkit-border-radius: 50%;
@@ -701,7 +805,7 @@ textarea {
 .doctors .card .footer {
   width: 100%;
   padding: 17px 5px;
-  background-color: #4caf50;
+  background-color: var(--third-color);
   text-align: center;
   color: white;
 }
@@ -731,7 +835,7 @@ textarea {
 }
 /* flex justify-center items-center flex-col gap-10 py-10 px-16 bg-white rounded-[20px] shadow-lg */
 .contact .card {
-  background-color: #a8c7a9;
+  background-color: var(--second-color);
   flex: 1;
   padding: 1.5rem 2.8rem;
   border-radius: 20px;
@@ -859,7 +963,7 @@ textarea {
 /* articles */
 /* footer */
 .footer {
-  background-color: #4caf50;
+  background-color: var(--third-color);
   width: 100%;
   padding-block: 50px;
 }
@@ -901,7 +1005,7 @@ textarea {
   display: block;
   width: 100%;
   height: 2px;
-  background-color: #a8c7a9;
+  background-color: var(--second-color);
 }
 .footer footer .rights {
   width: 100%;
@@ -928,6 +1032,8 @@ textarea {
 .profile-card {
   border-radius: 20px;
   margin-inline: 30px;
+  margin-left: 10%;
+  margin-right: 250px;
   background-color: white;
   padding: 40px;
   min-height: 100%;

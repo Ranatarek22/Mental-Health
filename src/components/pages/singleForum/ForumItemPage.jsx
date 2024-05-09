@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useLocation } from "react-router-dom";
 import { apiInstance } from "../../../axios";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -29,7 +29,7 @@ const ForumItemPage = () => {
           const postPromise = await apiInstance.get(`/posts/${postId}`, {
             cancelToken: cancelToken.token,
           });
-
+          console.log(postPromise.data);
           if (postPromise.status !== 200) {
             if (postPromise.response.data) {
               throw new Error(Object.values(postPromise.response.data)[0]);
@@ -38,6 +38,7 @@ const ForumItemPage = () => {
             }
           }
           const postData = await postPromise.data;
+          console.log(postData);
 
           setForum(postData);
           setEditedTitle(postData.title);
@@ -145,9 +146,13 @@ const ForumItemPage = () => {
     <div>
       {forum ? (
         <>
-          <div className="cont p-3 m-3">
+          <div className="cont p-3 mt-3">
             <div>
-              <img src="/Avatars.png" className="p-2" />
+              <img
+                src={forum.username ? "/Avatars.png" : "/Anony.png"}
+                className="p-2"
+              />
+              {/* {console.log(forum.username)} */}
             </div>
             <div
               className="py-2"
@@ -156,7 +161,11 @@ const ForumItemPage = () => {
                 width: "100%",
               }}
             >
-              <span style={{ fontWeight: "bold" }}>{forum.username} </span>
+              <span style={{ fontWeight: "bold" }}>
+                {forum.username ? forum.username : "Anonymous"}
+              </span>
+              {/* {console.log(forum.username)} */}
+
               <br />
               <p className="text-muted">{duration}</p>
               <div>
@@ -246,7 +255,7 @@ const ForumItemPage = () => {
               </div>
             )}
           </div>
-          <div className="cont2 flex-column p-3 m-3">
+          <div className="cont2 flex-column p-3 mt-3">
             <div className="flex-row">
               <p className="fw-bold p-2">Comments ({commentsCount})</p>
             </div>

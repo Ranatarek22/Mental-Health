@@ -3,7 +3,8 @@ import { Button, Container, Col } from "react-bootstrap";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaSignsPost } from "react-icons/fa6";
+import { FaSignsPost, FaBell, FaRegHandPointRight } from "react-icons/fa6";
+
 import {
   BsFillPencilFill,
   BsFillHouseDoorFill,
@@ -76,7 +77,7 @@ const Sidebar = () => {
                 className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
               >
-                <li className="nav-item d-flex align-items-center w-100">
+                <li className="nav-item  align-items-center w-100">
                   <a href="/" className="nav-link align-middle px-0 m-2">
                     <BsFillHouseDoorFill className="fs-4 mx-3 me-1 text-black" />
                     <span
@@ -88,23 +89,40 @@ const Sidebar = () => {
                   </a>
                 </li>
 
-                <li className="nav-item d-flex align-items-center w-100">
+                <li className="nav-item  align-items-center w-100">
                   <a href="#" className="nav-link px-0 align-middle m-2 w-100">
                     {" "}
-                    <BsCalculator className="fs-4 mx-3 me-1 text-black" />{" "}
+                    <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />{" "}
                     <span className="ms-1text-black text-black user-link">
                       Depression Test
                     </span>
                   </a>
                 </li>
-                <li className="nav-item d-flex align-items-center w-100">
-                  <a href="#" className="nav-link px-0 align-middle m-2 ">
+                <li className="nav-item align-items-center w-100">
+                  <a
+                    href="/forums/forumlist"
+                    className="nav-link px-0 align-middle m-2 "
+                  >
                     <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
                     <span
                       className="ms-1  text-black user-link"
                       onClick={() => navigate("/forums/forumlist")}
                     >
                       Forums
+                    </span>{" "}
+                  </a>
+                </li>
+                <li className="nav-item align-items-center w-100">
+                  <a
+                    href="/forums/forumlist"
+                    className="nav-link px-0 align-middle m-2 "
+                  >
+                    <FaBell className="fs-4 mx-3 me-1 text-black " />{" "}
+                    <span
+                      className="ms-1  text-black user-link"
+                      onClick={() => navigate("/forums/forumlist")}
+                    >
+                      Notifictions
                     </span>{" "}
                   </a>
                 </li>

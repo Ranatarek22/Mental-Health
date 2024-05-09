@@ -59,9 +59,11 @@ function App() {
         >
           <NavigateController setPathname={setPathname} />
           <main
-            className=" flex-grow-1 "
+            // className=" flex-grow-1 "
             style={{
               minHeight: `calc(-70px + 100vh)`,
+              minWidth: "50%",
+              maxWidth: "100%",
               // display: "flex",
               // justifyContent: "center",
               // justifyItems: "center",

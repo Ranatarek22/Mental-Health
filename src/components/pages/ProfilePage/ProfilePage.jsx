@@ -16,7 +16,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const userToken = JSON.parse(localStorage.getItem("mental_auth"));
     const fetchData = async () => {
-      const response = await apiInstance.get(`/profiles/${userToken.userId}`);
+      const response = await apiInstance.get(`/users/${userToken.userId}`);
       const fetchedData = response.data;
       setUserData({
         email: fetchedData.email,
@@ -44,7 +44,7 @@ const ProfilePage = () => {
       // getting userId
       const userToken = JSON.parse(localStorage.getItem("mental_auth"));
       const response = await apiInstance.put(
-        `/profiles/${userToken.userId}`,
+        `/users/${userToken.userId}`,
         formData
       );
       toast.success("profile updated successfully");

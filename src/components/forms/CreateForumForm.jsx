@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { apiInstance } from "../../axios";
 import toast from "react-hot-toast";
 import { object, string, number } from "yup";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/use-auth-store";
 
 const CreateForumForm = () => {
+  const [check, setChecked] = useState(false);
+  const handleToggle = () => {
+    setChecked(true);
+    return check; 
+  };
   const userId = useAuthStore((state) => state.userId);
   const initialValues = {
     title: "",
@@ -24,7 +30,13 @@ const CreateForumForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     // window.location.reload();
     try {
-      const response = await apiInstance.post("/posts", values);
+      const postData = {
+        ...values,
+        isAnonymous: check,
+      };
+
+      const response = await apiInstance.post("/posts", postData);
+      console.log(check);
 
       if (response.status === 201) {
         toast.success("Forum created successfully!");
@@ -33,9 +45,8 @@ const CreateForumForm = () => {
         const postDetailsResponse = await apiInstance.get(`/posts/${postId}`);
 
         if (postDetailsResponse.status === 200) {
-          // Do something with the post details, for example, log to console
-          console.log("Post Details:", postDetailsResponse.data);
-          // forum?.appUserId === userId
+          // console.log("Post Details:", postDetailsResponse.data);
+
           history(`/forums/${postId}`);
         }
         resetForm();
@@ -59,27 +70,35 @@ const CreateForumForm = () => {
   });
 
   return (
-    <div className="d-flex flex-column p-3 m-3 forum-card ">
-      <h1 className="d-flex justify-content-center p-2 m-1 fw-bold forum-details">
-        Forum Details
-      </h1>
-      <div className="m-3 p-4">
+    <div className="forum-card ">
+      <div className="d-flex justify-content-around align-items-center ">
+        <div className="d-flex  flex-column p-2 fw-bold forum-details">
+          Post
+        </div>
+        <div className="vertical-line"></div>
+        <div className="d-flex flex-column p-2  fw-bold forum-details">
+          Image
+        </div>
+      </div>
+      <div className="hr"></div>
+
+      {/* <div className="m-3 p-4">
         <h5 className="fw-bold">What's on your mind?</h5>
         <h6 className="m-1 forum-data">Enter all forum details</h6>
-      </div>
+      </div> */}
       <form
         onSubmit={formik.handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <div className="horizontal">
           <div className="mb-3 input-groups">
-            <label htmlFor="title">Title</label>
+            {/* <label htmlFor="title">Title</label> */}
             <input
               id="title"
               name="title"
               type="text"
               className="form-control"
-              placeholder="Enter forum title"
+              placeholder=" Title"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.title}
@@ -108,12 +127,12 @@ const CreateForumForm = () => {
           </div>
         </div> */}
         <div className="input-groups">
-          <label htmlFor="content">Description</label>
+          {/* <label htmlFor="content">Description</label> */}
           <textarea
             id="content"
             name="content"
             rows={8}
-            placeholder="Enter forum description"
+            placeholder="What's on your mind ?"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.content}
@@ -122,19 +141,23 @@ const CreateForumForm = () => {
             <p className="error">{formik.errors.content}</p>
           )}
         </div>
-        {/* <div className="image-upload">Upload Image</div> */}
 
+        <label class="switch">
+          <input type="checkbox" onClick={handleToggle} />
+          <span class="slider round"></span>
+        </label>
         <button
           type="submit"
           disabled={formik.isSubmitting}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#0B570E",
+            backgroundColor: "#3699a2",
             color: "#FFFFFF",
             marginTop: "10px",
-            alignSelf: "flex-end",
-            width: "25%",
-            borderRadius: "11px",
+            border: "none",
+            alignSelf: "center",
+            width: "69%",
+            borderRadius: "50px",
           }}
         >
           Submit
