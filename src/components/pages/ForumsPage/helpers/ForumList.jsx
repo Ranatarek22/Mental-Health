@@ -104,10 +104,10 @@ function ForumList() {
                         <p className="text-muted"> {postDate}</p>
                       </div>
                       <div>
-                        <span className="pt-2 mt-3">
+                        {/* <span className="pt-2 mt-3">
                           Comments
-                          {/* {commentsCount} */}
-                        </span>
+                          {commentsCount}
+                        </span> */}
                       </div>
                     </div>
                   </div>
