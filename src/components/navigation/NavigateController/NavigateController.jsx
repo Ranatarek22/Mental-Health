@@ -3,6 +3,7 @@ import AppHeader from "../NavBar/navbar";
 import Sidebar from "../SideBar/sidebar";
 import { useLocation } from "react-router-dom";
 import { main_routes } from "../../../routes/routes";
+import NavUser from "../NavUser/NavUser";
 // const main_routes = ["/", "/login", "/signup"];
 const NavigateController = (props) => {
   const loc = useLocation();

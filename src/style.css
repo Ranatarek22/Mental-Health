@@ -224,10 +224,13 @@
 /* End MediaQueries */
 /* Start SideBar */
 .sidebar {
+  /* width: 90%; */
   background-color: white;
+  /* display: none; */
 }
 .container-sidebar + * {
-  margin-left: 250px;
+  margin-left: 257px;
+  /* margin-left: 2px; */
 }
 .content-area {
   background-color: #dcdcdc;
@@ -271,7 +274,7 @@
   border-radius: 5px;
 }
 .container-sidebar {
-  /* width: 350px; */
+  width: 257px;
   position: fixed;
   top: 0;
   left: 0;
@@ -292,7 +295,26 @@ main {
   /* margin-left: 300px; */
 
   min-height: calc(-70px + 100vh);
+  /* min-width: 82%; */
+  width: 100%;
+  max-width: calc(100% - 257px);
   max-height: auto;
+}
+#navbar {
+  height: 60px;
+  background-color: var(--fourth-color);
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  width: 100%;
+  max-width: calc(100% - 257px);
+}
+#navbar + * {
+  margin-top: 80px;
+}
+.tips {
+  display: flex;
+  justify-content: center;
 }
 @media (max-width: 768px) {
   .user-link {
@@ -300,6 +322,16 @@ main {
   }
   .container-sidebar {
     width: 80px;
+  }
+
+  .tips {
+    display: none;
+  }
+  #navbar {
+    max-width: calc(100% - 80px);
+  }
+  main {
+    max-width: calc(100% - 80px);
   }
   .user-name,
   .user-email {
@@ -544,6 +576,7 @@ textarea {
   color: var(--third-color);
   border: none;
 }
+
 /*End Forum Item single page*/
 
 /* End SideBar */
