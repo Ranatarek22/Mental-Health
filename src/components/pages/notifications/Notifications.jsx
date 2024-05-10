@@ -96,20 +96,22 @@ export default function Notifications() {
         className="d-flex flex-column"
         style={{ backgroundColor: "#9cd8e7" }}
       >
-        <InfiniteScroll
-          dataLength={notifications.length}
-          next={fetchNotifications}
-          hasMore={hasMore}
-          loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
-          style={{ overflow: "hidden" }}
-          endMessage={<p>No more notifications</p>}
-        >
-          {notifications.map((notification) => (
-            <div key={notification.id}>
-              <Notification notification={notification} />
-            </div>
-          ))}
-        </InfiniteScroll>
+        <div className="notification">
+          <InfiniteScroll
+            dataLength={notifications.length}
+            next={fetchNotifications}
+            hasMore={hasMore}
+            loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
+            style={{ overflow: "hidden" }}
+            endMessage={<p>No more notifications</p>}
+          >
+            {notifications.map((notification) => (
+              <div key={notification.id}>
+                <Notification notification={notification} />
+              </div>
+            ))}
+          </InfiniteScroll>
+        </div>
       </div>
     </div>
   );
