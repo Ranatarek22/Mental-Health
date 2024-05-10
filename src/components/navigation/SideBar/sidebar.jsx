@@ -12,6 +12,7 @@ import {
 } from "react-icons/bs";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useRef, useState, useEffect } from "react";
+import { Postage } from "react-bootstrap-icons";
 const Sidebar = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
@@ -89,6 +90,18 @@ const Sidebar = () => {
                   </a>
                 </li>
 
+                {/* my post page navigator */}
+                <li className="nav-item  align-items-center w-100">
+                  <a href="/myposts" className="nav-link align-middle px-0 m-2">
+                    <Postage className="fs-4 mx-3 me-1 text-black" />
+                    <span
+                      className=" ms-2  text-black user-link"
+                      onClick={() => navigate("/myposts")}
+                    >
+                      My Posts
+                    </span>
+                  </a>
+                </li>
                 <li className="nav-item  align-items-center w-100">
                   <a href="#" className="nav-link px-0 align-middle m-2 w-100">
                     {" "}

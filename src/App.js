@@ -3,9 +3,9 @@ import "../src/style.css";
 import ToasterProvider from "./components/providers/toaster-provider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
-import AppHeader from "./components/navigation/NavBar/navbar";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
+import MyPosts from "./components/pages/MyPosts/MyPosts";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -36,7 +36,7 @@ const ResetPasswordPage = lazy(() =>
 
 function App() {
   const [pathname, setPathname] = useState();
-  const [navbarHeight, setNavbarHeight] = useState(0);
+  const [navarHeight, setNavbarHeight] = useState(0);
 
   useEffect(() => {
     const navbar = document.getElementById("app-navbar");
@@ -88,6 +88,7 @@ function App() {
                 }
               />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/myposts" element={<MyPosts />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsList />} />
