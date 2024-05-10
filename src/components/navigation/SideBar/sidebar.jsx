@@ -35,7 +35,11 @@ const Sidebar = () => {
           <div className="user">
             <div className="dropdown pb-3">
               <a
+<<<<<<< HEAD
                 href="/profile"
+=======
+                href="#"
+>>>>>>> 1885277 (LayoutOUt)
                 className="d-flex align-items-center text-black text-decoration-none  pt-3 px-3 m-2"
                 id="dropdownUser1"
                 data-bs-toggle="dropdown"
@@ -61,6 +65,7 @@ const Sidebar = () => {
                     Profile Settings
                   </a>
                 </li>
+<<<<<<< HEAD
 
                 {/* my post page navigator */}
                 <li className="nav-item  align-items-center w-100">
@@ -98,6 +103,15 @@ const Sidebar = () => {
                     <HiOutlineLogout className="fs-4 text-white" />
                     <span className="user-link ">Log Out</span>
                   </Button>
+=======
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <a className="dropdown-item" href="#">
+                    Sign out
+                  </a>
+>>>>>>> 1885277 (LayoutOUt)
                 </li>
               </ul>
             </div>
@@ -120,10 +134,14 @@ const Sidebar = () => {
               </li>
 
               <li className="nav-item  align-items-center w-100">
+<<<<<<< HEAD
                 <a
                   href="depressiontest"
                   className="nav-link px-0 align-middle m-2 w-100"
                 >
+=======
+                <a href="#" className="nav-link px-0 align-middle m-2 w-100">
+>>>>>>> 1885277 (LayoutOUt)
                   {" "}
                   <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />{" "}
                   <span className="ms-1text-black text-black user-link">
@@ -132,11 +150,22 @@ const Sidebar = () => {
                 </a>
               </li>
               <li className="nav-item align-items-center w-100">
+<<<<<<< HEAD
                 <a href="/forums" className="nav-link px-0 align-middle m-2 ">
                   <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/forums")}
+=======
+                <a
+                  href="/forums/forumlist"
+                  className="nav-link px-0 align-middle m-2 "
+                >
+                  <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <span
+                    className="ms-1  text-black user-link"
+                    onClick={() => navigate("/forums/forumlist")}
+>>>>>>> 1885277 (LayoutOUt)
                   >
                     Forums
                   </span>{" "}
@@ -144,13 +173,21 @@ const Sidebar = () => {
               </li>
               <li className="nav-item align-items-center w-100">
                 <a
+<<<<<<< HEAD
                   href="/notifications"
+=======
+                  href="/forums/forumlist"
+>>>>>>> 1885277 (LayoutOUt)
                   className="nav-link px-0 align-middle m-2 "
                 >
                   <FaBell className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
+<<<<<<< HEAD
                     onClick={() => navigate("/notifications")}
+=======
+                    onClick={() => navigate("/forums/forumlist")}
+>>>>>>> 1885277 (LayoutOUt)
                   >
                     Notifictions
                   </span>{" "}
