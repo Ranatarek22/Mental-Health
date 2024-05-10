@@ -6,6 +6,7 @@ import BlockRoute from "./routes/blockRoute";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
+import Notifications from "./components/pages/notifications/Notifications";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -89,6 +90,7 @@ function App() {
               />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/myposts" element={<MyPosts />} />
+              <Route path="/notifications" element={<Notifications />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsList />} />
