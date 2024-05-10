@@ -96,7 +96,7 @@ function App() {
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
               {/* <Route path="/forums/forumlist" element={<ForumsList />} /> */}
-              <Route path="/forums/forumlist" element={<ForumsPage />} />
+              {/* <Route path="/forums" element={<ForumsPage />} /> */}
               <Route path="/forums/:postId" element={<SingleForumPage />} />
               <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
               <Route

@@ -35,7 +35,7 @@ const Sidebar = () => {
           <div className="user">
             <div className="dropdown pb-3">
               <a
-                href="#"
+                href="/profile"
                 className="d-flex align-items-center text-black text-decoration-none  pt-3 px-3 m-2"
                 id="dropdownUser1"
                 data-bs-toggle="dropdown"
@@ -75,7 +75,10 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li className="nav-item  align-items-center w-100">
-                  <a href="#" className="nav-link px-0 align-middle m-2 w-100">
+                  <a
+                    href="depressiontest"
+                    className="nav-link px-0 align-middle m-2 w-100"
+                  >
                     {" "}
                     <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />{" "}
                     <span className="ms-1text-black text-black user-link">
@@ -84,9 +87,17 @@ const Sidebar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Sign out
-                  </a>
+                  <Button
+                    className="ms-2 text-white user-link "
+                    onClick={logOutHandler}
+                    style={{
+                      backgroundColor: "black",
+                      borderColor: "black",
+                    }}
+                  >
+                    <HiOutlineLogout className="fs-4 text-white" />
+                    <span className="user-link ">Log Out</span>
+                  </Button>
                 </li>
               </ul>
             </div>
@@ -109,7 +120,10 @@ const Sidebar = () => {
               </li>
 
               <li className="nav-item  align-items-center w-100">
-                <a href="#" className="nav-link px-0 align-middle m-2 w-100">
+                <a
+                  href="depressiontest"
+                  className="nav-link px-0 align-middle m-2 w-100"
+                >
                   {" "}
                   <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />{" "}
                   <span className="ms-1text-black text-black user-link">
@@ -118,14 +132,11 @@ const Sidebar = () => {
                 </a>
               </li>
               <li className="nav-item align-items-center w-100">
-                <a
-                  href="/forums/forumlist"
-                  className="nav-link px-0 align-middle m-2 "
-                >
+                <a href="/forums" className="nav-link px-0 align-middle m-2 ">
                   <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
-                    onClick={() => navigate("/forums/forumlist")}
+                    onClick={() => navigate("/forums")}
                   >
                     Forums
                   </span>{" "}
@@ -133,13 +144,13 @@ const Sidebar = () => {
               </li>
               <li className="nav-item align-items-center w-100">
                 <a
-                  href="/forums/forumlist"
+                  href="/notifications"
                   className="nav-link px-0 align-middle m-2 "
                 >
                   <FaBell className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
-                    onClick={() => navigate("/forums/forumlist")}
+                    onClick={() => navigate("/notifications")}
                   >
                     Notifictions
                   </span>{" "}
