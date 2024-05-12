@@ -224,10 +224,13 @@
 /* End MediaQueries */
 /* Start SideBar */
 .sidebar {
+  /* width: 90%; */
   background-color: white;
+  /* display: none; */
 }
 .container-sidebar + * {
-  margin-left: 250px;
+  margin-left: 257px;
+  /* margin-left: 2px; */
 }
 .content-area {
   background-color: #dcdcdc;
@@ -271,7 +274,7 @@
   border-radius: 5px;
 }
 .container-sidebar {
-  /* width: 350px; */
+  width: 257px;
   position: fixed;
   top: 0;
   left: 0;
@@ -292,7 +295,26 @@ main {
   /* margin-left: 300px; */
 
   min-height: calc(-70px + 100vh);
+  /* min-width: 82%; */
+  width: 100%;
+  max-width: calc(100% - 257px);
   max-height: auto;
+}
+#navbar {
+  height: 60px;
+  background-color: var(--fourth-color);
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  width: 100%;
+  max-width: calc(100% - 257px);
+}
+#navbar + * {
+  margin-top: 80px;
+}
+.tips {
+  display: flex;
+  justify-content: center;
 }
 @media (max-width: 768px) {
   .user-link {
@@ -300,6 +322,16 @@ main {
   }
   .container-sidebar {
     width: 80px;
+  }
+
+  .tips {
+    display: none;
+  }
+  #navbar {
+    max-width: calc(100% - 80px);
+  }
+  main {
+    max-width: calc(100% - 80px);
   }
   .user-name,
   .user-email {
@@ -544,6 +576,7 @@ textarea {
   color: var(--third-color);
   border: none;
 }
+
 /*End Forum Item single page*/
 
 /* End SideBar */
@@ -1206,3 +1239,35 @@ textarea {
   gap: 4px;
 }
 /* end profile style */
+/* start notifications section page */
+.notification {
+  padding: 20px;
+}
+.notification-container {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+.notification-container::hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.notification-message {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.notification-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* end notifications section page  */

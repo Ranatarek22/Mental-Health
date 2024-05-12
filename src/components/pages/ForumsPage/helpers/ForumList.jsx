@@ -21,7 +21,8 @@ function ForumList() {
         `/posts?PageNumber=${page}&PageSize=${pageSize}`
       );
       const newPosts = response.data;
-      console.log(newPosts);
+      //comment this sensitive data it show user id
+      // console.log(newPosts);
 
       setPosts((prevPosts) => [...prevPosts, ...newPosts]);
 
@@ -104,10 +105,10 @@ function ForumList() {
                         <p className="text-muted"> {postDate}</p>
                       </div>
                       <div>
-                        <span className="pt-2 mt-3">
+                        {/* <span className="pt-2 mt-3">
                           Comments
-                          {/* {commentsCount} */}
-                        </span>
+                          {commentsCount}
+                        </span> */}
                       </div>
                     </div>
                   </div>
