@@ -1,105 +1,166 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { apiInstance } from "../../../../axios";
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
 export function Articles() {
-  return (
-    <Container className="w-100">
-      <section id="articles" className="articles">
-        <div className="heading">
-          <h4>Better information, Better health</h4>
-          <h1>Articles</h1>
+    const [posts, setPosts] = useState([]);
+    const pageSize = 6;
+    const navigate = useNavigate();
+    // const commentsCount = usePostStore((state) => state.totalComments);
+
+    const fetchPosts = async () => {
+        try {
+            debugger;
+            const response = await apiInstance.get(
+                `/posts?PageNumber=5&PageSize=${pageSize}`
+            );
+            const newPosts = response.data;
+            //comment this sensitive data it show user id
+            // console.log(newPosts);
+
+            setPosts(newPosts);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    return (
+        <div
+            className="container-fluid"
+            style={{
+                // marginLeft: "calc((100% - 100vw) / 2)",
+                width: "100vw",
+                backgroundColor: "#fbfbfb",
+                padding: "100px",
+                marginLeft: "calc((100% - 100vw) / 2)",
+                paddingTop: 0,
+            }}
+        >
+            <section id="articles" className="articles">
+                <h3
+                    className="mb-5"
+                    style={{
+                        fontSize: "4rem",
+                        fontWeight: 300,
+                    }}
+                >
+                    Recent Articles
+                </h3>
+                <div
+                    className="post-cards"
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                        flexWrap: "wrap",
+                    }}
+                >
+                    {posts.map((post) => {
+                        return (
+                            <>
+                                <div
+                                    key={post.id}
+                                    className="post-card flex-column justify-content-center"
+                                    style={{
+                                        backgroundColor: "#fff",
+                                        width: "30%",
+                                        margin: "20px",
+                                        padding: "40px",
+                                        borderRadius: "10px",
+                                        transition: "all 0.3s ease",
+                                    }}
+                                >
+                                    <div
+                                        className="post-author-info"
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: "10px",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <div className="image">
+                                            <img
+                                                src={"/landingImages/logo.png"}
+                                                alt="post"
+                                                style={{
+                                                    width: "100%",
+                                                    borderRadius: "50%",
+                                                    height: "100%",
+                                                    objectFit: "cover",
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="name"
+                                            style={{
+                                                fontSize: "1.2rem",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            David Ortiz
+                                            {/* {post.username ?? "Anonymous"} */}
+                                        </div>
+                                    </div>
+                                    <div className="content mt-3">
+                                        <h3
+                                            style={{
+                                                fontSize: "1.1rem",
+                                                fontWeight: 600,
+                                                color: "rgb(104 110 116)",
+                                            }}
+                                        >
+                                            Lorem ipsum, dolor sit amet
+                                            consectetur adipisicing elit.
+                                            Tenetur animi alias repudiandae
+                                            quasi maxime odio.
+                                        </h3>
+                                    </div>
+                                    <div
+                                        className="date"
+                                        style={{
+                                            fontSize: "0.8rem",
+                                            fontWeight: 500,
+                                            color: "rgb(104 110 116)",
+                                        }}
+                                    >
+                                        {post.postedOn.slice(0, 10)}
+                                    </div>
+                                    {/* <div
+                                        style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <button
+                                            type="button"
+                                            style={{
+                                                backgroundColor: "transparent",
+                                                border: "2px solid black",
+                                                padding: "10px",
+                                                color: "black",
+                                                borderRadius: "10px",
+                                                fontSize: "1rem",
+                                                fontWeight: 700,
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            Comment Now
+                                        </button>
+                                    </div> */}
+                                </div>
+                            </>
+                        );
+                    })}
+                </div>
+            </section>
         </div>
-        <div className="cards">
-          <div className="card">
-            <div className="image"></div>
-            <div className="info">
-              <div className="description">
-                Sunday 01, September 2021 | By Dr.Mohamed
-              </div>
-              <div className="name">
-                Mind Matters: Navigating Mental Health Challenges with
-                Resilience
-              </div>
-              <div className="likes">
-                <div className="">
-                  <img src="/landingImages/like.png" alt="like" />
-                  <p>60</p>
-                </div>
-                <div className="">
-                  <img src="/landingImages/view.png" alt="view" />
-                  <p>269</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="image"></div>
-            <div className="info">
-              <div className="description">
-                Monday 05, September 2023 | By Dr.Ali
-              </div>
-              <div className="name">
-                Unlocking Inner Peace: Exploring Mental Wellness Strategies
-              </div>
-              <div className="likes">
-                <div className="">
-                  <img src="/landingImages/like.png" alt="like" />
-                  <p>19</p>
-                </div>
-                <div className="">
-                  <img src="/landingImages/view.png" alt="view" />
-                  <p>169</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="cards">
-          <div className="card">
-            <div className="image"></div>
-            <div className="info">
-              <div className="description">
-                Friday 15, March 2023 | By Dr.Sara
-              </div>
-              <div className="name">
-                Breaking the Stigma: Understanding Mental Health in Today's
-                World
-              </div>
-              <div className="likes">
-                <div className="">
-                  <img src="/landingImages/like.png" alt="like" />
-                  <p>39</p>
-                </div>
-                <div className="">
-                  <img src="/landingImages/view.png" alt="view" />
-                  <p>289</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card">
-            <div className="image"></div>
-            <div className="info">
-              <div className="description">
-                Monday 15, September 2023 | By Dr.Alaa
-              </div>
-              <div className="name">
-                Embracing Balance: Cultivating Mental Wellbeing in Everyday Life
-              </div>
-              <div className="likes">
-                <div className="">
-                  <img src="/landingImages/like.png" alt="like" />
-                  <p>88</p>
-                </div>
-                <div className="">
-                  <img src="/landingImages/view.png" alt="view" />
-                  <p>469</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Container>
-  );
+    );
 }

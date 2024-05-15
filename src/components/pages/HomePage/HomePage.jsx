@@ -4,19 +4,27 @@ import Services from "./components/Services";
 import { Doctors } from "./components/Doctors";
 import { Contact } from "./components/Contact";
 import { Articles } from "./components/Articles";
+import { Welcome } from "./components/Welcome";
+import { Scheduling } from "./components/Scheduling";
+import { Communication } from "./components/Communication";
 import Footer from "./components/Footer";
+import { motion } from "framer-motion";
+
 const HomePage = () => {
-  return (
-    // <main className="w-100">
-    <>
-      <Hero />
-      <Services />
-      <Doctors />
-      <Articles />
-      <Contact />
-      <Footer />
-    </>
-    // </main>
-  );
+    return (
+        // <main className="w-100">
+        <>
+            <Hero />
+            <Welcome />
+            <Communication />
+            <Scheduling />
+            <Services />
+            <Doctors />
+            <Articles />
+            {/* <Contact /> */}
+            <Footer />
+        </>
+        // </main>
+    );
 };
 export default HomePage;

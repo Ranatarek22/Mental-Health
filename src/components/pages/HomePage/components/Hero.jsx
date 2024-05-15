@@ -1,56 +1,83 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import { motion } from "framer-motion";
 
 function Hero() {
-  return (
-    <Container className="w-100">
-      <div className="hero-section">
-        <div className="up-section">
-          <div className="text">
-            <div className="text-up">
-              <h2 className="">Caring for Life</h2>
-              <p className="">
-                Leading the Way <br /> in Medical Excellence
-              </p>
+    return (
+        <motion.div
+            className="container-fluid"
+            style={{
+                width: "100vw",
+                marginLeft: "calc((100% - 100vw) / 2)",
+                backgroundColor: "var(--fourth-color)",
+                padding: "100px",
+                paddingTop: "24px",
+                height: "100vh",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeIn" }}
+        >
+            <div className="hero-section">
+                <div className="up-section">
+                    <div className="text">
+                        <div className="text-up">
+                            <h4
+                                className="fw-light"
+                                style={{
+                                    fontSize: "3rem",
+                                    marginBottom: 0,
+                                }}
+                            >
+                                Get Quick
+                            </h4>
+                            <h3
+                                style={{
+                                    fontSize: "4rem",
+                                    fontWeight: 800,
+                                }}
+                            >
+                                Medical Services
+                            </h3>
+                            <p
+                                className="mt-3"
+                                style={{
+                                    color: "#0000008a",
+                                    fontSize: "1.2rem",
+                                }}
+                            >
+                                We are a dedicated community of medical
+                                professionals and individuals who understand the
+                                importance of mental health. We’re here to
+                                provide support, resources, and a safe space for
+                                those seeking help.
+                            </p>
+                        </div>
+                        <a href={"/signup"}>
+                            <button
+                                style={{
+                                    backgroundColor: "white",
+                                    color: "black",
+                                    fontWeight: 700,
+                                    fontSize: "1.2rem",
+                                }}
+                            >
+                                Get Started
+                            </button>
+                        </a>
+                    </div>
+                    <img
+                        src={"/landingImages/hero.png"}
+                        alt="hero"
+                        style={{
+                            width: "45%",
+                        }}
+                    />
+                </div>
             </div>
-            <a href={"/signup"}>
-              <button style={{ width: "100%" }}>Get Started</button>
-            </a>
-          </div>
-          <img src={"/landingImages/hero.png"} alt="hero" />
-        </div>
-        <div className="down-section">
-          <div className="hero-card">
-            <p className="text-white text-xl font-semibold">Attend meeting</p>
-            <img
-              src={"/landingImages/calender.png"}
-              alt=""
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="hero-card">
-            <p className="text-white text-xl font-semibold">Find a doctor</p>
-            <img
-              src={"/landingImages/doctors.png"}
-              alt=""
-              width={60}
-              height={60}
-            />
-          </div>
-          <div className="hero-card">
-            <p className="text-white text-xl font-semibold">Depression Test</p>
-            <img
-              src={"/landingImages/brain.png"}
-              alt=""
-              width={60}
-              height={60}
-            />
-          </div>
-        </div>
-      </div>
-    </Container>
-  );
+        </motion.div>
+    );
 }
 
 export default Hero;
