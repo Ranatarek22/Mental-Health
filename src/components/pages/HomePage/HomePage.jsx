@@ -11,20 +11,20 @@ import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 
 const HomePage = () => {
-    return (
-        // <main className="w-100">
-        <>
-            <Hero />
-            <Welcome />
-            <Communication />
-            <Scheduling />
-            <Services />
-            <Doctors />
-            <Articles />
-            {/* <Contact /> */}
-            <Footer />
-        </>
-        // </main>
-    );
+  return (
+    // <main className="w-100">
+    <>
+      <Hero />
+      {/* <Welcome /> */}
+      {/* <Communication /> */}
+      <Scheduling />
+      <Services />
+      <Doctors />
+      <Articles />
+      {/* <Contact /> */}
+      <Footer />
+    </>
+    // </main>
+  );
 };
 export default HomePage;

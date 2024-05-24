@@ -7,7 +7,8 @@ const Tips = () => {
       style={{
         zIndex: "10",
         height: "310px",
-        width: "80%",
+        width: "29%",
+        position: "fixed",
       }}
     ></div>
   );

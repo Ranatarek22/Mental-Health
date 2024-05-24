@@ -1,21 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { FaSignsPost, FaBell, FaRegHandPointRight } from "react-icons/fa6";
-import {
-  BsFillPencilFill,
-  BsFillHouseDoorFill,
-  BsCalculator,
-} from "react-icons/bs";
-import { HiOutlineLogout } from "react-icons/hi";
-import { useRef, useState, useEffect } from "react";
+import { FaBell, FaPlus } from "react-icons/fa6";
+import UserProfile from "./userprofile";
 
 const NavUser = () => {
   const { removeActiveUser, isAuthenticated, userName, email, photoUrl } =
     useAuthStore();
   const navigate = useNavigate();
+  const image = useAuthStore((state) => state.photoUrl);
+  const [showProfileCard, setShowProfileCard] = useState(false);
 
   const logOutHandler = () => {
     removeActiveUser();
@@ -23,57 +19,76 @@ const NavUser = () => {
     navigate("/");
   };
 
+  const handleProfileClick = () => {
+    setShowProfileCard(!showProfileCard);
+  };
+
+  const handleCreatePost = () => {
+    navigate("/createforum");
+  };
+
   return (
-    <Navbar className="p-2 " id="navbar" expand="md">
-      <>
-        <div className="d-flex align-items-center justify-content-start flex-row-reverse w-100">
-          <div className="">
-            <FaBell
-              className=" pr-3 dropdown-toggle"
-              style={{ fontSize: "1.8rem" }}
+    <>
+      <Navbar className="p-2" id="navbar" expand="md">
+        <div className="d-flex align-items-center justify-content-between w-100 position-relative">
+          <div style={{ width: "30%" }}>
+            <input
+              type="text"
+              className="p-2 pe-3 m-2 cont4"
+              placeholder="Search for forum"
+              style={{ backgroundColor: "#e0dede" }}
             />
           </div>
-          {/* <div className="dropdown pb-3">
-            <a
-              href="#"
-              className="d-flex align-items-center text-black text-decoration-none "
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
+          <div className="ml-auto p-2 d-flex align-items-center">
+            <FaPlus
+              className="pr-2"
+              style={{ fontSize: "1.8rem", cursor: "pointer", color: "grey" }}
+              onClick={handleCreatePost}
+            />
+            <Button
+              variant="link"
+              className="ml-2  m-2 text-decoration-none "
+              onClick={handleCreatePost}
+              style={{
+                padding: 0,
+                border: "none",
+                background: "none",
+                color: "grey",
+              }}
             >
-              <img
-                // src={photoUrl ? photoUrl : "/user.png"}
-                alt="user profile"
-                className="rounded-circle me-2 mt-2 user-img"
-                // srcSet={photoUrl ? photoUrl : "/user.png"}
-                style={{ width: "60px", height: "60px" }}
-              />
-              <div className="">
-                <FaBell
-                  className="ms-2 pr-3 dropdown-toggle"
-                  style={{ fontSize: "1.8rem" }} // Adjust the size here
-                />
-              </div>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-dark custom-dropdown-menu text-small shadow">
-              <li>
-                <a className="dropdown-item" href="/profile">
-                  Profile Settings
-                </a>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <a className="dropdown-item" href="#" onClick={logOutHandler}>
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div> */}
+              Create
+            </Button>
+            <FaBell
+              className="pr-3  m-2 dropdown-toggle ml-2"
+              style={{ fontSize: "1.8rem", color: "grey" }}
+            />
+            <img
+              src={image ? image : "/user.png"}
+              alt="user profile"
+              className="rounded-circle p-2 ml-2 m-2 mt-2 user-img"
+              srcSet={image ? image : "/user.png"}
+              onClick={handleProfileClick} 
+            />
+          </div>
         </div>
-      </>
-    </Navbar>
+      </Navbar>
+
+      {/* Profile Card */}
+      {showProfileCard && (
+        <div className="user-card ">
+          <img
+            src={image ? image : "/user.png"}
+            alt="user profile"
+            className="rounded-circle mb-2"
+            style={{ width: "200px", height: "200px", objectFit: "cover" }}
+          />
+          <p className="mb-2">{userName}</p>
+          <Button variant="danger" onClick={logOutHandler}>
+            Sign Out
+          </Button>
+        </div>
+      )}
+    </>
   );
 };
 
