@@ -12,7 +12,7 @@ const CreateForumForm = () => {
   const [check, setChecked] = useState(false);
   const handleToggle = () => {
     setChecked(true);
-    return check; 
+    return check;
   };
   const userId = useAuthStore((state) => state.userId);
   const initialValues = {
@@ -30,13 +30,22 @@ const CreateForumForm = () => {
   const onSubmit = async (values, { setSubmitting, resetForm }) => {
     // window.location.reload();
     try {
-      const postData = {
-        ...values,
-        isAnonymous: check,
-      };
+      // const postData = {
+      //   ...values,
+      //   isAnonymous: check,
+      // };
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("content", values.content);
+      formData.append("photoPost", values.postPhoto);
+      formData.append("isAnonymous", check);
 
-      const response = await apiInstance.post("/posts", postData);
-      console.log(check);
+      const response = await apiInstance.post("/posts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // console.log(check);
 
       if (response.status === 201) {
         toast.success("Forum created successfully!");
@@ -76,9 +85,6 @@ const CreateForumForm = () => {
           Post
         </div>
         <div className="vertical-line"></div>
-        <div className="d-flex flex-column p-2  fw-bold forum-details">
-          Image
-        </div>
       </div>
       <div className="hr"></div>
 
@@ -141,6 +147,15 @@ const CreateForumForm = () => {
             <p className="error">{formik.errors.content}</p>
           )}
         </div>
+        <input
+          id="postPhoto"
+          type="file"
+          name="postPhoto"
+          onChange={(event) => {
+            formik.setFieldValue("postPhoto", event.currentTarget.files[0]); // Update formik values with selected file
+          }}
+          onBlur={formik.handleBlur}
+        />
 
         <label class="switch">
           <input type="checkbox" onClick={handleToggle} />

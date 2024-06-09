@@ -91,6 +91,14 @@ function ForumList() {
                         <p className="text-muted"> {postDate}</p>
                       </div>
                     </div>
+                    {post.postPhotoUrl && (
+                      <img
+                        width={500}
+                        alt="post photo"
+                        src={post.postPhotoUrl}
+                        className=""
+                      />
+                    )}
                     <div className="d-flex justify-content-start p-2 mt-3">
                       <div
                         className="icon-container"

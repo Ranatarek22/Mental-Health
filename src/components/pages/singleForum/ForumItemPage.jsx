@@ -233,6 +233,13 @@ const ForumItemPage = () => {
                       <span className="ms-2 fw-bold">{commentsCount}</span>
                     </div>
                   </div>
+                  {forum.postPhotoUrl && (
+                    <img
+                      alt="post photo"
+                      src={forum.postPhotoUrl}
+                      className=""
+                    />
+                  )}
                 </div>
                 {editButtonVisible && isMyPost && (
                   <div
