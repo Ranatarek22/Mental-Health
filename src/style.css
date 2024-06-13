@@ -1604,3 +1604,32 @@ textarea {
 }
 
 /* end notifications */
+
+/* start myPosts */
+.userImage {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+}
+.mypost {
+  display: flex;
+  flex-direction: column;
+}
+.mypost .comments {
+  width: 100%;
+  text-align: end;
+  padding: 10px;
+}
+
+.postImg img {
+  width: 100%;
+  max-height: 600px;
+  display: block;
+  object-fit: cover;
+}
+.feed {
+  max-width: 1200px;
+  margin: auto;
+}
+/* end myPosts */
