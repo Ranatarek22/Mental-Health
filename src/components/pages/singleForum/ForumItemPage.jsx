@@ -157,8 +157,9 @@ const ForumItemPage = () => {
               <div className="cont p-3 mt-3 w-100">
                 <div>
                   <img
-                    src={forum.username ? "/Avatars.png" : "/Anony.png"}
-                    className="p-2"
+                    src={forum.username ? forum.photoUrl : "/Anony.png"}
+                    alt="user img"
+                    className="userImage"
                   />
                   {/* {console.log(forum.username)} */}
                 </div>
@@ -234,11 +235,7 @@ const ForumItemPage = () => {
                     </div>
                   </div>
                   {forum.postPhotoUrl && (
-                    <img
-                      alt="post photo"
-                      src={forum.postPhotoUrl}
-                      className=""
-                    />
+                    <img alt="post img" src={forum.postPhotoUrl} />
                   )}
                 </div>
                 {editButtonVisible && isMyPost && (

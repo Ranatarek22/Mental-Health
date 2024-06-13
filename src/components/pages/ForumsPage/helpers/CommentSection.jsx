@@ -119,7 +119,11 @@ const CommentSection = ({ postId }) => {
     >
       <div className="d-flex w-100 p-2">
         <div className="">
-          <img src="/Avatars.png" className="h-100 w-100" />
+          <img
+            alt="user Img"
+            src={JSON.parse(localStorage.getItem("mental_auth")).photoUrl}
+            className="userImage"
+          />
         </div>
         <div className="flex-grow-1">
           <CommentForm

@@ -160,7 +160,11 @@ const Comment = (props) => {
         className="d-flex gap-2 p-2 align-items-start justify-content-start"
       >
         <div>
-          <img src="/Avatars.png" />
+          <img
+            alt="comment user Img"
+            src={comment.photoUrl}
+            className="userImage"
+          />
         </div>
         <div className="text-truncate">
           <h6 className="fw-bold m-0">{comment?.username}</h6>
