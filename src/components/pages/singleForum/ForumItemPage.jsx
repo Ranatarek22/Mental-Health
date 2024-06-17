@@ -235,7 +235,9 @@ const ForumItemPage = () => {
                     </div>
                   </div>
                   {forum.postPhotoUrl && (
-                    <img alt="post img" src={forum.postPhotoUrl} />
+                    <div className="postImg">
+                      <img alt="post img" src={forum.postPhotoUrl} />
+                    </div>
                   )}
                 </div>
                 {editButtonVisible && isMyPost && (
