@@ -6,8 +6,8 @@ import BlockRoute from "./routes/blockRoute";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
-import Notifications from "./components/pages/notifications/Notifications";
 import { Spinner } from "react-bootstrap";
+import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -111,6 +111,7 @@ function App() {
                 }
               />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/depressiontest" element={<MentalHealthTest />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/appointment" element={<Appointment />} />
               <Route path="/notifications" element={<Notifications />} />

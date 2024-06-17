@@ -1,63 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { apiInstance } from "../../axios";
-import toast from "react-hot-toast";
-import { object, string, number } from "yup";
-import axios from "axios";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/use-auth-store";
+import { apiInstance } from "../../axios";
+import toast from "react-hot-toast";
+import { object, string } from "yup";
+import { useDropzone } from "react-dropzone";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import { BsUpload } from "react-icons/bs";
 
 const CreateForumForm = () => {
   const [check, setChecked] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
   const handleToggle = () => {
-    setChecked(true);
-    return check; 
+    setChecked((prev) => !prev);
   };
   const userId = useAuthStore((state) => state.userId);
+  const navigate = useNavigate();
+
   const initialValues = {
     title: "",
-    // tags: "",
     content: "",
+    postPhoto: null,
   };
 
   const validationSchema = object().shape({
     title: string().required("Title is required"),
-    // tags: string(),
     content: string().required("Description is required"),
   });
-  const history = useNavigate();
-  const onSubmit = async (values, { setSubmitting, resetForm }) => {
-    // window.location.reload();
-    try {
-      const postData = {
-        ...values,
-        isAnonymous: check,
-      };
 
-      const response = await apiInstance.post("/posts", postData);
-      console.log(check);
+  const onSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("content", values.content);
+      formData.append("photoPost", values.postPhoto);
+      formData.append("isAnonymous", check);
+
+      const response = await apiInstance.post("/posts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status === 201) {
         toast.success("Forum created successfully!");
         const postId = response.data.id;
-        console.log(postId);
         const postDetailsResponse = await apiInstance.get(`/posts/${postId}`);
 
         if (postDetailsResponse.status === 200) {
-          // console.log("Post Details:", postDetailsResponse.data);
-
-          history(`/forums/${postId}`);
+          navigate(`/forums/${postId}`);
         }
         resetForm();
+        setUploadedImage(null);
       }
     } catch (error) {
       console.error("Error creating forum:", error);
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("error");
-      }
+      toast.error(error.response?.data?.message || "Error");
     } finally {
       setSubmitting(false);
     }
@@ -69,70 +69,52 @@ const CreateForumForm = () => {
     onSubmit,
   });
 
-  return (
-    <div className="forum-card ">
-      <div className="d-flex justify-content-around align-items-center ">
-        <div className="d-flex  flex-column p-2 fw-bold forum-details">
-          Post
-        </div>
-        <div className="vertical-line"></div>
-        <div className="d-flex flex-column p-2  fw-bold forum-details">
-          Image
-        </div>
-      </div>
-      <div className="hr"></div>
+  const onDrop = (acceptedFiles) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0];
+      formik.setFieldValue("postPhoto", file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadedImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-      {/* <div className="m-3 p-4">
-        <h5 className="fw-bold">What's on your mind?</h5>
-        <h6 className="m-1 forum-data">Enter all forum details</h6>
-      </div> */}
-      <form
-        onSubmit={formik.handleSubmit}
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        <div className="horizontal">
-          <div className="mb-3 input-groups">
-            {/* <label htmlFor="title">Title</label> */}
-            <input
-              id="title"
-              name="title"
-              type="text"
-              className="form-control"
-              placeholder=" Title"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.title}
-            />
-            {formik.touched.title && formik.errors.title && (
-              <p className="error">{formik.errors.title}</p>
-            )}
-          </div>
+  const removeImage = () => {
+    formik.setFieldValue("postPhoto", null);
+    setUploadedImage(null);
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  });
+
+  return (
+    <div className="forum-card">
+      <h1>Create Post</h1>
+      <form onSubmit={formik.handleSubmit}>
+        <div>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Title"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.title}
+          />
+          {formik.touched.title && formik.errors.title && (
+            <p className="error">{formik.errors.title}</p>
+          )}
         </div>
-        {/* <div className="horizontal">
-          <div className="mb-3 input-groups">
-            <label htmlFor="tags">Tags</label>
-            <input
-              id="tags"
-              name="tags"
-              type="text"
-              className="form-control"
-              placeholder="tag1,tag2,etc"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.tags}
-            />
-            {formik.touched.tags && formik.errors.tags && (
-              <p className="error">{formik.errors.tags}</p>
-            )}
-          </div>
-        </div> */}
-        <div className="input-groups">
-          {/* <label htmlFor="content">Description</label> */}
+        <div>
           <textarea
             id="content"
             name="content"
             rows={8}
-            placeholder="What's on your mind ?"
+            placeholder="What's on your mind?"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.content}
@@ -141,27 +123,51 @@ const CreateForumForm = () => {
             <p className="error">{formik.errors.content}</p>
           )}
         </div>
-
-        <label class="switch">
-          <input type="checkbox" onClick={handleToggle} />
-          <span class="slider round"></span>
+        <div {...getRootProps()} className="dropzone">
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <p>
+              Drag & drop an image here, or click to select one
+              <p>
+                <BsUpload size={24} />
+              </p>
+            </p>
+          )}
+        </div>
+        {uploadedImage && (
+          <div className="uploaded-image">
+            <button
+              type="button"
+              className="remove-image"
+              onClick={removeImage}
+            >
+              x
+            </button>
+            <img src={uploadedImage} alt="Uploaded" />
+          </div>
+        )}
+        <label className="switch">
+          <input type="checkbox" onClick={handleToggle} checked={check} />
+          <span className="slider round"></span>
         </label>
-        <button
-          type="submit"
-          disabled={formik.isSubmitting}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#3699a2",
-            color: "#FFFFFF",
-            marginTop: "10px",
-            border: "none",
-            alignSelf: "center",
-            width: "69%",
-            borderRadius: "50px",
-          }}
-        >
-          Submit
-        </button>
+        <Button type="submit" disabled={formik.isSubmitting}>
+          {formik.isSubmitting ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Loading...
+            </>
+          ) : (
+            "Submit"
+          )}
+        </Button>
       </form>
     </div>
   );

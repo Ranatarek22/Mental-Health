@@ -5,10 +5,18 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { FaBell, FaPlus } from "react-icons/fa6";
 import UserProfile from "./userprofile";
+import { NotificationsProvider } from "../../../context/NotificationsContext";
+import NotificationIcon from "../../pages/notifications/NotificationIcon";
 
 const NavUser = () => {
-  const { removeActiveUser, isAuthenticated, userName, email, photoUrl } =
-    useAuthStore();
+  const {
+    removeActiveUser,
+    isAuthenticated,
+    userName,
+    email,
+    photoUrl,
+    token,
+  } = useAuthStore();
   const navigate = useNavigate();
   const image = useAuthStore((state) => state.photoUrl);
   const [showProfileCard, setShowProfileCard] = useState(false);
@@ -58,16 +66,15 @@ const NavUser = () => {
             >
               Create
             </Button>
-            <FaBell
-              className="pr-3  m-2 dropdown-toggle ml-2"
-              style={{ fontSize: "1.8rem", color: "grey" }}
-            />
+            <NotificationsProvider token={token}>
+              <NotificationIcon />
+            </NotificationsProvider>
             <img
               src={image ? image : "/user.png"}
               alt="user profile"
               className="rounded-circle p-2 ml-2 m-2 mt-2 user-img"
               srcSet={image ? image : "/user.png"}
-              onClick={handleProfileClick} 
+              onClick={handleProfileClick}
             />
           </div>
         </div>

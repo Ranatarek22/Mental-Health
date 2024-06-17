@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
@@ -6,10 +6,10 @@ import { SyncLoader } from "react-spinners";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { calculateDuration } from "../ForumsPage/Date";
 import { apiInstance } from "../../../axios";
+import Tips from "../ForumsPage/helpers/Tips";
 
 export default function MyPosts() {
   const userId = useAuthStore((state) => state.userId);
-  // console.log("userId", userId);
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
@@ -36,6 +36,7 @@ export default function MyPosts() {
 
   useEffect(() => {
     fetchPosts();
+    console.log(posts);
   }, []);
 
   const override = css`
@@ -45,77 +46,86 @@ export default function MyPosts() {
   `;
   return (
     <div className="w-100">
-      <div
-        className="d-flex flex-column"
-        style={{ backgroundColor: "#9cd8e7" }}
-      >
-        <div
-          className="cont4 p-2 m-3 "
-          style={{ position: "sticky", top: 0, zIndex: "10" }}
-        >
-          <input
-            type="text"
-            className="p-2 m-2"
-            placeholder="Search for forum"
-          />
-          <button className="p-2 m-2" onClick={() => navigate(`/createforum`)}>
-            Create Forum
-          </button>
-        </div>
+      <div style={{ display: "flex", width: "100%" }}>
+        <div className="feed" style={{ width: "50%", flex: "3" }}>
+          <div
+            className="cont4 p-2 m-3"
+            style={{ position: "sticky", top: 0, zIndex: "10" }}
+          >
+            <input
+              type="text"
+              className="p-2 m-2"
+              placeholder="Search for forum"
+            />
+            <button
+              className="p-2 m-2"
+              onClick={() => navigate(`/createforum`)}
+            >
+              Create Forum
+            </button>
+          </div>
 
-        <InfiniteScroll
-          dataLength={posts.length}
-          next={fetchPosts}
-          hasMore={hasMore}
-          loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
-          style={{ overflow: "hidden" }}
-          endMessage={<p>No more posts</p>}
-        >
-          {posts.map((post, index) => {
-            const postDate = calculateDuration(post.postedOn);
-            return (
-              <div
-                key={index}
-                className="post-container"
-                onClick={() => navigate(`/forums/${post.id}`)}
-              >
-                <div className="cont p-2 m-3 align-items-center">
-                  <div className="flex-grow-1">
-                    <div className="cont p-2 m-2">
-                      <div className="fw-bold flex-grow-1">{post.title}</div>
-                      {/* <div className="flex-column">
-                  <span>like</span>
-                </div> */}
-                    </div>
-                    <div className="cont m-2">
+          <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchPosts}
+            hasMore={hasMore}
+            loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
+            style={{ overflow: "hidden" }}
+            endMessage={<p>No more posts</p>}
+          >
+            {posts.map((post, index) => {
+              const postDate = calculateDuration(post.postedOn);
+              return (
+                <div
+                  key={index}
+                  className="post-container"
+                  onClick={() => navigate(`/forums/${post.id}`)}
+                >
+                  <div className="cont p-2 m-3 align-items-center mypost">
+                    <div className="cont p-2">
                       <div>
                         <img
-                          src={post.username ? "/Avatars.png" : "/Anony.png"}
-                          className="pe-2"
+                          width={40}
+                          height={40}
+                          src={!post.isAnonymous ? post.photoUrl : "/Anony.png"}
+                          className="userImage"
                           alt="avatar"
                         />
                       </div>
                       <div className="flex-grow-1">
                         <span className="fw-bold m-0">
-                          {" "}
-                          {post.username ? post.username : "Anonymous"}
+                          {!post.isAnonymous ? post.username : "Anonymous"}
                         </span>
                         <br />
                         <p className="text-muted"> {postDate}</p>
                       </div>
-                      <div>
-                        <span className="pt-2 mt-3">
-                          Comments
-                          {/* {commentsCount} */}
-                        </span>
-                      </div>
+                    </div>
+                    <div className="cont p-2 m-2">
+                      <div className="fw-bold flex-grow-1">{post.title}</div>
+                    </div>
+                    <div className="cont p-2 m-2">
+                      <div className="fw-bold flex-grow-1">{post.content}</div>
+                    </div>
+                    <div className="postImg">
+                      {post.postPhotoUrl && (
+                        <img src={post.postPhotoUrl} alt="postPhotoUrl" />
+                      )}
+                    </div>
+                    <div className="comments">
+                      {post.commentsCount} Comments
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </InfiniteScroll>
+              );
+            })}
+          </InfiniteScroll>
+        </div>
+        <div
+          style={{ width: "50%", flex: "2" }}
+          className="mt-4 tips justify-content-center w-100"
+        >
+          <Tips />
+        </div>
       </div>
     </div>
   );
