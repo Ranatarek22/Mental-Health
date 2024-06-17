@@ -35,7 +35,9 @@ const ForgetPasswordPage = lazy(() =>
 const ResetPasswordPage = lazy(() =>
   import("./components/pages/ResetPasswordPage/ResetPasswordPage")
 );
-
+const Appointment = lazy(() =>
+  import("./components/pages/AppointmentPage/AppointmentPage")
+);
 function App() {
   const [pathname, setPathname] = useState();
   const [navarHeight, setNavbarHeight] = useState(0);
@@ -110,6 +112,7 @@ function App() {
               />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/myposts" element={<MyPosts />} />
+              <Route path="/appointment" element={<Appointment />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
