@@ -61,9 +61,11 @@ const Sidebar = () => {
               </li>
 
               <li className="nav-item  align-items-center w-100">
-                <a href="#" className="nav-link px-0 align-middle m-2 w-100">
-                  {" "}
-                  <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />{" "}
+                <a
+                  href="/depressiontest"
+                  className="nav-link px-0 align-middle m-2 w-100"
+                >
+                  <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />
                   <span className="ms-1text-black text-black user-link">
                     Depression Test
                   </span>
@@ -74,7 +76,7 @@ const Sidebar = () => {
                   href="/forums/forumlist"
                   className="nav-link px-0 align-middle m-2 "
                 >
-                  <FaSignsPost className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <FaSignsPost className="fs-4 mx-3 me-1 text-black " />
                   <span
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/forums/forumlist")}
@@ -85,7 +87,7 @@ const Sidebar = () => {
               </li>
               <li className="nav-item align-items-center w-100">
                 <a href="/myposts" className="nav-link px-0 align-middle m-2 ">
-                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />
                   <span
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/myposts")}

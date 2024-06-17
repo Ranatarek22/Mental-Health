@@ -7,6 +7,7 @@ import NavigateController from "./components/navigation/NavigateController/Navig
 import { main_routes } from "./routes/routes";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
 import { Spinner } from "react-bootstrap";
+import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -108,6 +109,7 @@ function App() {
                 }
               />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/depressiontest" element={<MentalHealthTest />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
