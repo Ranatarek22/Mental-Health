@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
+import Notifications from "./components/pages/notifications/NotificationsDropdown";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
 import { Spinner } from "react-bootstrap";
 import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
