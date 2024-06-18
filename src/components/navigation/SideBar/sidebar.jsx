@@ -96,6 +96,20 @@ const Sidebar = () => {
                   </span>{" "}
                 </a>
               </li>
+              <li className="nav-item align-items-center w-100">
+                <a
+                  href="/appointment"
+                  className="nav-link px-0 align-middle m-2 "
+                >
+                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <span
+                    className="ms-1  text-black user-link"
+                    onClick={() => navigate("/appointment")}
+                  >
+                    Appointment
+                  </span>{" "}
+                </a>
+              </li>
             </ul>
           </div>
 
