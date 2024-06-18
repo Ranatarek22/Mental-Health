@@ -1,5 +1,3 @@
-// src/components/pages/CalendarPage/CalendarPage.jsx
-
 import React from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -24,7 +22,7 @@ const events = [
   // Add more events here
 ];
 
-const AppointmentPage = () => {
+const WeeklySchedule = () => {
   return (
     <div>
       <Calendar
@@ -38,4 +36,4 @@ const AppointmentPage = () => {
   );
 };
 
-export default AppointmentPage;
+export default WeeklySchedule;

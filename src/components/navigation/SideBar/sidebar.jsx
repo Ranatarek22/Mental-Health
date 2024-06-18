@@ -97,14 +97,39 @@ const Sidebar = () => {
                 </a>
               </li>
               <li className="nav-item align-items-center w-100">
+                <a href="/doctors" className="nav-link px-0 align-middle m-2 ">
+                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <span
+                    className="ms-1  text-black user-link"
+                    onClick={() => navigate("/doctors")}
+                  >
+                    Doctors
+                  </span>{" "}
+                </a>
+              </li>
+              <li className="nav-item align-items-center w-100">
                 <a
-                  href="/appointment"
+                  href="/weeklyschedule"
                   className="nav-link px-0 align-middle m-2 "
                 >
                   <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
-                    onClick={() => navigate("/appointment")}
+                    onClick={() => navigate("/weeklyschedule")}
+                  >
+                    Weekly Schedule
+                  </span>{" "}
+                </a>
+              </li>
+              <li className="nav-item align-items-center w-100">
+                <a
+                  href="/appointments"
+                  className="nav-link px-0 align-middle m-2 "
+                >
+                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <span
+                    className="ms-1  text-black user-link"
+                    onClick={() => navigate("/appointments")}
                   >
                     Appointment
                   </span>{" "}

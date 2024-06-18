@@ -1,17 +1,15 @@
 import { Suspense, lazy, useState, useEffect } from "react";
-import "../src/style.css";
 import ToasterProvider from "./components/providers/toaster-provider";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import BlockRoute from "./routes/blockRoute";
 import NavigateController from "./components/navigation/NavigateController/NavigateController";
 import { main_routes } from "./routes/routes";
-import Notifications from "./components/pages/notifications/NotificationsDropdown";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
 import { Spinner } from "react-bootstrap";
 import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
-import { Doctors } from "./components/pages/HomePage/components/Doctors";
 import DoctorsList from "./components/pages/doctors/Doctors";
 import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
+import "../src/style.css";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -39,8 +37,8 @@ const ForgetPasswordPage = lazy(() =>
 const ResetPasswordPage = lazy(() =>
   import("./components/pages/ResetPasswordPage/ResetPasswordPage")
 );
-const Appointment = lazy(() =>
-  import("./components/pages/AppointmentPage/AppointmentPage")
+const WeeklySchedule = lazy(() =>
+  import("./components/pages/WeeklySchedule/WeeklySchedule")
 );
 function App() {
   const [pathname, setPathname] = useState();
@@ -119,8 +117,7 @@ function App() {
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPosts />} />
-              <Route path="/appointment" element={<Appointment />} />
-              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/weeklyschedule" element={<WeeklySchedule />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />
               {/* <Route path="/forums/forumlist" element={<ForumsList />} /> */}
