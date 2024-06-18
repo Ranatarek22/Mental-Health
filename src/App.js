@@ -8,6 +8,9 @@ import { main_routes } from "./routes/routes";
 import MyPosts from "./components/pages/MyPosts/MyPosts";
 import { Spinner } from "react-bootstrap";
 import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
+import { Doctors } from "./components/pages/HomePage/components/Doctors";
+import DoctorsList from "./components/pages/doctors/Doctors";
+import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -110,6 +113,8 @@ function App() {
               />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/depressiontest" element={<MentalHealthTest />} />
+              <Route path="/appointments" element={<UserAppointments />} />
+              <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPosts />} />
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/forums" element={<ForumsPage />} />

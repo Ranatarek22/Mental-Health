@@ -1853,4 +1853,63 @@ textarea {
     padding: 10px;
   }
 }
-/* test */
+/* end test */
+/* start doctors */
+.doctors-list {
+  padding: 20px;
+}
+.doctor-card {
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.doctor-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+/* end doctors */
+/* start appointments */
+.user-appointments {
+  padding: 20px;
+}
+.appointment-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.appointment-card {
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.appointment-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.appointment-card.confirmed {
+  background-color: lightgreen;
+}
+.appointment-card.pending {
+  background-color: lightyellow;
+}
+.loading-skeleton {
+  background: #e0e0e0;
+  height: 200px;
+  margin: 10px 0;
+}
+/* end appointments */
