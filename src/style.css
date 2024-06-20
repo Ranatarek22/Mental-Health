@@ -1866,9 +1866,195 @@ textarea {
     padding: 10px;
   }
 }
-/* test */
-/* Calender */
-.rbc-time-view .rbc-row {
-  min-height: auto;
+/* end test */
+/* start doctors */
+
+.DoctorCardSkeleton {
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
 }
-/* end of Calender */
+.DoctorCardSkeleton .skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex: 1;
+}
+
+.DoctorCardSkeleton .skeleton-line-short {
+  height: 1.2rem;
+  width: 25%;
+}
+
+.DoctorCardSkeleton .skeleton-line-long {
+  height: 0.8rem;
+  width: 36%;
+}
+.DoctorCardSkeleton .skeleton-end-line {
+  height: 0.7rem;
+  width: 10%;
+}
+.DoctorCardSkeleton .skeleton-img {
+  width: 3rem;
+  height: 3rem;
+  background-color: #aaaaaa;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  animation: pulse 2s infinite;
+}
+.doctors-list {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.doctors-list h1 {
+  margin-bottom: 50px;
+  text-align: center;
+}
+.doctor-card {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.doctor-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+/* end doctors */
+/* start appointments */
+.user-appointments {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+}
+.user-appointments h1 {
+  margin-bottom: 50px;
+  text-align: center;
+}
+.appointment-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.appointment-card {
+  cursor: pointer;
+  display: flex;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.appointment-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.appointment-card.confirmed {
+  background-color: lightgreen;
+}
+.appointment-card.pending {
+  background-color: lightyellow;
+}
+.appointment-card.rejected {
+  background-color: rgb(255, 224, 224);
+}
+.appointment-card.cancelled {
+  background-color: rgb(218, 218, 218);
+}
+.appointment-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px); /* Blurred background effect */
+  z-index: 999;
+}
+
+.appointment-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  width: 400px; /* Standardized width */
+  max-width: 90%; /* Adjust as needed */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  z-index: 1000;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.cancel-section {
+  margin-top: 10px;
+}
+
+.cancel-section label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.cancel-section input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.cancel-section button {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-section button:hover {
+  background-color: #d32f2f;
+}
+
+.toast {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+}
+
+/* end appointments */
