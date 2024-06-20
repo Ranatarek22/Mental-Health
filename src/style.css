@@ -1102,6 +1102,19 @@ textarea {
   }
 }
 /* start profile style */
+.nav-user {
+  border-radius: 20px;
+  margin-inline: 30px;
+  background-color: white;
+  right: 0;
+  top: 2%;
+
+  width: fit-content;
+  box-shadow: 0px 9px 20px 4px #a3a3a345;
+  gap: 40px;
+  z-index: 38;
+  position: fixed;
+}
 .profile-card {
   border-radius: 20px;
   margin-inline: 30px;
@@ -1854,3 +1867,8 @@ textarea {
   }
 }
 /* test */
+/* Calender */
+.rbc-time-view .rbc-row {
+  min-height: auto;
+}
+/* end of Calender */
