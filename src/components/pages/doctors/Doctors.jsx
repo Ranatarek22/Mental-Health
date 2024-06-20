@@ -1,35 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { DoctorCard } from "./DoctorCard";
+import { apiInstance } from "../../../axios";
+import { useInView } from "react-intersection-observer";
 
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
+  const [hasMore, setHasMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
 
+  const { ref, inView } = useInView({
+    threshold: 1.0,
+  });
   useEffect(() => {
     const fetchDoctors = async () => {
-      const response = await fetch(
-        "https://nexus-api-h3ik.onrender.com/api/doctors/e767b5a8-ffa3-4cab-bc3e-00dab1e30fca",
-        {
-          method: "GET",
-          headers: {
-            Authorization:
-              "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJlNzY3YjVhOC1mZmEzLTRjYWItYmMzZS0wMGRhYjFlMzBmY2EiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU3NjdiNWE4LWZmYTMtNGNhYi1iYzNlLTAwZGFiMWUzMGZjYSIsImVtYWlsIjoiZG9jdG9yQGV4YW1wbGUuY29tIiwibmFtZSI6IlN0ZXZlbiBDaGFybGVzIiwicGhvdG9VcmwiOiJodHRwOi8vcmVzLmNsb3VkaW5hcnkuY29tL2RsdDBlMDllNy9pbWFnZS91cGxvYWQvdjE3MTg2NDY1MzIvdGd0aWZuMjFxMzl5cWx6eGJ4ZGUucG5nIiwianRpIjoiZG9jdG9yQGV4YW1wbGUuY29tIiwicm9sZXMiOiJEb2N0b3IiLCJleHAiOjE3MjEyNTk1NjAsImlzcyI6Imh0dHBzOi8vbmV4dXMtYXBpLWgzaWsub25yZW5kZXIuY29tIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIzNSJ9.g2r715IFyGrebq29UHBFgB96Ezfj0qynLfhn4lSExgc",
-          },
-        }
+      setIsLoading(true);
+      const response = await apiInstance.get(
+        `/doctors?PageNumber=${page}&PageSize=${pageSize}`
       );
-      const data = await response.json();
-      setDoctors(data);
+      const newData = response.data;
+      setDoctors((prev) => [...prev, ...newData]);
+      setHasMore(newData.length === pageSize);
+      setIsLoading(false);
     };
     fetchDoctors();
     console.log(doctors);
-  }, []);
+  }, [page]);
 
+  useEffect(() => {
+    if (inView && hasMore && !isLoading) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [hasMore, isLoading, inView]);
   return (
     <div className="doctors-list">
-      {/* {doctors.map((doctor) => ( */}
-      <DoctorCard key={doctors.id} doctor={doctors} />
-      {/* ))} */}
+      <h1>our Professions Doctors</h1>
+      {doctors.map((doctor) => (
+        <DoctorCard key={doctors.id} doctor={doctor} />
+      ))}
+      {isLoading && (
+        <div className="DoctorCardSkeleton-list ">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
+            <DoctorCardSkeleton key={idx} />
+          ))}
+        </div>
+      )}
+      <div ref={ref} />
     </div>
   );
 };
 
 export default DoctorsList;
+
+const DoctorCardSkeleton = () => {
+  return (
+    <div className="DoctorCardSkeleton">
+      <div className="skeleton-img"></div>
+      <div className="skeleton-content">
+        <div className="skeleton-line skeleton-line-short"></div>
+        <div className="skeleton-line skeleton-line-long"></div>
+        <div className="skeleton-line skeleton-end-line"></div>
+      </div>
+    </div>
+  );
+};

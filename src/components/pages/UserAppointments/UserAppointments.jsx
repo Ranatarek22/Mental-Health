@@ -19,9 +19,10 @@ const UserAppointments = () => {
     const response = await apiInstance.get(
       `/appointments/clients/me?PageNumber=${page}&PageSize=${pageSize}`
     );
-    setAppointments((prev) => [...prev, ...response.data]);
+    const newData = response.data;
+    setAppointments((prev) => [...prev, ...newData]);
+    setHasMore(newData.length === pageSize);
     setLoading(false);
-    setHasMore(appointments.length === pageSize);
   };
   useEffect(() => {
     fetchAppointments(page);
@@ -35,7 +36,7 @@ const UserAppointments = () => {
 
   return (
     <div className="user-appointments">
-      {appointments.length === 0 && <LoadingSkeleton />}
+      <h1>Your Requested Appointments</h1>
       {appointments.map((appointment) => (
         <AppointmentCard
           key={appointment.id}
@@ -43,6 +44,13 @@ const UserAppointments = () => {
           onClick={(id) => setSelectedAppointment(id)}
         />
       ))}
+      {loading && (
+        <div className="DoctorCardSkeleton-list ">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
+            <LoadingSkeleton key={idx} />
+          ))}
+        </div>
+      )}
       <div ref={ref} />
       {selectedAppointment && (
         <AppointmentDetails
