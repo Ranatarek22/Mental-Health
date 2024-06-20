@@ -1,12 +1,6 @@
-import { useNavigate } from "react-router-dom";
-
 export const DoctorCard = ({ doctor }) => {
-  const history = useNavigate();
   return (
-    <div
-      className="doctor-card"
-      onClick={() => history.push(`/WeeklySchedule/${doctor.id}`)}
-    >
+    <a href={`/WeeklySchedule/${doctor.id}`} className="doctor-card">
       <img
         src={doctor.photoUrl ? doctor.photoUrl : "/Anony.png"}
         alt={doctor.firstName}
@@ -18,6 +12,6 @@ export const DoctorCard = ({ doctor }) => {
         <p>{doctor.specialization}</p>
         <p>{doctor.gender}</p>
       </div>
-    </div>
+    </a>
   );
 };
