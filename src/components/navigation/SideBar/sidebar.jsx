@@ -8,6 +8,7 @@ import {
   FaBell,
   FaRegHandPointRight,
   FaFileSignature,
+  FaStethoscope,
 } from "react-icons/fa6";
 
 import {
@@ -18,6 +19,7 @@ import {
 import { HiOutlineLogout } from "react-icons/hi";
 import { useRef, useState, useEffect } from "react";
 import { Postage } from "react-bootstrap-icons";
+import { FaCalendarAlt } from "react-icons/fa";
 const Sidebar = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
@@ -98,7 +100,7 @@ const Sidebar = () => {
               </li>
               <li className="nav-item align-items-center w-100">
                 <a href="/doctors" className="nav-link px-0 align-middle m-2 ">
-                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <FaStethoscope className="fs-4 mx-3 me-1 text-black " />
                   <span
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/doctors")}
@@ -113,7 +115,7 @@ const Sidebar = () => {
                   href="/appointments"
                   className="nav-link px-0 align-middle m-2 "
                 >
-                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <FaCalendarAlt className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/appointments")}
