@@ -49,7 +49,7 @@ export const DoctorCard = ({ doctor }) => {
           </p>
         </div>
 
-        <div style={{ flex: "2", textAlign: "center" }}>
+        <div style={{ flex: "2", textAlign: "center", width: "40%" }}>
           <DoctorSchedule doctorId={doctor.id} />
         </div>
       </div>

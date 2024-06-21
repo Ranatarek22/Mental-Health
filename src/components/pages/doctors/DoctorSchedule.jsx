@@ -19,7 +19,6 @@ const DoctorSchedule = ({ doctorId }) => {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
 
-
       const today = moment();
       const currentWeekEvents = [];
       const nextWeekEvents = [];
@@ -77,7 +76,7 @@ const DoctorSchedule = ({ doctorId }) => {
 
   return (
     <div className="doctor-schedule">
-      <CustomWeekView events={events} date={currentDate} />
+      <CustomWeekView events={events} date={currentDate} doctorId={doctorId} />
     </div>
   );
 };

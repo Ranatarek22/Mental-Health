@@ -28,16 +28,19 @@ const CustomDay = ({ events, date }) => {
       <div className="day-header">
         <span style={{ color: "var(--third-color)" }}>{formattedDate()}</span>
       </div>
-      {dayEvents.map((event, index) => (
-        <div
-          key={index}
-          className="event-slot"
-          style={{ backgroundColor: event.color }}
-        >
-          {moment(event.start).format("HH:mm")} -{" "}
-          {moment(event.end).format("HH:mm")}
-        </div>
-      ))}
+      <div className="event-slots">
+        {dayEvents.slice(0, 6).map((event, index) => (
+          <div
+            key={index}
+            className="event-slot"
+            style={{ backgroundColor: event.color }}
+          >
+            {moment(event.start).format("HH:mm")} -{" "}
+            {moment(event.end).format("HH:mm")}
+          </div>
+        ))}
+      </div>
+
       <button className="book-button">Book</button>
     </div>
   );

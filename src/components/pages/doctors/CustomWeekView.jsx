@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import CustomDay from "./CustomDay"; 
-
+import CustomDay from "./CustomDay";
 import { apiInstance } from "../../../axios";
 
-const CustomWeekView = () => {
+
+const CustomWeekView = ({ doctorId }) => {
   const [events, setEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(moment().startOf("week"));
 
@@ -14,7 +13,6 @@ const CustomWeekView = () => {
   }, []);
 
   const fetchDoctorSchedule = async () => {
-    const doctorId = "e767b5a8-ffa3-4cab-bc3e-00dab1e30fca";
     try {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
