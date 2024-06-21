@@ -107,20 +107,7 @@ const Sidebar = () => {
                   </span>{" "}
                 </a>
               </li>
-              <li className="nav-item align-items-center w-100">
-                <a
-                  href="/weeklyschedule"
-                  className="nav-link px-0 align-middle m-2 "
-                >
-                  <FaFileSignature className="fs-4 mx-3 me-1 text-black " />{" "}
-                  <span
-                    className="ms-1  text-black user-link"
-                    onClick={() => navigate("/weeklyschedule")}
-                  >
-                    Weekly Schedule
-                  </span>{" "}
-                </a>
-              </li>
+
               <li className="nav-item align-items-center w-100">
                 <a
                   href="/appointments"

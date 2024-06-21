@@ -43,7 +43,7 @@ const NavUser = () => {
             <input
               type="text"
               className="p-2 pe-3 m-2 cont4"
-              placeholder="Search for forum"
+              placeholder="Search "
               style={{ backgroundColor: "#e0dede" }}
             />
           </div>

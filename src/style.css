@@ -1915,18 +1915,21 @@ textarea {
   text-align: center;
 }
 .doctor-card {
+  margin-top: 10%;
   text-decoration: none;
   color: #000;
   display: flex;
   padding: 10px;
-  margin: 10px 0;
+  margin-left: 2%;
+  color: var(--third-color);
   border: 1px solid #ddd;
   border-radius: 5px;
   cursor: pointer;
+  width: 90%;
 }
 .doctor-card img {
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -2058,3 +2061,83 @@ textarea {
 }
 
 /* end appointments */
+/* Calender */
+
+.week-view {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 250px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-header {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.event-slot {
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  color: white;
+  text-align: center;
+}
+.book-button {
+  background-color: pink;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.book-button:hover {
+  background-color: hotpink;
+}
+
+.week-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.card-container > * {
+  flex: 0 0 auto;
+  width: 50%; /* Adjust width as needed */
+  padding: 0 5px; /* Adjust spacing between cards */
+}
+
+.scrollable-container {
+  display: flex;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.scrollable-container > * {
+  flex: 0 0 auto;
+  width: 50%; /* Adjust width as needed */
+  padding: 0 5px; /* Adjust spacing between cards */
+}
+
+.scrollable-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+/* End of Calender */

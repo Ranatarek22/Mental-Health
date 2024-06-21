@@ -15,9 +15,6 @@ const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
   import("./components/pages/ForumsPage/ForumPage")
 );
-const ForumsList = lazy(() =>
-  import("./components/pages/ForumsPage/helpers/ForumList")
-);
 const SignUpPage = lazy(() =>
   import("./components/pages/SignUpPage/SignUpPage")
 );
@@ -36,6 +33,9 @@ const ForgetPasswordPage = lazy(() =>
 );
 const ResetPasswordPage = lazy(() =>
   import("./components/pages/ResetPasswordPage/ResetPasswordPage")
+);
+const DoctorSchedule = lazy(() =>
+  import("./components/pages/doctors/DoctorSchedule")
 );
 
 function App() {
@@ -79,19 +79,7 @@ function App() {
           style={{ minHeight: "100vh", overflow: "hidden" }}
         >
           <NavigateController setPathname={setPathname} />
-          <main
-            // className=" flex-grow-1 "
-            style={
-              {
-                // minHeight: `calc(-70px + 100vh)`,
-                // minWidth: "70%",
-                // maxWidth: "100%",
-                // display: "flex",
-                // justifyContent: "center",
-                // justifyItems: "center",
-              }
-            }
-          >
+          <main>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route
@@ -115,9 +103,10 @@ function App() {
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPosts />} />
+
               <Route path="/createforum" element={<CreateForumPage />} />
+              <Route path="/doctorschedule" element={<DoctorSchedule />} />
               <Route path="/forums" element={<ForumsPage />} />
-              {/* <Route path="/forums/forumlist" element={<ForumsList />} /> */}
               <Route path="/forums/forumlist" element={<ForumsPage />} />
               <Route path="/forums/:postId" element={<SingleForumPage />} />
               <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
@@ -125,7 +114,7 @@ function App() {
                 path="/forgetpassword/resetpassword"
                 element={<ResetPasswordPage />}
               />
-              <Route path="*" element={<Navigate to={"/"} />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </main>
         </div>
