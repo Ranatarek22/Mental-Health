@@ -17,7 +17,7 @@ export const DoctorCard = ({ doctor }) => {
         }}
         className="doctor-card"
       >
-        <div style={{ flex: "1" }}>
+        <div style={{ padding: "5%" }}>
           <img
             src={doctor.photoUrl ? doctor.photoUrl : "/doctor.png"}
             alt={doctor.firstName}
@@ -25,7 +25,7 @@ export const DoctorCard = ({ doctor }) => {
           />
         </div>
 
-        <div style={{ flex: "4", marginLeft: "20px" }}>
+        <div style={{ padding: "5%" }}>
           <h4>
             {doctor.firstName} {doctor.lastName}
           </h4>
@@ -49,7 +49,13 @@ export const DoctorCard = ({ doctor }) => {
           </p>
         </div>
 
-        <div style={{ flex: "2", textAlign: "center", width: "40%" }}>
+        <div
+          style={{
+            flex: "2",
+            textAlign: "center",
+            width: "66%",
+          }}
+        >
           <DoctorSchedule doctorId={doctor.id} />
         </div>
       </div>

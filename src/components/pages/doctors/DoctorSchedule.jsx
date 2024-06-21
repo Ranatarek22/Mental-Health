@@ -18,7 +18,7 @@ const DoctorSchedule = ({ doctorId }) => {
     try {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
-
+      console.log(response.data);
       const today = moment();
       const currentWeekEvents = [];
       const nextWeekEvents = [];
