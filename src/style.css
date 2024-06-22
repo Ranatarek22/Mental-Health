@@ -320,7 +320,7 @@ main {
   max-width: calc(100% - 257px);
 }
 #navbar + * {
-  margin-top: 52px;
+  margin-top: 100px;
 }
 .tips {
   display: flex;
@@ -1914,6 +1914,54 @@ textarea {
 /* end test */
 /* start doctors */
 
+.doctors-list-container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filters {
+  max-width: 400px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .filters .Slider {
+    width: 220px;
+  }
+}
+
+.filters input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.fees-filter {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.fees-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.doctors-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
 .DoctorCardSkeleton {
   display: flex;
   padding: 10px;
@@ -1960,7 +2008,7 @@ textarea {
   text-align: center;
 }
 .doctor-card {
-  margin-top: 10%;
+  margin-top: 2%;
   overflow-x: hidden;
   text-decoration: none;
   color: #000;
