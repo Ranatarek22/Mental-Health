@@ -3,15 +3,17 @@ import { DoctorCard } from "./DoctorCard";
 import { apiInstance } from "../../../axios";
 import { useInView } from "react-intersection-observer";
 import { useNavigate, useLocation } from "react-router-dom";
-import useDoctorStore from "../../../hooks/use-doctor-store";
 import { Slider } from "@mui/material";
 import debounce from "lodash.debounce";
+import NavUser from "../../navigation/NavUser/NavUser";
+import { FaFilter } from "react-icons/fa"; // Importing filter icon
 
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false); // State to control filter visibility
   const pageSize = 10;
 
   const navigate = useNavigate();
@@ -62,7 +64,6 @@ const DoctorsList = () => {
   }, [page, filters]);
 
   useEffect(() => {
-    console.log(hasMore);
     if (inView && hasMore && !isLoading) {
       setPage((prevPage) => prevPage + 1);
     }
@@ -89,80 +90,115 @@ const DoctorsList = () => {
   };
 
   return (
-    <div className="doctors-list-container">
-      <div className="filters">
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={filters.name}
-          onChange={handleFilterChange}
-        />
-        <input
-          type="text"
-          name="specialization"
-          placeholder="Specialization"
-          value={filters.specialization}
-          onChange={handleFilterChange}
-        />
-        <input
-          type="text"
-          name="gender"
-          placeholder="Gender"
-          value={filters.gender}
-          onChange={handleFilterChange}
-        />
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          value={filters.city}
-          onChange={handleFilterChange}
-        />
-        <div className="fees-filter">
-          <Slider
-            value={[filters.minFees, filters.maxFees]}
-            onChange={handleFeesChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={1000}
+    <>
+      <NavUser />
+      <div className="doctors-list-container">
+        <button
+          className="filter-toggle"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <FaFilter /> Filter
+        </button>
+        <div className={`filters ${showFilters ? "show" : ""}`}>
+          <h3>Filter</h3>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={filters.name}
+            onChange={handleFilterChange}
           />
-          <div className="fees-inputs">
-            <input
-              type="number"
-              name="minFees"
-              placeholder="Min Fees"
-              value={filters.minFees}
-              onChange={handleFilterChange}
+          <input
+            type="text"
+            name="specialization"
+            placeholder="Specialization"
+            value={filters.specialization}
+            onChange={handleFilterChange}
+          />
+          <div className="gender-filter">
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value=""
+                checked={filters.gender === ""}
+                onChange={handleFilterChange}
+              />
+              All
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                checked={filters.gender === "male"}
+                onChange={handleFilterChange}
+              />
+              Male
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                checked={filters.gender === "female"}
+                onChange={handleFilterChange}
+              />
+              Female
+            </label>
+          </div>
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={filters.city}
+            onChange={handleFilterChange}
+          />
+          <div className="fees-filter">
+            <Slider
+              value={[filters.minFees, filters.maxFees]}
+              onChange={handleFeesChange}
+              valueLabelDisplay="auto"
+              min={0}
+              max={1000}
             />
-            <input
-              type="number"
-              name="maxFees"
-              placeholder="Max Fees"
-              value={filters.maxFees}
-              onChange={handleFilterChange}
-            />
+            <div className="fees-inputs">
+              <input
+                type="number"
+                name="minFees"
+                placeholder="Min Fees"
+                value={filters.minFees}
+                onChange={handleFilterChange}
+              />
+              <input
+                type="number"
+                name="maxFees"
+                placeholder="Max Fees"
+                value={filters.maxFees}
+                onChange={handleFilterChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="">
-        {doctors.map((doctor) => (
-          <div key={doctor.id}>
-            <DoctorCard doctor={doctor} />
-          </div>
-        ))}
-      </div>
-
-      {isLoading && (
-        <div className="DoctorCardSkeleton-list">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
-            <DoctorCardSkeleton key={idx} />
+        <div className="">
+          {doctors.map((doctor) => (
+            <div key={doctor.id}>
+              <DoctorCard doctor={doctor} />
+            </div>
           ))}
         </div>
-      )}
-      <div ref={ref} />
-    </div>
+
+        {isLoading && (
+          <div className="DoctorCardSkeleton-list">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
+              <DoctorCardSkeleton key={idx} />
+            ))}
+          </div>
+        )}
+        <div ref={ref} />
+      </div>
+    </>
   );
 };
 
