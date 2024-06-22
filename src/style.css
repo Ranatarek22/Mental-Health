@@ -2112,6 +2112,8 @@ textarea {
 .week-view {
   display: flex;
   flex-wrap: wrap;
+  overflow: auto;
+  width: 100%;
 }
 
 .day-card {
@@ -2193,7 +2195,6 @@ textarea {
 .scrollable-container {
   display: flex;
   overflow-x: auto;
-  width: 100%;
 }
 
 .scrollable-container > * {
