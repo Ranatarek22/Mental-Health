@@ -10,6 +10,7 @@ import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTe
 import DoctorsList from "./components/pages/doctors/Doctors";
 import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
 import "../src/style.css";
+import Reservation from "./components/pages/doctors/Reservation";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -106,6 +107,10 @@ function App() {
 
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/doctorschedule" element={<DoctorSchedule />} />
+              <Route
+                path="/reserve/:doctorId/:startTime/:endTime/:duration"
+                element={<Reservation />}
+              />
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsPage />} />
               <Route path="/forums/:postId" element={<SingleForumPage />} />

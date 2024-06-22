@@ -3,7 +3,6 @@ import moment from "moment";
 import CustomDay from "./CustomDay";
 import { apiInstance } from "../../../axios";
 
-
 const CustomWeekView = ({ doctorId }) => {
   const [events, setEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(moment().startOf("week"));
@@ -82,12 +81,22 @@ const CustomWeekView = ({ doctorId }) => {
     <div className="week-view">
       <div className="card-container">
         {weekDates.slice(0, 2).map((day) => (
-          <CustomDay key={day} date={day.toDate()} events={events} />
+          <CustomDay
+            key={day}
+            date={day.toDate()}
+            events={events}
+            doctorId={doctorId}
+          />
         ))}
       </div>
       <div className="scrollable-container">
         {weekDates.slice(2).map((day) => (
-          <CustomDay key={day} date={day.toDate()} events={events} />
+          <CustomDay
+            key={day}
+            date={day.toDate()}
+            events={events}
+            doctorId={doctorId}
+          />
         ))}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { DoctorCard } from "./DoctorCard";
 import { apiInstance } from "../../../axios";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
+import useDoctorStore from "../../../hooks/use-doctor-store";
 
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
@@ -10,6 +11,7 @@ const DoctorsList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const pageSize = 10;
+  const addDoctor = useDoctorStore((state) => state.setDocs);
 
   const navigate = useNavigate();
 
@@ -25,6 +27,7 @@ const DoctorsList = () => {
           `/doctors?PageNumber=${page}&PageSize=${pageSize}`
         );
         const newData = response.data;
+        addDoctor(newData);
         setDoctors((prev) => [...prev, ...newData]);
         setHasMore(newData.length === pageSize);
       } catch (error) {
