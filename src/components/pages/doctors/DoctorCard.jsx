@@ -49,7 +49,7 @@ export const DoctorCard = ({ doctor }) => {
               <p>{doctor.gender}</p>
             </div>
 
-            <Typography component="legend">Rating</Typography>
+            {/* <Typography component="legend">Rating</Typography>
             <Rating
               name="customized-color"
               defaultValue={2}
@@ -57,9 +57,10 @@ export const DoctorCard = ({ doctor }) => {
                 `${value} Heart${value !== 1 ? "s" : ""}`
               }
               precision={0.5}
-              icon={<FavoriteIcon style={{ color: "pink" }} />}
-              emptyIcon={<FavoriteBorderIcon style={{ color: "pink" }} />}
-            />
+              icon={<FavoriteIcon />}
+              emptyIcon={<FavoriteBorderIcon />}
+            /> */}
+            <Rating name="size-medium" defaultValue={2} />
           </div>
         </div>
         <div style={{ width: "60%", flexDirection: "end" }}>

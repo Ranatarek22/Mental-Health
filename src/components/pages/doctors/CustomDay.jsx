@@ -34,7 +34,6 @@ const CustomDay = ({ events, date, doctorId }) => {
     navigate(
       `/reserve/${doctorId}/${start.toISOString()}/${end.toISOString()}/${formattedDuration}`
     );
-    
   };
 
   return (
@@ -50,9 +49,7 @@ const CustomDay = ({ events, date, doctorId }) => {
             style={{ backgroundColor: event.color, cursor: "pointer" }}
             onClick={() =>
               reserveNavigation(moment(event.start), moment(event.end))
-            
             }
-           
           >
             {moment(event.start).format("HH:mm")} -{" "}
             {moment(event.end).format("HH:mm")}

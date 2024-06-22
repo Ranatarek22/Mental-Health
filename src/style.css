@@ -2090,6 +2090,9 @@ textarea {
   overflow-y: auto;
   margin-bottom: 10px;
 }
+.event-slot:hover {
+  color: var(--main-color);
+}
 
 .event-slot {
   padding: 5px;
