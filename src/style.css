@@ -1863,9 +1863,54 @@ textarea {
 }
 @media (max-width: 600px) {
   .MentalHealthTest {
-    padding: 10px;
+    margin: 10px;
+    padding: 6px;
   }
 }
+.popup-bg {
+  background-color: #000000c7;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 10;
+}
+.popup {
+  width: 340px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #d9d9d9;
+  color: black;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 17px 9px #00000030;
+  text-align: center;
+  z-index: 1000;
+}
+
+.popup-content p {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.popup-content button {
+  padding: 8px 15px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.popup-content button:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
 /* end test */
 /* start doctors */
 

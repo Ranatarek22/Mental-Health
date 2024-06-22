@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { apiInstance } from "../../../axios";
 import { AiOutlineClose } from "react-icons/ai";
 import toast from "react-hot-toast";
+import { formatDateTimeRange } from "./formatDateTimeRange";
 
 const AppointmentDetails = ({ appointment, onClose }) => {
   const [reason, setReason] = useState("");
@@ -9,7 +10,6 @@ const AppointmentDetails = ({ appointment, onClose }) => {
     appointment.status === "Confirmed" || appointment.status === "Pending"
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   const handleClose = () => {
     onClose();
@@ -23,7 +23,7 @@ const AppointmentDetails = ({ appointment, onClose }) => {
         { reason }
       );
       if (response.status === 200) {
-        appointment.status = "Cancelled"; // Assuming backend updates status
+        appointment.status = "Cancelled";
         appointment.cancellationReason = reason;
         setIsCancelable(false);
         toast.success("Appointment cancelled successfully.");
@@ -63,14 +63,6 @@ const AppointmentDetails = ({ appointment, onClose }) => {
       </div>
     </>
   );
-};
-
-const formatDateTimeRange = (startTime, endTime) => {
-  const start = new Date(startTime);
-  const end = new Date(endTime);
-  const diffMs = end - start;
-  const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-  return `${diffMins} mins left`;
 };
 
 export default AppointmentDetails;

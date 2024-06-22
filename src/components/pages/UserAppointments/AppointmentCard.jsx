@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDateTimeRange } from "./formatDateTimeRange";
 
 const AppointmentCard = ({ appointment, onClick }) => (
   <div
@@ -13,11 +14,5 @@ const AppointmentCard = ({ appointment, onClick }) => (
     </div>
   </div>
 );
-const formatDateTimeRange = (startTime, endTime) => {
-  const start = new Date(startTime);
-  const end = new Date(endTime);
-  const diffMs = end - start;
-  const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-  return `${diffMins} mins left`;
-};
+
 export default AppointmentCard;
