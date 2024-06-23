@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Select from "react-select";
 import { DoctorCard } from "./DoctorCard";
 import { apiInstance } from "../../../axios";
 import { useInView } from "react-intersection-observer";
@@ -6,14 +7,59 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Slider } from "@mui/material";
 import debounce from "lodash.debounce";
 import NavUser from "../../navigation/NavUser/NavUser";
-import { FaFilter } from "react-icons/fa"; // Importing filter icon
+import { FaFilter } from "react-icons/fa";
 
+const egyptianCities = [
+  { value: "", label: "All" },
+  { value: "cairo", label: "Cairo" },
+  { value: "alexandria", label: "Alexandria" },
+  { value: "giza", label: "Giza" },
+  { value: "shubra_el_kheima", label: "Shubra El Kheima" },
+  { value: "port_said", label: "Port Said" },
+  { value: "suez", label: "Suez" },
+  { value: "mansoura", label: "Mansoura" },
+  { value: "mahalla_el_kubra", label: "Mahalla El Kubra" },
+  { value: "tanta", label: "Tanta" },
+  { value: "asyut", label: "Asyut" },
+  { value: "ismailia", label: "Ismailia" },
+  { value: "faiyum", label: "Faiyum" },
+  { value: "zagazig", label: "Zagazig" },
+  { value: "damietta", label: "Damietta" },
+  { value: "asyut", label: "Asyut" },
+  { value: "minya", label: "Minya" },
+  { value: "damanhur", label: "Damanhur" },
+  { value: "beni_suef", label: "Beni Suef" },
+  { value: "qena", label: "Qena" },
+  { value: "sohag", label: "Sohag" },
+  { value: "hurghada", label: "Hurghada" },
+  { value: "6th_of_october_city", label: "6th of October City" },
+  { value: "shibin_el_kom", label: "Shibin El Kom" },
+  { value: "banha", label: "Banha" },
+  { value: "kafr_el_sheikh", label: "Kafr El Sheikh" },
+  { value: "mallawi", label: "Mallawi" },
+  { value: "bilqas", label: "Bilqas" },
+  { value: "arish", label: "Arish" },
+  { value: "matai", label: "Matai" },
+  { value: "idfu", label: "Idfu" },
+  { value: "mit_ghamr", label: "Mit Ghamr" },
+  { value: "el_mahalla_el_kubra", label: "El Mahalla El Kubra" },
+];
+const specializations = [
+  { value: "", label: "All" },
+  { value: "HealthPsychology", label: "Health Psychology" },
+  { value: "ClinicalPsychology", label: "Clinical Psychology" },
+  { value: "Neuropsychology", label: "Neuropsychology" },
+  { value: "ForensicPsychology", label: "Forensic Psychology" },
+  { value: "EducationalPsychology", label: "Educational Psychology" },
+  { value: "ChildPsychology", label: "Child Psychology" },
+  { value: "CounselingPsychology", label: "Counseling Psychology" },
+];
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
-  const [showFilters, setShowFilters] = useState(false); // State to control filter visibility
+  const [showFilters, setShowFilters] = useState(false);
   const pageSize = 10;
 
   const navigate = useNavigate();
@@ -76,8 +122,7 @@ const DoctorsList = () => {
     });
   }, [filters, navigate, location.pathname]);
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
+  const handleFilterChange = (name, value) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -106,14 +151,18 @@ const DoctorsList = () => {
             name="name"
             placeholder="Name"
             value={filters.name}
-            onChange={handleFilterChange}
+            onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
           />
-          <input
-            type="text"
+          <Select
             name="specialization"
+            options={specializations}
             placeholder="Specialization"
-            value={filters.specialization}
-            onChange={handleFilterChange}
+            value={specializations.find(
+              (option) => option.value === filters.specialization
+            )}
+            onChange={(option) =>
+              handleFilterChange("specialization", option ? option.value : "")
+            }
           />
           <div className="gender-filter">
             <label>
@@ -122,7 +171,9 @@ const DoctorsList = () => {
                 name="gender"
                 value=""
                 checked={filters.gender === ""}
-                onChange={handleFilterChange}
+                onChange={(e) =>
+                  handleFilterChange(e.target.name, e.target.value)
+                }
               />
               All
             </label>
@@ -132,7 +183,9 @@ const DoctorsList = () => {
                 name="gender"
                 value="male"
                 checked={filters.gender === "male"}
-                onChange={handleFilterChange}
+                onChange={(e) =>
+                  handleFilterChange(e.target.name, e.target.value)
+                }
               />
               Male
             </label>
@@ -142,17 +195,23 @@ const DoctorsList = () => {
                 name="gender"
                 value="female"
                 checked={filters.gender === "female"}
-                onChange={handleFilterChange}
+                onChange={(e) =>
+                  handleFilterChange(e.target.name, e.target.value)
+                }
               />
               Female
             </label>
           </div>
-          <input
-            type="text"
+          <Select
             name="city"
+            options={egyptianCities}
             placeholder="City"
-            value={filters.city}
-            onChange={handleFilterChange}
+            value={egyptianCities.find(
+              (option) => option.value === filters.city
+            )}
+            onChange={(option) =>
+              handleFilterChange("city", option ? option.value : "")
+            }
           />
           <div className="fees-filter">
             <Slider
@@ -168,14 +227,18 @@ const DoctorsList = () => {
                 name="minFees"
                 placeholder="Min Fees"
                 value={filters.minFees}
-                onChange={handleFilterChange}
+                onChange={(e) =>
+                  handleFilterChange(e.target.name, e.target.value)
+                }
               />
               <input
                 type="number"
                 name="maxFees"
                 placeholder="Max Fees"
                 value={filters.maxFees}
-                onChange={handleFilterChange}
+                onChange={(e) =>
+                  handleFilterChange(e.target.name, e.target.value)
+                }
               />
             </div>
           </div>
