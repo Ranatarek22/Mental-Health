@@ -2231,7 +2231,55 @@ textarea {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1100;
 }
+.user-appointments {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
+.user-appointments .user-appointments-filters {
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.user-appointments .holder-filter {
+  flex: 1;
+}
+.reset-button {
+  padding: 8px 15px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.fees-filter {
+  display: flex;
+  align-items: center;
+}
+
+.fees-inputs {
+  max-width: 400px;
+  display: flex;
+  gap: 10px;
+}
+
+.skeleton {
+  background: #e0e0e0;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.skeleton-line {
+  background: #e0e0e0;
+  height: 20px;
+  margin-bottom: 10px;
+}
 /* end appointments */
 /* Calender */
 
