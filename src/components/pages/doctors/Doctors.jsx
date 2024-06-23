@@ -133,7 +133,17 @@ const DoctorsList = () => {
       maxFees: newValue[1],
     }));
   };
-
+  const resetFilters = () => {
+    setFilters({
+      name: "",
+      city: "",
+      gender: "",
+      specialization: "",
+      minFees: 0,
+      maxFees: 1000,
+    });
+    // navigate("/appointments", { replace: true });
+  };
   return (
     <>
       <NavUser />
@@ -241,6 +251,11 @@ const DoctorsList = () => {
                 }
               />
             </div>
+          </div>
+          <div className="">
+            <button className="reset-button" onClick={resetFilters}>
+              Reset Filters
+            </button>
           </div>
         </div>
 
