@@ -39,6 +39,7 @@ const AppHeader = () => {
             <Nav.Link href="/#doctors">Doctors</Nav.Link>
             <Nav.Link href="/#articles">Articles</Nav.Link>
             <Nav.Link href="/#contact">Contact</Nav.Link>
+            <Nav.Link href="/#MentalHealthTest">Mental Health Test</Nav.Link>
 
             {isAuthenticated && <Nav.Link href="/profile">Profile</Nav.Link>}
           </Nav>

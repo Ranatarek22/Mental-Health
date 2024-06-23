@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
-import { FaCheck, FaTimes } from "react-icons/fa";
 import { apiInstance } from "../../../axios";
 
 const questions = [
@@ -107,7 +106,7 @@ const MentalHealthTest = () => {
   });
 
   return (
-    <div className="MentalHealthTest">
+    <div className="MentalHealthTest" id="MentalHealthTest">
       <Toaster />
       {popup.open && (
         <div className="popup-bg">
@@ -121,53 +120,60 @@ const MentalHealthTest = () => {
           </div>
         </div>
       )}
-      <form onSubmit={formik.handleSubmit} className="form">
-        {questions.map((q, idx) => (
-          <div key={idx} className="form-group">
-            <label>{q.question}</label>
-            {q.type === "textarea" ? (
-              <div>
-                <textarea
-                  name={`question${idx}`}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values[`question${idx}`]}
-                  className="textarea"
-                />
-                {formik.touched[`question${idx}`] &&
-                formik.errors[`question${idx}`] ? (
-                  <div className="error">{formik.errors[`question${idx}`]}</div>
-                ) : null}
-              </div>
-            ) : (
-              <div>
-                <select
-                  name={`question${idx}`}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values[`question${idx}`]}
-                  className="select"
-                >
-                  <option value="">Select an option</option>
-                  {q.options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched[`question${idx}`] &&
-                formik.errors[`question${idx}`] ? (
-                  <div className="error">{formik.errors[`question${idx}`]}</div>
-                ) : null}
-              </div>
-            )}
-            <hr />
-          </div>
-        ))}
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
+      <section id="articles" className="mentalHealthTest">
+        <h3>Mental Health Test</h3>
+        <form onSubmit={formik.handleSubmit} className="form">
+          {questions.map((q, idx) => (
+            <div key={idx} className="form-group">
+              <label>{q.question}</label>
+              {q.type === "textarea" ? (
+                <div>
+                  <textarea
+                    name={`question${idx}`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values[`question${idx}`]}
+                    className="textarea"
+                  />
+                  {formik.touched[`question${idx}`] &&
+                  formik.errors[`question${idx}`] ? (
+                    <div className="error">
+                      {formik.errors[`question${idx}`]}
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div>
+                  <select
+                    name={`question${idx}`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values[`question${idx}`]}
+                    className="select"
+                  >
+                    <option value="">Select an option</option>
+                    {q.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  {formik.touched[`question${idx}`] &&
+                  formik.errors[`question${idx}`] ? (
+                    <div className="error">
+                      {formik.errors[`question${idx}`]}
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              <hr />
+            </div>
+          ))}
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+        </form>
+      </section>
     </div>
   );
 };
