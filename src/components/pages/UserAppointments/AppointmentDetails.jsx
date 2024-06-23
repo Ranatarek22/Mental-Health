@@ -44,8 +44,17 @@ const AppointmentDetails = ({ appointment, onClose }) => {
           <AiOutlineClose />
         </button>
         <h2>{appointment.clientName}</h2>
+        <h5>with dr.{appointment.doctorName}</h5>
         <p>{formatDateTimeRange(appointment.startTime, appointment.endTime)}</p>
-        <p>Status: {appointment.status}</p>
+        <p>
+          status: <strong>{appointment.status}</strong>
+        </p>
+        <p>
+          Fees: <strong>${appointment.fees}</strong>
+        </p>
+        <p>
+          Locations: <strong>{appointment.location}</strong>
+        </p>
         {isCancelable && (
           <div className="cancel-section">
             <label>Cancel Reason:</label>

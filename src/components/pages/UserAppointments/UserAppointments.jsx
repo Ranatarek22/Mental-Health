@@ -20,6 +20,7 @@ const UserAppointments = () => {
       `/appointments/clients/me?PageNumber=${page}&PageSize=${pageSize}`
     );
     const newData = response.data;
+    console.log(newData);
     setAppointments((prev) => [...prev, ...newData]);
     setHasMore(newData.length === pageSize);
     setLoading(false);

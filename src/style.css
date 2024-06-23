@@ -2148,6 +2148,9 @@ textarea {
 .appointment-card.cancelled {
   background-color: rgb(218, 218, 218);
 }
+.appointment-card p {
+  margin: 0px;
+}
 .appointment-details-overlay {
   position: fixed;
   top: 0;
@@ -2172,7 +2175,9 @@ textarea {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
   z-index: 1000;
 }
-
+.appointment-details p {
+  margin: 0px;
+}
 .close-button {
   position: absolute;
   top: 10px;

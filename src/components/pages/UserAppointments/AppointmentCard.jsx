@@ -9,8 +9,17 @@ const AppointmentCard = ({ appointment, onClick }) => (
     <img src={appointment.clientPhotoUrl} alt={appointment.clientName} />
     <div>
       <h4>{appointment.clientName}</h4>
+      <h5>with dr.{appointment.doctorName}</h5>
       <p>{formatDateTimeRange(appointment.startTime, appointment.endTime)}</p>
-      <p>{appointment.status}</p>
+      <p>
+        status: <strong>{appointment.status}</strong>
+      </p>
+      <p>
+        Fees: <strong>${appointment.fees}</strong>
+      </p>
+      <p>
+        Locations: <strong>{appointment.location}</strong>
+      </p>
     </div>
   </div>
 );
