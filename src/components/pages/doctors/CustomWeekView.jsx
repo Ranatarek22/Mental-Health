@@ -32,7 +32,7 @@ const CustomWeekView = ({ doctorId }) => {
 
       const initialDays = calculateDates(weekDays, 0, DAYS_PER_LOAD);
       setDisplayedDays(initialDays);
-      setTotalDaysCount(weekDays.length * 52); // assuming 1 year worth of schedule
+      setTotalDaysCount(weekDays.length * 52);
 
       const initialEvents = calculateEvents(weekDays, 0, DAYS_PER_LOAD);
       setEvents(initialEvents);
@@ -136,36 +136,28 @@ const CustomWeekView = ({ doctorId }) => {
           .day(dayOfWeek)
           .add(weeksToAdd + Math.floor(i / weekDays.length), "weeks");
 
-        const startHour = day.startTime.substring(0, 2);
-        const startMinute = day.startTime.substring(3, 5);
-        const endHour = day.endTime.substring(0, 2);
-        const endMinute = day.endTime.substring(3, 5);
-        const sessionDuration = moment.duration(day.sessionDuration);
+        const startTime = day.startTime;
+        const endTime = day.endTime;
 
-        let currentStartTime = targetDay.clone().set({
-          hour: startHour,
-          minute: startMinute,
-        });
-        const currentEndTime = targetDay.clone().set({
-          hour: endHour,
-          minute: endMinute,
-        });
+        const event = {
+          start: targetDay
+            .clone()
+            .set({
+              hour: startTime.substring(0, 2),
+              minute: startTime.substring(3, 5),
+            })
+            .toDate(),
+          end: targetDay
+            .clone()
+            .set({
+              hour: endTime.substring(0, 2),
+              minute: endTime.substring(3, 5),
+            })
+            .toDate(),
+          color: "var(--third-color)",
+        };
 
-        while (currentStartTime.isBefore(currentEndTime)) {
-          const eventEndTime = currentStartTime.clone().add(sessionDuration);
-          if (eventEndTime.isAfter(currentEndTime)) {
-            break;
-          }
-
-          const event = {
-            start: currentStartTime.toDate(),
-            end: eventEndTime.toDate(),
-            color: "var(--third-color)",
-          };
-
-          allEvents.push(event);
-          currentStartTime.add(sessionDuration).add(15, "minutes");
-        }
+        allEvents.push(event);
       });
     }
     return allEvents;
@@ -189,11 +181,13 @@ const CustomWeekView = ({ doctorId }) => {
           />
         ))}
       </div>
-      {visibleDaysCount < totalDaysCount && (
-        <button className="next-button" onClick={handleNextClick}>
-          More
-        </button>
-      )}
+      <div>
+        {visibleDaysCount < totalDaysCount && (
+          <button className="next-button" onClick={handleNextClick}>
+            More
+          </button>
+        )}
+      </div>
     </div>
   );
 };

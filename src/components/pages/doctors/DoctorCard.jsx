@@ -38,10 +38,10 @@ export const DoctorCard = ({ doctor }) => {
               <FaStethoscope className="me-2" color="pink" />
               <p className="mb-0">{doctor.specialization}</p>
             </div>
-            <div className="d-flex align-items-center mb-2">
+            {/* <div className="d-flex align-items-center mb-2">
               <LocationOnIcon className="me-2" />
               <p className="mb-0">{doctor.location}</p>
-            </div>
+            </div> */}
             <div className="d-flex align-items-center mb-2">
               <LocationOnIcon className="me-2" />
               <p className="mb-0">{doctor.city}</p>

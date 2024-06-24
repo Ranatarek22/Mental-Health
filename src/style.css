@@ -2292,18 +2292,17 @@ textarea {
 .card-container {
   display: flex;
   justify-content: flex-start;
-  width: 400px; /* Width of two cards */
+  width: 400px;
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 10px; /* Add padding to avoid scroll bar overlap */
+  padding-bottom: 10px;
 }
-
 .day-card {
   display: inline-block;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  width: 200px; /* Fixed width */
+  width: 200px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-right: 10px;
 }
@@ -2363,5 +2362,9 @@ textarea {
 .scrollable-container::-webkit-scrollbar {
   display: none;
 }
-
+@media (max-width: 425px) {
+  .day-card {
+    width: 100px;
+  }
+}
 /* End of Calender */
