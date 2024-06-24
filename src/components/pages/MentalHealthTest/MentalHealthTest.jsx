@@ -1,156 +1,179 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
+import { apiInstance } from "../../../axios";
 
 const questions = [
-  { type: "text", question: "How do you feel today?" },
-  { type: "radio", question: "Do you often feel sad?", options: ["Yes", "No"] },
   {
     type: "select",
-    question: "How would you rate your mood today?",
-    options: ["High", "Medium", "Low"],
+    question: "How often do you feel hopeless or helpless?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  {
-    type: "radio",
-    question: "Do you have trouble sleeping?",
-    options: ["Yes", "No"],
-  },
-  { type: "text", question: "What activities make you feel better?" },
   {
     type: "select",
-    question: "How often do you exercise?",
-    options: ["Always", "Often", "Sometimes", "Never"],
+    question:
+      "How often do you have trouble sleeping or experience changes in your sleep patterns (e.g., insomnia or oversleeping)?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  {
-    type: "radio",
-    question: "Do you feel anxious frequently?",
-    options: ["Yes", "No"],
-  },
-  { type: "text", question: "Describe your support system." },
   {
     type: "select",
-    question: "How would you rate your appetite?",
-    options: ["High", "Medium", "Low"],
+    question: "How often do you feel excessively tired or lack energy?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  {
-    type: "radio",
-    question: "Do you experience mood swings?",
-    options: ["Yes", "No"],
-  },
-  { type: "text", question: "What coping mechanisms do you use?" },
   {
     type: "select",
-    question: "How often do you socialize?",
-    options: ["Always", "Often", "Sometimes", "Never"],
+    question:
+      "How often do you lose interest or pleasure in activities you used to enjoy?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  { type: "radio", question: "Do you feel hopeless?", options: ["Yes", "No"] },
-  { type: "text", question: "What are your hobbies?" },
   {
     type: "select",
-    question: "How would you rate your energy levels?",
-    options: ["High", "Medium", "Low"],
+    question:
+      "How often do you experience difficulty concentrating or making decisions?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  {
-    type: "radio",
-    question: "Do you have trouble concentrating?",
-    options: ["Yes", "No"],
-  },
-  { type: "text", question: "What are your goals for the next month?" },
   {
     type: "select",
-    question: "How often do you feel overwhelmed?",
-    options: ["Always", "Often", "Sometimes", "Never"],
+    question: "How often do you feel worthless or excessively guilty?",
+    options: ["Sometimes", "Always", "Never", "Usually"],
   },
-  { type: "radio", question: "Do you feel lonely?", options: ["Yes", "No"] },
-  { type: "text", question: "What makes you feel accomplished?" },
+  { type: "textarea", question: "Tell us your story" },
 ];
 
 const validationSchema = Yup.object(
   questions.reduce((acc, curr, idx) => {
-    acc[`question${idx}`] = Yup.string().required("This field is required");
+    if (curr.type !== "textarea") {
+      acc[`question${idx}`] = Yup.string().required("This field is required");
+    } else {
+      acc[`question${idx}`] = Yup.string().required("This field is required");
+    }
     return acc;
   }, {})
 );
 
 const MentalHealthTest = () => {
+  const [popup, setPopup] = useState({ open: false, message: "" });
+
   const formik = useFormik({
     initialValues: questions.reduce((acc, curr, idx) => {
       acc[`question${idx}`] = "";
       return acc;
     }, {}),
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      toast.success("Form submitted successfully!");
+    onSubmit: async (values) => {
+      const responseCounts = { sometimes: 0, always: 0, never: 0, usually: 0 };
+
+      questions.forEach((q, idx) => {
+        if (q.type !== "textarea") {
+          responseCounts[values[`question${idx}`].toLowerCase()] += 1;
+        }
+      });
+
+      const payload = {
+        text: values[`question6`],
+        ...responseCounts,
+      };
+
+      try {
+        const response = await apiInstance.post(
+          "/users/test-depression",
+          JSON.stringify(payload),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data) {
+          setPopup({
+            open: true,
+            message:
+              "You are depressed. Please seek help from a mental health professional.",
+          });
+        } else {
+          setPopup({
+            open: true,
+            message: "You are normal. Keep maintaining your mental health!",
+          });
+        }
+        toast.success("Form submitted successfully!");
+      } catch (error) {
+        toast.error("Error submitting form.");
+      }
     },
   });
 
   return (
-    <div className="MentalHealthTest">
-      <form onSubmit={formik.handleSubmit} className="form">
-        {questions.map((q, idx) => (
-          <div key={idx} className="form-group">
-            {idx !== 0 && <hr />}
-
-            <label>{q.question}</label>
-            {q.type === "text" && (
-              <div>
-                <textarea
-                  type="text"
-                  name={`question${idx}`}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values[`question${idx}`]}
-                  className="input"
-                />
-              </div>
-            )}
-            {q.type === "radio" && (
-              <div className="q">
-                {q.options.map((option) => (
-                  <label key={option} className="radio-label">
-                    <input
-                      type="radio"
-                      name={`question${idx}`}
-                      value={option}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      className="radio-input"
-                    />
-                    {option}
-                  </label>
-                ))}
-              </div>
-            )}
-            {q.type === "select" && (
-              <div>
-                <select
-                  name={`question${idx}`}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values[`question${idx}`]}
-                  className="select"
-                >
-                  <option value="">Select an option</option>
-                  {q.options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-            {formik.touched[`question${idx}`] &&
-            formik.errors[`question${idx}`] ? (
-              <div className="error">{formik.errors[`question${idx}`]}</div>
-            ) : null}
+    <div className="MentalHealthTest" id="MentalHealthTest">
+      <Toaster />
+      {popup.open && (
+        <div className="popup-bg">
+          <div className="popup">
+            <div className="popup-content">
+              <p>{popup.message}</p>
+              <button onClick={() => setPopup({ open: false, message: "" })}>
+                Close
+              </button>
+            </div>
           </div>
-        ))}
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
+        </div>
+      )}
+      <section id="articles" className="mentalHealthTest">
+        <h3>Mental Health Test</h3>
+        <form onSubmit={formik.handleSubmit} className="form">
+          {questions.map((q, idx) => (
+            <div key={idx} className="form-group">
+              <label>{q.question}</label>
+              {q.type === "textarea" ? (
+                <div>
+                  <textarea
+                    name={`question${idx}`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values[`question${idx}`]}
+                    className="textarea"
+                  />
+                  {formik.touched[`question${idx}`] &&
+                  formik.errors[`question${idx}`] ? (
+                    <div className="error">
+                      {formik.errors[`question${idx}`]}
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div>
+                  <select
+                    name={`question${idx}`}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values[`question${idx}`]}
+                    className="select"
+                  >
+                    <option value="">Select an option</option>
+                    {q.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  {formik.touched[`question${idx}`] &&
+                  formik.errors[`question${idx}`] ? (
+                    <div className="error">
+                      {formik.errors[`question${idx}`]}
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              <hr />
+            </div>
+          ))}
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+        </form>
+      </section>
     </div>
   );
 };

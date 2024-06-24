@@ -6,6 +6,8 @@ const LoadingSkeleton = () => (
     <div className="skeleton-content">
       <div className="skeleton-line skeleton-line-short"></div>
       <div className="skeleton-line skeleton-line-long"></div>
+      <div className="skeleton-line skeleton-line-short"></div>
+      <div className="skeleton-line skeleton-line-long"></div>
       <div className="skeleton-line skeleton-end-line"></div>
     </div>
   </div>

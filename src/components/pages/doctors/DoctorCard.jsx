@@ -1,20 +1,21 @@
 import React from "react";
-import NavUser from "../../navigation/NavUser/NavUser";
 import DoctorSchedule from "./DoctorSchedule";
 import { FaStethoscope, FaMoneyBillWave } from "react-icons/fa";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
+// import Rating from "@mui/material/Rating";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 export const DoctorCard = ({ doctor }) => {
   return (
     <>
-      <NavUser />
       <div
         style={{
           flexDirection: "row",
-          marginTop: "8%",
-          marginBottom: "4%",
+          marginTop: "2%",
+          marginBottom: "0%",
         }}
         className="doctor-card d-flex flex-wrap align-items-center justify-content-between"
       >
@@ -39,11 +40,15 @@ export const DoctorCard = ({ doctor }) => {
             </div>
             <div className="d-flex align-items-center mb-2">
               <LocationOnIcon className="me-2" />
-              <p className="mb-0">7 st warraq arrab</p>
+              <p className="mb-0">{doctor.location}</p>
+            </div>
+            <div className="d-flex align-items-center mb-2">
+              <LocationOnIcon className="me-2" />
+              <p className="mb-0">{doctor.city}</p>
             </div>
             <div className="d-flex align-items-center mb-2">
               <FaMoneyBillWave className="me-2 text-success" />
-              <p className="mb-0">$100</p>
+              <p className="mb-0">$ {doctor.sessionFees} </p>
             </div>
             <div>
               <p>{doctor.gender}</p>
