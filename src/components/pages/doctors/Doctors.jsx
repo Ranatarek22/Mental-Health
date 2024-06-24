@@ -27,6 +27,7 @@ const DoctorsList = () => {
           `/doctors?PageNumber=${page}&PageSize=${pageSize}`
         );
         const newData = response.data;
+        
         addDoctor(newData);
         setDoctors((prev) => [...prev, ...newData]);
         setHasMore(newData.length === pageSize);

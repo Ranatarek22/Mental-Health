@@ -17,7 +17,7 @@ const formatDateTimeRange = (startTime, endTime) => {
   const start = new Date(startTime);
   const end = new Date(endTime);
   const diffMs = end - start;
-  const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+  const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); 
   return `${diffMins} mins left`;
 };
 export default AppointmentCard;

@@ -2,9 +2,10 @@ import React from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
-const CustomDay = ({ events, date, doctorId }) => {
+const CustomDay = ({ events, date, formattedDate, doctorId }) => {
   const navigate = useNavigate();
 
+  // Filter events for the specific day
   const dayEvents = events.filter((event) =>
     moment(event.start).isSame(date, "day")
   );
@@ -13,18 +14,8 @@ const CustomDay = ({ events, date, doctorId }) => {
     return null;
   }
 
-  const formattedDate = () => {
-    const today = moment().startOf("day");
-    const tomorrow = moment().add(1, "day").startOf("day");
-
-    if (moment(date).isSame(today, "day")) {
-      return "Today";
-    } else if (moment(date).isSame(tomorrow, "day")) {
-      return "Tomorrow";
-    } else {
-      return moment(date).format("ddd, D/M/YYYY");
-    }
-  };
+  // Get the first event of the day
+  const firstEvent = dayEvents[0];
 
   const reserveNavigation = (start, end) => {
     const duration = moment.duration(moment(end).diff(moment(start)));
@@ -39,24 +30,48 @@ const CustomDay = ({ events, date, doctorId }) => {
   return (
     <div className="day-card">
       <div className="day-header">
-        <span style={{ color: "var(--third-color)" }}>{formattedDate()}</span>
+        <span style={{ color: "var(--third-color)" }}>{formattedDate}</span>
       </div>
       <div className="event-slots">
-        {dayEvents.slice(0, 6).map((event, index) => (
-          <div
-            key={index}
-            className="event-slot"
-            style={{ backgroundColor: event.color, cursor: "pointer" }}
-            onClick={() =>
-              reserveNavigation(moment(event.start), moment(event.end))
-            }
-          >
-            {moment(event.start).format("HH:mm")} -{" "}
-            {moment(event.end).format("HH:mm")}
-          </div>
-        ))}
+        <div
+          className="event-slot"
+          style={{
+            backgroundColor: firstEvent.color,
+            cursor: "pointer",
+            padding: "10px",
+            margin: "5px 0",
+            borderRadius: "5px",
+            textAlign: "center",
+          }}
+          onClick={() =>
+            reserveNavigation(moment(firstEvent.start), moment(firstEvent.end))
+          }
+        >
+          {moment(firstEvent.start).format("HH:mm")}
+        </div>
+        <div
+          className="event-slot"
+          style={{
+            backgroundColor: firstEvent.color,
+            cursor: "pointer",
+            padding: "10px",
+            margin: "5px 0",
+            borderRadius: "5px",
+            textAlign: "center",
+          }}
+          onClick={() =>
+            reserveNavigation(moment(firstEvent.start), moment(firstEvent.end))
+          }
+        >
+          {moment(firstEvent.end).format("HH:mm")}
+        </div>
       </div>
-      <button className="book-button">Book</button>
+      <button
+        className="book-button"
+        onClick={() => reserveNavigation(dayEvents[0].start, dayEvents[0].end)}
+      >
+        Book
+      </button>
     </div>
   );
 };

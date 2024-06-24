@@ -11,17 +11,15 @@ const Reservation = () => {
 
   const queryParams = queryString.parse(location.search);
   const getDoctor = useDoctorStore((state) => state.getDoctorById);
-  const doctor=getDoctor(doctorId);
-//   console.log(doctor.specialization);
+  const doctor = getDoctor(doctorId);
+  //   console.log(doctor.specialization);
 
-
-  //   console.log(doctorId);
+  console.log(doctorId);
 
   const requestBody = {
     startTime: startTime,
     duration: duration,
     location: "string",
-    reason: "string",
   };
 
   useEffect(() => {
@@ -53,11 +51,7 @@ const Reservation = () => {
     bookAppointment();
   }, [doctorId, startTime, duration, queryParams.location, queryParams.reason]);
 
-  return (
-    <div>
-
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Reservation;

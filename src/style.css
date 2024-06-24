@@ -2159,7 +2159,57 @@ textarea {
 .doctor-schedule {
   width: 70%;
 }
+.doctor-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.doctor-card > div {
+  flex: 1 1 100%;
+  margin: 10px;
+}
+
+.doctor-card img {
+  max-width: 150px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+.next-button {
+  color: var(--main-color);
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background-color: #0056b3; /* Adjust the hover background color as needed */
+}
+
+@media (min-width: 768px) {
+  .doctor-card > div {
+    flex: 1 1 auto;
+  }
+  .doctor-card .p-2 {
+    flex: 0 0 auto;
+  }
+  .doctor-card .pr-5 {
+    flex: 1 1 auto;
+  }
+  .doctor-card .flex-grow-1 {
+    flex: 1 1 auto;
+  }
+}
+@media (max-width: 768px) {
+  .doctor-card > div {
+    display: flex;
+    justify-content: center;
+  }
+}
 .scrollable-container::-webkit-scrollbar {
   display: none;
 }
