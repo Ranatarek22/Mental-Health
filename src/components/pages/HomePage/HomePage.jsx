@@ -9,6 +9,7 @@ import { Scheduling } from "./components/Scheduling";
 import { Communication } from "./components/Communication";
 import Footer from "./components/Footer";
 import { motion } from "framer-motion";
+import MentalHealthTest from "../MentalHealthTest/MentalHealthTest";
 
 const HomePage = () => {
   return (
@@ -20,6 +21,7 @@ const HomePage = () => {
       <Scheduling />
       <Services />
       <Doctors />
+      <MentalHealthTest />
       <Articles />
       {/* <Contact /> */}
       <Footer />
