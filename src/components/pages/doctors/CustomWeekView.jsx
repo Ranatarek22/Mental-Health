@@ -26,7 +26,6 @@ const CustomWeekView = ({ doctorId }) => {
     try {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
-      console.log(weekDays);
       if (!weekDays || weekDays.length === 0) {
         throw new Error("No weekDays data found");
       }

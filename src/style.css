@@ -2282,22 +2282,30 @@ textarea {
 }
 /* end appointments */
 /* Calender */
-
 .week-view {
   display: flex;
-  flex-wrap: wrap;
-  overflow: auto;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
+.card-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 400px; /* Width of two cards */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px; /* Add padding to avoid scroll bar overlap */
+}
+
 .day-card {
+  display: inline-block;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  width: 250px;
+  width: 200px; /* Fixed width */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-right: 10px;
 }
 
 .day-header {
@@ -2311,9 +2319,6 @@ textarea {
   overflow-y: auto;
   margin-bottom: 10px;
 }
-.event-slot:hover {
-  color: var(--main-color);
-}
 
 .event-slot {
   padding: 5px;
@@ -2323,12 +2328,8 @@ textarea {
   text-align: center;
 }
 
-.scroll-down {
-  font-size: 12px;
-  color: var(--third-color);
-  text-align: center;
-  margin-top: 5px;
-  color: var(--third-color);
+.event-slot:hover {
+  color: var(--main-color);
 }
 
 .book-button {
@@ -2346,57 +2347,6 @@ textarea {
   background-color: hotpink;
 }
 
-.week-view {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-container {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 10px;
-}
-
-.card-container > * {
-  flex: 0 0 auto;
-  width: 50%;
-  padding: 0 5px;
-}
-
-.scrollable-container {
-  display: flex;
-  overflow-x: auto;
-}
-
-.scrollable-container > * {
-  flex: 0 0 auto;
-  /* width: 50%; */
-  padding: 0 5px;
-}
-.doctor-schedule {
-  width: 70%;
-}
-.doctor-card {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.doctor-card > div {
-  flex: 1 1 100%;
-  margin: 10px;
-}
-
-.doctor-card img {
-  max-width: 150px;
-  height: auto;
-  margin: 0 auto;
-  display: block;
-}
 .next-button {
   color: var(--main-color);
   padding: 10px 20px;
@@ -2407,29 +2357,9 @@ textarea {
 }
 
 .next-button:hover {
-  background-color: #0056b3; /* Adjust the hover background color as needed */
+  background-color: #0056b3;
 }
 
-@media (min-width: 768px) {
-  .doctor-card > div {
-    flex: 1 1 auto;
-  }
-  .doctor-card .p-2 {
-    flex: 0 0 auto;
-  }
-  .doctor-card .pr-5 {
-    flex: 1 1 auto;
-  }
-  .doctor-card .flex-grow-1 {
-    flex: 1 1 auto;
-  }
-}
-@media (max-width: 768px) {
-  .doctor-card > div {
-    display: flex;
-    justify-content: center;
-  }
-}
 .scrollable-container::-webkit-scrollbar {
   display: none;
 }
