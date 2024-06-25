@@ -92,7 +92,7 @@ const DoctorsList = () => {
         const response = await apiInstance.get(
           `/doctors?PageNumber=${page}&PageSize=${pageSize}&Name=${filters.name}&Specialization=${filters.specialization}&Gender=${filters.gender}&City=${filters.city}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
         );
-        const newData = response.data.filter((doctor) => doctor.weekDays && doctor.weekDays.length > 0);
+        const newData = response.data;
         if (page === 1) {
           setDoctors(newData);
         } else {
