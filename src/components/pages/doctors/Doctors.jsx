@@ -44,6 +44,7 @@ const egyptianCities = [
   { value: "mit_ghamr", label: "Mit Ghamr" },
   { value: "el_mahalla_el_kubra", label: "El Mahalla El Kubra" },
 ];
+
 const specializations = [
   { value: "", label: "All" },
   { value: "HealthPsychology", label: "Health Psychology" },
@@ -54,6 +55,7 @@ const specializations = [
   { value: "ChildPsychology", label: "Child Psychology" },
   { value: "CounselingPsychology", label: "Counseling Psychology" },
 ];
+
 const DoctorsList = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +92,7 @@ const DoctorsList = () => {
         const response = await apiInstance.get(
           `/doctors?PageNumber=${page}&PageSize=${pageSize}&Name=${filters.name}&Specialization=${filters.specialization}&Gender=${filters.gender}&City=${filters.city}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
         );
-        const newData = response.data;
+        const newData = response.data.filter((doctor) => doctor.weekDays && doctor.weekDays.length > 0);
         if (page === 1) {
           setDoctors(newData);
         } else {
@@ -133,6 +135,7 @@ const DoctorsList = () => {
       maxFees: newValue[1],
     }));
   };
+
   const resetFilters = () => {
     setFilters({
       name: "",
@@ -142,8 +145,8 @@ const DoctorsList = () => {
       minFees: 0,
       maxFees: 1000,
     });
-    // navigate("/appointments", { replace: true });
   };
+
   return (
     <>
       <NavUser />

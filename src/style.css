@@ -2364,7 +2364,10 @@ textarea {
 }
 @media (max-width: 425px) {
   .day-card {
-    width: 100px;
+    width: 1420px;
+  }
+  .card-container {
+    width: 200px;
   }
 }
 /* End of Calender */

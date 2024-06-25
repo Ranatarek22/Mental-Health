@@ -14,9 +14,6 @@ const CustomDay = ({ events, date, formattedDate, doctorId }) => {
     return null;
   }
 
-  // Get the first event of the day
-  const firstEvent = dayEvents[0];
-
   const reserveNavigation = (start, end) => {
     const duration = moment.duration(moment(end).diff(moment(start)));
     const formattedDuration = moment
@@ -27,51 +24,45 @@ const CustomDay = ({ events, date, formattedDate, doctorId }) => {
     );
   };
 
+  // Group events by their start time
+  const groupedEvents = dayEvents.reduce((acc, event) => {
+    const startTime = moment(event.start).format("HH:mm");
+    if (!acc[startTime]) {
+      acc[startTime] = [];
+    }
+    acc[startTime].push(event);
+    return acc;
+  }, {});
+
   return (
     <div className="day-card">
       <div className="day-header">
         <span style={{ color: "var(--third-color)" }}>{formattedDate}</span>
       </div>
       <div className="event-slots">
-        <div
-          className="event-slot"
-          style={{
-            backgroundColor: firstEvent.color,
-            cursor: "pointer",
-            padding: "10px",
-            margin: "5px 0",
-            borderRadius: "5px",
-            textAlign: "center",
-          }}
-          onClick={() =>
-            reserveNavigation(moment(firstEvent.start), moment(firstEvent.end))
-          }
-        >
-          {moment(firstEvent.start).format("HH:mm")}
-        </div>
-        <div
-          className="event-slot"
-          style={{
-            backgroundColor: firstEvent.color,
-            cursor: "pointer",
-            padding: "10px",
-            margin: "5px 0",
-            borderRadius: "5px",
-            textAlign: "center",
-          }}
-          onClick={() =>
-            reserveNavigation(moment(firstEvent.start), moment(firstEvent.end))
-          }
-        >
-          {moment(firstEvent.end).format("HH:mm")}
-        </div>
+        {Object.keys(groupedEvents).map((startTime, index) => (
+          <div key={index}>
+            <div
+              className="event-slot"
+              style={{
+                backgroundColor: groupedEvents[startTime][0].color,
+                cursor: "pointer",
+                padding: "10px",
+                margin: "5px 0",
+                borderRadius: "5px",
+              }}
+              onClick={() =>
+                reserveNavigation(
+                  moment(groupedEvents[startTime][0].start),
+                  moment(groupedEvents[startTime][0].end)
+                )
+              }
+            >
+              {startTime}
+            </div>
+          </div>
+        ))}
       </div>
-      <button
-        className="book-button"
-        onClick={() => reserveNavigation(dayEvents[0].start, dayEvents[0].end)}
-      >
-        Book
-      </button>
     </div>
   );
 };

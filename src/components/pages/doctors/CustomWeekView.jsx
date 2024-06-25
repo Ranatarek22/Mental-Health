@@ -10,7 +10,7 @@ const CustomWeekView = ({ doctorId }) => {
   const [weeksAhead, setWeeksAhead] = useState(0);
   const [visibleDaysCount, setVisibleDaysCount] = useState(3);
   const [totalDaysCount, setTotalDaysCount] = useState(0);
-  const DAYS_PER_LOAD = 3;
+  const DAYS_PER_LOAD = 6;
 
   useEffect(() => {
     fetchDoctorSchedule();
@@ -136,28 +136,36 @@ const CustomWeekView = ({ doctorId }) => {
           .day(dayOfWeek)
           .add(weeksToAdd + Math.floor(i / weekDays.length), "weeks");
 
-        const startTime = day.startTime;
-        const endTime = day.endTime;
+        const startHour = day.startTime.substring(0, 2);
+        const startMinute = day.startTime.substring(3, 5);
+        const endHour = day.endTime.substring(0, 2);
+        const endMinute = day.endTime.substring(3, 5);
+        const sessionDuration = moment.duration(day.sessionDuration);
 
-        const event = {
-          start: targetDay
-            .clone()
-            .set({
-              hour: startTime.substring(0, 2),
-              minute: startTime.substring(3, 5),
-            })
-            .toDate(),
-          end: targetDay
-            .clone()
-            .set({
-              hour: endTime.substring(0, 2),
-              minute: endTime.substring(3, 5),
-            })
-            .toDate(),
-          color: "var(--third-color)",
-        };
+        let currentStartTime = targetDay.clone().set({
+          hour: startHour,
+          minute: startMinute,
+        });
+        const currentEndTime = targetDay.clone().set({
+          hour: endHour,
+          minute: endMinute,
+        });
 
-        allEvents.push(event);
+        while (currentStartTime.isBefore(currentEndTime)) {
+          const eventEndTime = currentStartTime.clone().add(sessionDuration);
+          if (eventEndTime.isAfter(currentEndTime)) {
+            break;
+          }
+
+          const event = {
+            start: currentStartTime.toDate(),
+            end: eventEndTime.toDate(),
+            color: "var(--third-color)",
+          };
+
+          allEvents.push(event);
+          currentStartTime.add(sessionDuration).add(15, "minutes");
+        }
       });
     }
     return allEvents;
