@@ -1122,8 +1122,7 @@ textarea {
 .profile-card {
   border-radius: 20px;
   margin-inline: 30px;
-  margin-left: 10%;
-  margin-right: 250px;
+  margin: 20px auto;
   background-color: white;
   padding: 40px;
   min-height: 100%;
@@ -1225,6 +1224,7 @@ textarea {
   opacity: 0.5;
 }
 .profile-card button {
+  margin-top: 40px;
   border-radius: 20px;
   font-weight: bold;
   font-size: 22px;
@@ -1232,7 +1232,7 @@ textarea {
   border: none;
   padding: 8px 2px;
   box-shadow: 0px 9px 20px 4px #a3a3a345;
-  background: var(--second-color);
+  background: var(--main-color);
   transition: 0.4s ease-in-out;
   color: #fff;
   -webkit-transition: 0.3s ease-in-out;
@@ -1245,9 +1245,6 @@ textarea {
     font-size: 18px;
     padding: 4px 2px;
   }
-}
-.profile-card button:hover {
-  background: var(--main-color);
 }
 .profile-card form .form-row.image {
   justify-content: center;
@@ -1890,18 +1887,17 @@ textarea {
   background-color: #000000c7;
   width: 100%;
   position: fixed;
+  padding: 8px;
   top: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   z-index: 10;
 }
 .popup {
-  width: 340px;
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  max-width: 460px;
   background-color: #d9d9d9;
   color: black;
   padding: 15px 25px;
@@ -1915,19 +1911,43 @@ textarea {
   margin-bottom: 10px;
   font-size: 22px;
 }
-
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.popup-content .actions {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
 .popup-content button {
+  width: 100%;
   padding: 8px 15px;
-  background-color: green;
+  background-color: rgb(46, 32, 245);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
 }
-
+.popup-content > button:last-child {
+  background-color: #99413500;
+  border: 1px solid rgb(30, 15, 236);
+  color: #000;
+}
 .popup-content button:hover {
-  background-color: darken(var(--primary-color), 10%);
+  background-color: rgb(30, 15, 236);
+  color: white;
 }
 
 /* end test */

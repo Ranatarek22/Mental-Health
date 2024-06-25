@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { apiInstance } from "../../../axios";
+import { useNavigate } from "react-router-dom";
 
 const questions = [
   {
@@ -53,6 +54,8 @@ const validationSchema = Yup.object(
 );
 
 const MentalHealthTest = () => {
+  const navigate = useNavigate();
+  const [isDepressed, setIsDepressed] = useState(false);
   const [popup, setPopup] = useState({ open: false, message: "" });
 
   const formik = useFormik({
@@ -85,12 +88,12 @@ const MentalHealthTest = () => {
             },
           }
         );
-        console.log(response.data);
+        setIsDepressed(response.data);
         if (response.data) {
           setPopup({
             open: true,
             message:
-              "You are depressed. Please seek help from a mental health professional.",
+              "You are depressed. Please seek help from a mental health professional or check ur community.",
           });
         } else {
           setPopup({
@@ -113,6 +116,23 @@ const MentalHealthTest = () => {
           <div className="popup">
             <div className="popup-content">
               <p>{popup.message}</p>
+
+              {isDepressed && (
+                <div className="actions">
+                  <button
+                    onClick={() => navigate("/doctors", { replace: true })}
+                  >
+                    Doctors
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate("/forums/forumlist", { replace: true })
+                    }
+                  >
+                    Forums
+                  </button>
+                </div>
+              )}
               <button onClick={() => setPopup({ open: false, message: "" })}>
                 Close
               </button>
