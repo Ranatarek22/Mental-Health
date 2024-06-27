@@ -20,7 +20,12 @@ const AppointmentDetails = ({ appointment, onClose }) => {
       setIsLoading(true);
       const response = await apiInstance.put(
         `/appointments/${appointment.id}/cancel`,
-        { reason }
+        reason,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       if (response.status === 200) {
         appointment.status = "Cancelled";
