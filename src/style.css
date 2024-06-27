@@ -555,13 +555,22 @@ textarea {
 /*Start Forum Item single page*/
 .cont {
   width: 100%;
-  background-color: #c5ecff;
+
   display: flex;
   border-radius: 20px;
+  border: 1px solid #dce9ec;
   /* overflow-y: auto; */
   /* text-align: center; */
 }
+.contmypost {
+  width: 100%;
 
+  display: flex;
+  border-radius: 20px;
+
+  /* overflow-y: auto; */
+  /* text-align: center; */
+}
 .cont2 {
   width: 100%;
   background-color: #ffffff;
@@ -1416,7 +1425,6 @@ textarea {
   display: none !important;
 }
 
-
 .landing .image {
   flex: 1;
   display: flex;
@@ -1663,9 +1671,12 @@ textarea {
   text-align: end;
   padding: 10px;
 }
-
+.postImg {
+  display: flex;
+  justify-content: center;
+}
 .postImg img {
-  width: 100%;
+  width: 80%;
   object-fit: cover;
   max-height: auto;
   display: block;
