@@ -74,10 +74,10 @@ function ForumList() {
               >
                 <div className="cont p-2 m-3 align-items-center">
                   <div className="flex-grow-1">
-                    <div className="cont p-2 m-2">
+                    <div className=" p-2 m-2">
                       <h3>{post.title}</h3>
                     </div>
-                    <div className="cont m-2 d-flex align-items-center">
+                    <div className=" m-2 d-flex align-items-center">
                       <img
                         src={post.username ? post.photoUrl : "/Anony.png"}
                         className="userImage"
@@ -91,14 +91,15 @@ function ForumList() {
                         <p className="text-muted"> {postDate}</p>
                       </div>
                     </div>
-                    {post.postPhotoUrl && (
-                      <img
-                        width={500}
-                        alt="post photo"
-                        src={post.postPhotoUrl}
-                        className=""
-                      />
-                    )}
+                    <div className="d-flex justify-content-center">
+                      {post.postPhotoUrl && (
+                        <img
+                          width="80%"
+                          alt="post photo"
+                          src={post.postPhotoUrl}
+                        />
+                      )}
+                    </div>
                     <div className="d-flex justify-content-start p-2 mt-3">
                       <div
                         className="icon-container"

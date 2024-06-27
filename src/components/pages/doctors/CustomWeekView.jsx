@@ -25,6 +25,7 @@ const CustomWeekView = ({ doctorId, appointments }) => {
     try {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
+      // console.log(doctorId);
 
       if (weekDays.length === 0) {
         throw new Error("No weekDays data found");
@@ -176,8 +177,8 @@ const CustomWeekView = ({ doctorId, appointments }) => {
                 doctorId={doctorId}
                 startOfDayTime={dayDetails ? dayDetails.startTime : ""}
                 endOfDayTime={dayDetails ? dayDetails.endTime : ""}
-                sessionDuration={dayDetails ? dayDetails.sessionDuration : 30} 
-                appointments={appointments} 
+                sessionDuration={dayDetails ? dayDetails.sessionDuration : 30}
+                appointments={appointments}
               />
             );
           })}

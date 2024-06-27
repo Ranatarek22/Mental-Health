@@ -48,23 +48,6 @@ export default function MyPosts() {
     <div className="w-100">
       <div style={{ display: "flex", width: "100%" }}>
         <div className="feed" style={{ width: "50%", flex: "3" }}>
-          <div
-            className="cont4 p-2 m-3"
-            style={{ position: "sticky", top: 0, zIndex: "10" }}
-          >
-            <input
-              type="text"
-              className="p-2 m-2"
-              placeholder="Search for forum"
-            />
-            <button
-              className="p-2 m-2"
-              onClick={() => navigate(`/createforum`)}
-            >
-              Create Forum
-            </button>
-          </div>
-
           <InfiniteScroll
             dataLength={posts.length}
             next={fetchPosts}
@@ -82,7 +65,7 @@ export default function MyPosts() {
                   onClick={() => navigate(`/forums/${post.id}`)}
                 >
                   <div className="cont p-2 m-3 align-items-center mypost">
-                    <div className="cont p-2">
+                    <div className="contmypost p-2">
                       <div>
                         <img
                           width={40}
@@ -100,11 +83,11 @@ export default function MyPosts() {
                         <p className="text-muted"> {postDate}</p>
                       </div>
                     </div>
-                    <div className="cont p-2 m-2">
+                    <div className="contmypost p-2 m-2 d-flex justify-content-center align-items-center">
                       <div className="fw-bold flex-grow-1">{post.title}</div>
                     </div>
-                    <div className="cont p-2 m-2">
-                      <div className="fw-bold flex-grow-1">{post.content}</div>
+                    <div className="contmypost d-flex justify-content-center align-items-center p-2 m-2">
+                      <div className=" flex-grow-1">{post.content}</div>
                     </div>
                     <div className="postImg">
                       {post.postPhotoUrl && (

@@ -221,7 +221,11 @@ const ForumItemPage = () => {
                       // Display post content
                       forum.content
                     )}
-
+                    {forum.postPhotoUrl && (
+                      <div className="postImg">
+                        <img alt="post img" src={forum.postPhotoUrl} />
+                      </div>
+                    )}
                     <div className="py-2 mt-2">
                       {" "}
                       <TfiCommentsSmiley
@@ -234,11 +238,6 @@ const ForumItemPage = () => {
                       <span className="ms-2 fw-bold">{commentsCount}</span>
                     </div>
                   </div>
-                  {forum.postPhotoUrl && (
-                    <div className="postImg">
-                      <img alt="post img" src={forum.postPhotoUrl} />
-                    </div>
-                  )}
                 </div>
                 {editButtonVisible && isMyPost && (
                   <div
