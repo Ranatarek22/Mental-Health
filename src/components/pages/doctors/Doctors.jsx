@@ -8,6 +8,7 @@ import { Slider } from "@mui/material";
 import debounce from "lodash.debounce";
 import NavUser from "../../navigation/NavUser/NavUser";
 import { FaFilter } from "react-icons/fa";
+import useDoctorStore from "../../../hooks/use-doctor-store";
 
 const egyptianCities = [
   { value: "", label: "All" },
@@ -63,6 +64,7 @@ const DoctorsList = () => {
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const pageSize = 10;
+  const AddDoc = useDoctorStore((state) => state.setDocs);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,7 +94,8 @@ const DoctorsList = () => {
         const response = await apiInstance.get(
           `/doctors?PageNumber=${page}&PageSize=${pageSize}&Name=${filters.name}&Specialization=${filters.specialization}&Gender=${filters.gender}&City=${filters.city}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
         );
-        const newData = response.data.filter((doctor) => doctor.weekDays && doctor.weekDays.length > 0);
+        const newData = response.data;
+        AddDoc(newData);
         if (page === 1) {
           setDoctors(newData);
         } else {

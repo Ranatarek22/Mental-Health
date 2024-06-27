@@ -4,5 +4,5 @@ export const main_routes = [
   "/signup",
   "/forgetpassword",
   "/forgetpassword/resetpassword",
-  
+  "/depressiontest",
 ];

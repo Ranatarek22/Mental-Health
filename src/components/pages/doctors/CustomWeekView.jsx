@@ -3,81 +3,68 @@ import moment from "moment";
 import CustomDay from "./CustomDay";
 import { apiInstance } from "../../../axios";
 
-const CustomWeekView = ({ doctorId }) => {
+const CustomWeekView = ({ doctorId, appointments }) => {
   const [events, setEvents] = useState([]);
   const [displayedDays, setDisplayedDays] = useState([]);
   const [formattedDates, setFormattedDates] = useState({});
   const [weeksAhead, setWeeksAhead] = useState(0);
-  const [visibleDaysCount, setVisibleDaysCount] = useState(3);
-  const [totalDaysCount, setTotalDaysCount] = useState(0);
-  const DAYS_PER_LOAD = 6;
+  const [weekDays, setWeekDays] = useState([]);
+  const DAYS_PER_LOAD = 3;
 
   useEffect(() => {
     fetchDoctorSchedule();
   }, []);
 
   useEffect(() => {
-    if (weeksAhead > 0) {
-      fetchMoreDates();
+    if (weekDays.length > 0) {
+      updateDisplayedDaysAndEvents();
     }
-  }, [weeksAhead]);
+  }, [weeksAhead, weekDays]);
 
   const fetchDoctorSchedule = async () => {
     try {
       const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
       const { weekDays } = response.data;
-      if (!weekDays || weekDays.length === 0) {
+
+      if (weekDays.length === 0) {
         throw new Error("No weekDays data found");
       }
 
-      const initialDays = calculateDates(weekDays, 0, DAYS_PER_LOAD);
-      setDisplayedDays(initialDays);
-      setTotalDaysCount(weekDays.length * 52);
-
-      const initialEvents = calculateEvents(weekDays, 0, DAYS_PER_LOAD);
-      setEvents(initialEvents);
-
-      const formatted = formatDates(initialDays);
-      setFormattedDates(formatted);
+      setWeekDays(weekDays);
+      updateDisplayedDaysAndEvents(weekDays, 0, DAYS_PER_LOAD);
     } catch (error) {
       console.error("Error fetching doctor schedule:", error);
     }
   };
 
-  const fetchMoreDates = async () => {
-    try {
-      const response = await apiInstance.get(`/doctors/${doctorId}/schedule`);
-      const { weekDays } = response.data;
+  const updateDisplayedDaysAndEvents = (
+    weekDaysData = weekDays,
+    startWeek = weeksAhead,
+    daysCount = DAYS_PER_LOAD
+  ) => {
+    const newDays = calculateDates(
+      weekDaysData,
+      startWeek,
+      daysCount,
+      displayedDays
+    );
+    const newEvents = calculateEvents(
+      weekDaysData,
+      startWeek,
+      daysCount,
+      events
+    );
 
-      if (!weekDays || weekDays.length === 0) {
-        throw new Error("No weekDays data found");
-      }
+    const updatedDays = [...displayedDays, ...newDays].sort((a, b) =>
+      a.isBefore(b) ? -1 : 1
+    );
 
-      const moreDays = calculateDates(
-        weekDays,
-        weeksAhead,
-        DAYS_PER_LOAD,
-        displayedDays
-      );
-
-      setDisplayedDays((prevDays) => [...prevDays, ...moreDays]);
-
-      const moreEvents = calculateEvents(
-        weekDays,
-        weeksAhead,
-        DAYS_PER_LOAD,
-        displayedDays.length
-      );
-      setEvents((prevEvents) => [...prevEvents, ...moreEvents]);
-
-      const formatted = formatDates(moreDays);
-      setFormattedDates((prevFormatted) => ({
-        ...prevFormatted,
-        ...formatted,
-      }));
-    } catch (error) {
-      console.error("Error fetching more doctor schedule:", error);
-    }
+    setDisplayedDays(updatedDays);
+    setEvents((prevEvents) => [...prevEvents, ...newEvents]);
+    setFormattedDates((prevFormatted) => ({
+      ...prevFormatted,
+      ...formatDates(newDays),
+    }));
   };
 
   const formatDates = (days) => {
@@ -97,38 +84,34 @@ const CustomWeekView = ({ doctorId }) => {
     return formatted;
   };
 
-  const calculateDates = (weekDays, weeksToAdd, limit, existingDays = []) => {
-    const dates = new Set(existingDays.map((day) => day.toISOString()));
+  const calculateDates = (weekDays, weeksToAdd, limit, existingDays) => {
     const result = [];
+    const daysToShow = new Set(existingDays.map((day) => day.toISOString()));
 
-    for (let i = 0; i < limit; i++) {
+    while (result.length < limit) {
       weekDays.forEach((day) => {
         const dayOfWeek = day.dayOfWeek.toLowerCase();
         let targetDay = moment()
           .startOf("week")
           .day(dayOfWeek)
-          .add(weeksToAdd + Math.floor(i / weekDays.length), "weeks");
+          .add(weeksToAdd, "weeks");
         if (targetDay.isBefore(moment(), "day")) {
           targetDay.add(1, "week");
         }
         const targetDayISO = targetDay.toISOString();
-        if (!dates.has(targetDayISO)) {
-          dates.add(targetDayISO);
+        if (!daysToShow.has(targetDayISO)) {
+          daysToShow.add(targetDayISO);
           result.push(targetDay);
         }
       });
+      weeksToAdd++;
     }
-    return result;
+    return result.slice(0, limit);
   };
 
-  const calculateEvents = (
-    weekDays,
-    weeksToAdd,
-    limit,
-    existingDaysCount = 0
-  ) => {
-    const allEvents = [];
-    for (let i = existingDaysCount; i < existingDaysCount + limit; i++) {
+  const calculateEvents = (weekDays, weeksToAdd, limit, existingEvents) => {
+    const allEvents = [...existingEvents];
+    for (let i = 0; i < limit; i++) {
       weekDays.forEach((day) => {
         const dayOfWeek = day.dayOfWeek.toLowerCase();
         let targetDay = moment()
@@ -173,28 +156,36 @@ const CustomWeekView = ({ doctorId }) => {
 
   const handleNextClick = () => {
     setWeeksAhead((prev) => prev + 1);
-    setVisibleDaysCount((prevCount) => prevCount + DAYS_PER_LOAD);
   };
 
   return (
     <div className="week-view">
       <div className="card-container">
-        {displayedDays.slice(0, visibleDaysCount).map((day, index) => (
-          <CustomDay
-            key={index}
-            date={day.toDate()}
-            formattedDate={formattedDates[day.toISOString()]}
-            events={events}
-            doctorId={doctorId}
-          />
-        ))}
+        {displayedDays
+          .slice(0, (weeksAhead + 1) * DAYS_PER_LOAD)
+          .map((day, index) => {
+            const dayOfWeek = moment(day).format("dddd");
+            const dayDetails = weekDays.find(
+              (wd) => wd.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase()
+            );
+            return (
+              <CustomDay
+                key={index}
+                date={day.toDate()}
+                formattedDate={formattedDates[day.toISOString()]}
+                doctorId={doctorId}
+                startOfDayTime={dayDetails ? dayDetails.startTime : ""}
+                endOfDayTime={dayDetails ? dayDetails.endTime : ""}
+                sessionDuration={dayDetails ? dayDetails.sessionDuration : 30} 
+                appointments={appointments} 
+              />
+            );
+          })}
       </div>
       <div>
-        {visibleDaysCount < totalDaysCount && (
-          <button className="next-button" onClick={handleNextClick}>
-            More
-          </button>
-        )}
+        <button className="next-button" onClick={handleNextClick}>
+          More
+        </button>
       </div>
     </div>
   );

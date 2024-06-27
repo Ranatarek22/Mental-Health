@@ -11,6 +11,7 @@ import DoctorsList from "./components/pages/doctors/Doctors";
 import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
 import "../src/style.css";
 import Reservation from "./components/pages/doctors/Reservation";
+import Footer from "./components/pages/HomePage/components/Footer";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -41,7 +42,7 @@ const DoctorSchedule = lazy(() =>
 
 function App() {
   const [pathname, setPathname] = useState();
-  const [navarHeight, setNavbarHeight] = useState(0);
+  const [navbarHeight, setNavbarHeight] = useState(0);
 
   useEffect(() => {
     const navbar = document.getElementById("app-navbar");
@@ -104,6 +105,7 @@ function App() {
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPosts />} />
+              <Route path="/reserve" element={<Reservation />} />
 
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/doctorschedule" element={<DoctorSchedule />} />
@@ -122,6 +124,7 @@ function App() {
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </main>
+          {main_routes.includes(pathname) && <Footer />}
         </div>
         <ToasterProvider />
       </BrowserRouter>

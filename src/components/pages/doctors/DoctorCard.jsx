@@ -8,7 +8,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-export const DoctorCard = ({ doctor }) => {
+export const DoctorCard = ({ doctor}) => {
+  const hasSchedule = doctor.weekDays;
+  // console.log(hasSchedule);
   return (
     <>
       <div
@@ -38,10 +40,6 @@ export const DoctorCard = ({ doctor }) => {
               <FaStethoscope className="me-2" color="pink" />
               <p className="mb-0">{doctor.specialization}</p>
             </div>
-            {/* <div className="d-flex align-items-center mb-2">
-              <LocationOnIcon className="me-2" />
-              <p className="mb-0">{doctor.location}</p>
-            </div> */}
             <div className="d-flex align-items-center mb-2">
               <LocationOnIcon className="me-2" />
               <p className="mb-0">{doctor.city}</p>

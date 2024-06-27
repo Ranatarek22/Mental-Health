@@ -4,7 +4,7 @@ import queryString from "query-string";
 import { apiInstance } from "../../../axios";
 import toast from "react-hot-toast";
 import useDoctorStore from "../../../hooks/use-doctor-store";
-
+import ReserveForm from"../../forms/ReserveForm"
 const Reservation = () => {
   const { doctorId, startTime, duration } = useParams();
   const location = useLocation();
@@ -14,7 +14,7 @@ const Reservation = () => {
   const doctor = getDoctor(doctorId);
   //   console.log(doctor.specialization);
 
-  console.log(doctorId);
+  // console.log(doctorId);
 
   const requestBody = {
     startTime: startTime,
@@ -51,7 +51,9 @@ const Reservation = () => {
     bookAppointment();
   }, [doctorId, startTime, duration, queryParams.location, queryParams.reason]);
 
-  return <div></div>;
+  return <div>
+    <ReserveForm doctor={doctor}/>
+  </div>;
 };
 
 export default Reservation;

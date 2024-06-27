@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import CustomWeekView from "./CustomWeekView";
+import { apiInstance } from "../../../axios";
 
 const DoctorSchedule = ({ doctorId }) => {
   const [currentDate, setCurrentDate] = useState(

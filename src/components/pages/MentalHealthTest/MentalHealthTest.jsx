@@ -141,7 +141,7 @@ const MentalHealthTest = () => {
         </div>
       )}
       <section id="articles" className="mentalHealthTest">
-        <h3>Mental Health Test</h3>
+        <h3>Depression Test</h3>
         <form onSubmit={formik.handleSubmit} className="form">
           {questions.map((q, idx) => (
             <div key={idx} className="form-group">

@@ -2,9 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaArrowTurnDown } from "react-icons/fa6";
 
-function Hero() {
+function DepressionTest() {
   return (
     <motion.div
+      id="depressiontest" // Adding the id attribute here
       className="landing container-fluid"
       style={{
         width: "100vw",
@@ -18,24 +19,21 @@ function Hero() {
       transition={{ duration: 1, ease: "easeIn" }}
     >
       <div className="container">
-        <div className="text">
-          <h1> Medical Services</h1>
-          <p>
-            We are a dedicated community of medical professionals and
-            individuals who understand the importance of mental health. We’re
-            here to provide support, resources, and a safe space for those
-            seeking help.
-          </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
-        </div>
         <div className="image">
-          <img src="/landingImages/Doctor4.png" alt="hero" />
+          <img
+            src="/landingImages/Doctor5.png"
+            alt="hero"
+            style={{ width: "55%" }}
+          />
         </div>
-        <div>
-          <a href="#services" className="go-down">
-            <FaArrowTurnDown />
+        <div className="text">
+          <h1> Take Depression Test</h1>
+          <p>
+            This Test will help you to know if you're depressed or not and if
+            you're depressed will assist you to have treatments
+          </p>
+          <a href="/depressiontest">
+            <button>Test</button>
           </a>
         </div>
       </div>
@@ -43,5 +41,4 @@ function Hero() {
   );
 }
 
-
-export default Hero;
+export default DepressionTest;
