@@ -55,7 +55,7 @@ export const DoctorCard = ({ doctor}) => {
           </div>
         </div>
         <div className="flex-grow-1 d-flex justify-content-center text-center">
-          <DoctorSchedule doctorId={doctor.id} />
+          <DoctorSchedule doctorId={doctor.id} doctorFirstName={doctor.firstName} doctorLastName={doctor.lastName} />
         </div>
       </div>
     </>

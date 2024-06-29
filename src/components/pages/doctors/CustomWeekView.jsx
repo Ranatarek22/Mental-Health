@@ -3,7 +3,7 @@ import moment from "moment";
 import CustomDay from "./CustomDay";
 import { apiInstance } from "../../../axios";
 
-const CustomWeekView = ({ doctorId, appointments }) => {
+const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstName}) => {
   const [events, setEvents] = useState([]);
   const [displayedDays, setDisplayedDays] = useState([]);
   const [formattedDates, setFormattedDates] = useState({});
@@ -179,6 +179,8 @@ const CustomWeekView = ({ doctorId, appointments }) => {
                 endOfDayTime={dayDetails ? dayDetails.endTime : ""}
                 sessionDuration={dayDetails ? dayDetails.sessionDuration : 30}
                 appointments={appointments}
+                doctorLastName={doctorLastName}
+                doctorFirstName={doctorFirstName}
               />
             );
           })}

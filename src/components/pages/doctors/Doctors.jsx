@@ -94,7 +94,14 @@ const DoctorsList = () => {
         const response = await apiInstance.get(
           `/doctors?PageNumber=${page}&PageSize=${pageSize}&Name=${filters.name}&Specialization=${filters.specialization}&Gender=${filters.gender}&City=${filters.city}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
         );
-        const newData = response.data;
+        let newData = response.data;
+        console.log(newData);
+
+        // Filter out doctors without fees and location
+        newData = newData.filter(
+          (doctor) => doctor.sessionFees !== 0 && doctor.location !== null
+        );
+
         AddDoc(newData);
         if (page === 1) {
           setDoctors(newData);
