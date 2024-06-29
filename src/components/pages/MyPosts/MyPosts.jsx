@@ -6,7 +6,7 @@ import { SyncLoader } from "react-spinners";
 import { useAuthStore } from "../../../hooks/use-auth-store";
 import { calculateDuration } from "../ForumsPage/Date";
 import { apiInstance } from "../../../axios";
-import Tips from "../ForumsPage/helpers/Tips";
+
 
 export default function MyPosts() {
   const userId = useAuthStore((state) => state.userId);
@@ -47,6 +47,7 @@ export default function MyPosts() {
   return (
     <div className="w-100">
       <div style={{ display: "flex", width: "100%" }}>
+
         <div className="feed" style={{ width: "50%", flex: "3" }}>
           <InfiniteScroll
             dataLength={posts.length}
@@ -103,12 +104,7 @@ export default function MyPosts() {
             })}
           </InfiniteScroll>
         </div>
-        <div
-          style={{ width: "50%", flex: "2" }}
-          className="mt-4 tips justify-content-center w-100"
-        >
-          <Tips />
-        </div>
+
       </div>
     </div>
   );

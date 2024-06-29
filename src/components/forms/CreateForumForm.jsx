@@ -93,7 +93,6 @@ const CreateForumForm = () => {
 
   return (
     <div className="forum-card">
-      <h1>Create Post</h1>
       <form onSubmit={formik.handleSubmit}>
         <div>
           <input

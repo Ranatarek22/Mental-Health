@@ -1691,11 +1691,12 @@ textarea {
 
 .forum-card {
   margin: auto;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 500px;
+      border: 1px solid #d4d4d4;
   width: 100%;
 }
 

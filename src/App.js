@@ -12,6 +12,7 @@ import UserAppointments from "./components/pages/UserAppointments/UserAppointmen
 import "../src/style.css";
 import Reservation from "./components/pages/doctors/Reservation";
 import Footer from "./components/pages/HomePage/components/Footer";
+import MyPostsPAge from "./components/pages/MyPosts/MyPostsPAge";
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -22,7 +23,7 @@ const SignUpPage = lazy(() =>
 );
 const HomePage = lazy(() => import("./components/pages/HomePage/HomePage"));
 const CreateForumPage = lazy(() =>
-  import("./components/forms/CreateForumForm")
+  import("./components/pages/ForumsPage/CreateForumPage")
 );
 const ProfilePage = lazy(() =>
   import("./components/pages/ProfilePage/ProfilePage")
@@ -104,7 +105,7 @@ function App() {
               <Route path="/depressiontest" element={<MentalHealthTest />} />
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
-              <Route path="/myposts" element={<MyPosts />} />
+              <Route path="/myposts" element={<MyPostsPAge />} />
               <Route path="/reserve" element={<Reservation />} />
 
               <Route path="/createforum" element={<CreateForumPage />} />

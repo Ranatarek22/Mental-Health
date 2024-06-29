@@ -108,7 +108,7 @@ const CustomDay = ({
             className="event-slot"
             style={{ backgroundColor: "var(--third-color)" }}
           >
-            <strong>From</strong>
+            <strong>From</strong>{" "}
             {startOfDayTime
               ? moment(startOfDayTime, "HH:mm:ss").format("HH:mm")
               : "N/A"}
@@ -117,7 +117,7 @@ const CustomDay = ({
             className="event-slot"
             style={{ backgroundColor: "var(--third-color)" }}
           >
-            <strong>To</strong>
+            <strong>To</strong>{" "}
             {endOfDayTime
               ? moment(endOfDayTime, "HH:mm:ss").format("HH:mm")
               : "N/A"}
