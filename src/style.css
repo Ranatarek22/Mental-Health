@@ -12,8 +12,10 @@ body {
   --main-color: #0098fa;
   --second-color: #ffffff;
   --third-color: #89cff0;
+
   --fourth-color: #cae7ef;
   --fifth-color: #e8f1ff;
+  --new-color: #b0c5ff;
   --main-transition: 0.3s;
 }
 ::-webkit-scrollbar {
@@ -346,6 +348,91 @@ main {
   display: flex;
   justify-content: center;
 }
+/* Tips.css */
+.tips-container {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 100%;
+  height: 310px;
+  overflow-y: auto;
+}
+
+.tips-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.tips-container h3 {
+  font-size: 1.75em;
+  color: #ffffff;
+  margin-bottom: 16px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.tips-container h3::after {
+  content: "";
+  width: 50px;
+  height: 3px;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tips-container ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+/* .tips-content{
+  width: 100%;
+} */
+.tips-container li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 12px;
+  transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.tips-container li:hover {
+  background-color: #e0e0e0;
+  transform: translateX(5px);
+}
+
+/* Optional: Custom scrollbar styling */
+.tips-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tips-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.tips-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 8px;
+}
+
+.tips-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .logo {
   display: none;
 }
@@ -509,15 +596,15 @@ input:checked + .slider:before {
 #title,
 #content {
   background: transparent;
-  border: 2px solid var(--third-color);
+  border: 2px solid var(--new-color);
 }
 #title::placeholder,
 #content::placeholder {
-  color: var(--third-color);
+  color: var(--new-color);
 }
 
 .forum-details {
-  color: var(--third-color);
+  color: var(--new-color);
   font-size: 18px;
 }
 .forum-data {
@@ -613,7 +700,7 @@ textarea {
   width: 100%;
 }
 .cont4 {
-  background-color: var(--third-color);
+  background-color: var(--new-color);
   display: flex;
   border-radius: 20px;
   overflow-y: hidden;
@@ -1696,7 +1783,7 @@ textarea {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 500px;
-      border: 1px solid #d4d4d4;
+  border: 1px solid #d4d4d4;
   width: 100%;
 }
 
@@ -1826,7 +1913,7 @@ textarea {
 
 .forum-card button {
   padding: 10px 20px;
-  background-color: #3699a2;
+  background-color: var(--new-color);
   color: white;
   border: none;
   border-radius: 50px;
@@ -1839,6 +1926,48 @@ textarea {
 
 .forum-card button:disabled {
   background-color: #ccc;
+}
+.forum-card button:hover {
+  background-color: grey;
+}
+
+/* ForumList.css */
+.post-container {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.post-container:hover {
+  transform: translateY(-5px);
+}
+
+.post-photo {
+  width: 34%;
+  height: auto;
+  padding: 10px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.userImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icon-container {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.full-width .cont {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 @media (max-width: 768px) {
