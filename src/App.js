@@ -10,7 +10,7 @@ import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTe
 import DoctorsList from "./components/pages/doctors/Doctors";
 import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
 import "../src/style.css";
-import Reservation from "./components/pages/doctors/Reservation";
+
 import Footer from "./components/pages/HomePage/components/Footer";
 import MyPostsPAge from "./components/pages/MyPosts/MyPostsPAge";
 
@@ -106,14 +106,10 @@ function App() {
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPostsPAge />} />
-              <Route path="/reserve" element={<Reservation />} />
 
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/doctorschedule" element={<DoctorSchedule />} />
-              <Route
-                path="/reserve/:doctorId/:startTime/:endTime/:duration"
-                element={<Reservation />}
-              />
+
               <Route path="/forums" element={<ForumsPage />} />
               <Route path="/forums/forumlist" element={<ForumsPage />} />
               <Route path="/forums/:postId" element={<SingleForumPage />} />
