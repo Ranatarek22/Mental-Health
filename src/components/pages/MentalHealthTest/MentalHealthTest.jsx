@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { apiInstance } from "../../../axios";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const questions = [
   {
@@ -56,7 +57,8 @@ const validationSchema = Yup.object(
 const MentalHealthTest = () => {
   const navigate = useNavigate();
   const [isDepressed, setIsDepressed] = useState(false);
-  const [popup, setPopup] = useState({ open: false, message: "" });
+  const [showResult, setShowResult] = useState(false);
+  const [activeAccordion, setActiveAccordion] = useState(null);
 
   const formik = useFormik({
     initialValues: questions.reduce((acc, curr, idx) => {
@@ -89,18 +91,7 @@ const MentalHealthTest = () => {
           }
         );
         setIsDepressed(response.data);
-        if (response.data) {
-          setPopup({
-            open: true,
-            message:
-              "You are depressed. Please seek help from a mental health professional or check ur community.",
-          });
-        } else {
-          setPopup({
-            open: true,
-            message: "You are normal. Keep maintaining your mental health!",
-          });
-        }
+        setShowResult(true);
         toast.success("Form submitted successfully!");
       } catch (error) {
         toast.error("Error submitting form.");
@@ -108,39 +99,20 @@ const MentalHealthTest = () => {
     },
   });
 
+  const toggleAccordion = (index) => {
+    setActiveAccordion(activeAccordion === index ? null : index);
+  };
+
   return (
     <div className="MentalHealthTest" id="MentalHealthTest">
       <Toaster />
-      {popup.open && (
-        <div className="popup-bg">
-          <div className="popup">
-            <div className="popup-content">
-              <p>{popup.message}</p>
-
-              {isDepressed && (
-                <div className="actions">
-                  <button
-                    onClick={() => navigate("/doctors", { replace: true })}
-                  >
-                    Doctors
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate("/forums/forumlist", { replace: true })
-                    }
-                  >
-                    Forums
-                  </button>
-                </div>
-              )}
-              <button onClick={() => setPopup({ open: false, message: "" })}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      <section id="articles" className="mentalHealthTest">
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        id=""
+        className="mentalHealthTest"
+      >
         <h3>Depression Test</h3>
         <form onSubmit={formik.handleSubmit} className="form">
           {questions.map((q, idx) => (
@@ -163,7 +135,7 @@ const MentalHealthTest = () => {
                   ) : null}
                 </div>
               ) : (
-                <div>
+                <div className="select-wrapper">
                   <select
                     name={`question${idx}`}
                     onChange={formik.handleChange}
@@ -193,7 +165,153 @@ const MentalHealthTest = () => {
             Submit
           </button>
         </form>
-      </section>
+      </motion.section>
+
+      <AnimatePresence>
+        {showResult && (
+          <motion.section
+            id="result"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5 }}
+            className="result-section"
+          >
+            <h3>Test Results</h3>
+            <div className="result-card">
+              <div className="result-header">
+                <h4>
+                  {isDepressed
+                    ? "Depression Indicated"
+                    : "No Depression Indicated"}
+                </h4>
+              </div>
+              <p className="result-description">
+                {isDepressed
+                  ? "Based on your responses, there are indications of depression. It's important to consult with a mental health professional for a proper diagnosis and support."
+                  : "Your responses suggest no significant indicators of depression. However, if you have concerns, don't hesitate to speak with a mental health professional."}
+              </p>
+              {isDepressed && (
+                <div className="result-actions">
+                  <button
+                    onClick={() => navigate("/doctors", { replace: true })}
+                  >
+                    Find a Doctor
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate("/forums/forumlist", { replace: true })
+                    }
+                  >
+                    Join Support Community
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="accordion">
+              <div className="accordion-item">
+                <button
+                  className={`accordion-title ${
+                    activeAccordion === 0 ? "active" : ""
+                  }`}
+                  onClick={() => toggleAccordion(0)}
+                >
+                  How our test works
+                </button>
+                <AnimatePresence>
+                  {activeAccordion === 0 && (
+                    <motion.div
+                      className="accordion-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <h4>Our 3-Phase Analysis Process:</h4>
+                      <ol>
+                        <li>
+                          <strong>Response Weighting:</strong> We assign weights
+                          to your responses to determine if the overall
+                          sentiment tends to be more negative.
+                        </li>
+                        <li>
+                          <strong>Sentiment Analysis:</strong> We use advanced
+                          techniques like VADER and RoBERTa, combined with user
+                          analysis, to assess if your responses indicate
+                          potential issues.
+                        </li>
+                        <li>
+                          <strong>Depression Analysis:</strong> We compare your
+                          responses against a database of over 10,000 depression
+                          cases using machine learning models (decision trees,
+                          logistic regression, and support vector machines) to
+                          identify similarities.
+                        </li>
+                      </ol>
+                      <p>
+                        This multi-phase approach allows us to provide a
+                        comprehensive assessment. However, it's important to
+                        note that this test is not a clinical diagnosis. Always
+                        consult with a mental health professional for a proper
+                        evaluation.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div className="accordion-item">
+                <button
+                  className={`accordion-title ${
+                    activeAccordion === 1 ? "active" : ""
+                  }`}
+                  onClick={() => toggleAccordion(1)}
+                >
+                  Let's take action now
+                </button>
+                <AnimatePresence>
+                  {activeAccordion === 1 && (
+                    <motion.div
+                      className="accordion-content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <h4>Access our Nexus community</h4>
+                      <p>
+                        Join our supportive community to connect with others who
+                        understand what you're going through. Share experiences
+                        and find support.
+                      </p>
+                      <button
+                        onClick={() =>
+                          navigate("/forums/forumlist", { replace: true })
+                        }
+                      >
+                        Join Community
+                      </button>
+
+                      <h4>Access pro doctors</h4>
+                      <p>
+                        Consult with professional doctors who specialize in
+                        mental health. Book appointments and get the help you
+                        need.
+                      </p>
+                      <button
+                        onClick={() => navigate("/doctors", { replace: true })}
+                      >
+                        Find Doctors
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

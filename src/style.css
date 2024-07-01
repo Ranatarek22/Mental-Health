@@ -2025,7 +2025,6 @@ textarea {
   border-radius: 4px;
   border: 1px solid #ccc;
 }
-
 .radio-label {
   display: flex;
   align-items: center;
@@ -2057,71 +2056,189 @@ textarea {
     font-size: 2rem;
   }
 }
-.popup-bg {
-  background-color: #000000c7;
-  width: 100%;
-  position: fixed;
-  padding: 8px;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  z-index: 10;
-}
-.popup {
-  max-width: 460px;
-  background-color: #d9d9d9;
-  color: black;
-  padding: 15px 25px;
-  border-radius: 8px;
-  box-shadow: 0 0 17px 9px #00000030;
-  text-align: center;
-  z-index: 1000;
+.MentalHealthTest {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 20px;
 }
 
-.popup-content p {
-  margin-bottom: 10px;
-  font-size: 22px;
+.form-group {
+  margin-bottom: 20px;
 }
-.popup-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  align-items: center;
-  justify-content: center;
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
-.popup-content .actions {
+
+.textarea {
   width: 100%;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
 }
-.popup-content button {
+
+.select-wrapper {
+  position: relative;
+}
+
+.select {
   width: 100%;
-  padding: 8px 15px;
-  background-color: rgb(46, 32, 245);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+
+.submit-btn {
+  background-color: #007bff;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
+  transition: background-color 0.3s;
 }
-.popup-content > button:last-child {
-  background-color: #99413500;
-  border: 1px solid rgb(30, 15, 236);
-  color: #000;
+
+.submit-btn:hover {
+  background-color: #0056b3;
 }
-.popup-content button:hover {
-  background-color: rgb(30, 15, 236);
+
+#result {
+  margin-top: 30px;
+}
+.result-section {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.result-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.result-header h4 {
+  margin: 0;
+  color: #333;
+}
+
+.result-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.result-actions button,
+.accordion-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.result-actions button:first-child,
+.accordion-content button {
+  background-color: #007bff;
   color: white;
+}
+
+.result-actions button:last-child,
+.accordion-content button:last-child {
+  background-color: #28a745;
+  color: white;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+.accordion {
+  margin-top: 30px;
+}
+
+.accordion-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.accordion-title {
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.accordion-title:hover,
+.accordion-title.active {
+  background-color: #e0e0e0;
+}
+
+.accordion-content {
+  padding: 20px;
+  background-color: white;
+}
+
+.accordion-content h4 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.accordion-content ol {
+  padding-left: 20px;
+}
+
+.accordion-content li {
+  margin-bottom: 10px;
+}
+
+.accordion-content p {
+  margin-top: 15px;
+  color: #555;
 }
 
 /* end test */
