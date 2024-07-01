@@ -83,6 +83,7 @@ const NavUser = () => {
                   alt="user profile"
                   className="rounded-circle mb-2"
                   style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                  onClick={() => navigate("/profile")}
                 />
                 <p className="mb-2">{userName}</p>
               </Dropdown.ItemText>

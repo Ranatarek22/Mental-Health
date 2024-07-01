@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { apiInstance } from "../../../axios";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -10,18 +10,21 @@ import { useAuthStore } from "../../../hooks/use-auth-store";
 import { calculateDuration } from "../ForumsPage/Date";
 import Tips from "../ForumsPage/helpers/Tips";
 import NavUser from "../../navigation/NavUser/NavUser";
-// import { useNavigate } from "react-router-dom";
 
 const ForumItemPage = () => {
   const userId = useAuthStore((state) => state.userId);
   const params = useParams();
+  const navigate = useNavigate();
   const [forum, setForum] = useState();
   const commentsCount = usePostStore((state) => state.totalComments);
   const token = useAuthStore((state) => state.token);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [photoPost, setPhotoPost] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editButtonVisible, setEditButtonVisible] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!forum && params.postId) {
@@ -31,36 +34,23 @@ const ForumItemPage = () => {
           const postPromise = await apiInstance.get(`/posts/${postId}`, {
             cancelToken: cancelToken.token,
           });
-          console.log(postPromise.data);
           if (postPromise.status !== 200) {
-            if (postPromise.response.data) {
-              throw new Error(Object.values(postPromise.response.data)[0]);
-            } else {
-              throw new Error(postPromise.statusText);
-            }
+            throw new Error(postPromise.statusText);
           }
-          const postData = await postPromise.data;
-          console.log(postData);
-
+          const postData = postPromise.data;
           setForum(postData);
           setEditedTitle(postData.title);
           setEditedContent(postData.content);
+          setIsAnonymous(postData.isAnonymous);
+          setPhotoPost(postData.postPhotoUrl);
         } catch (error) {
           if (axios.isCancel(error)) {
-            console.error("cancelled");
+            console.error("Cancelled");
           } else {
-            if (typeof error === "object") {
-              toast.error(Object.values(error.response.data)[0]);
-              // console.log(error);
-            } else {
-              toast.error(String(error));
-            }
+            toast.error(error.response?.data?.message || error.message);
           }
         }
-
-        return () => {
-          cancelToken.cancel("cancelled");
-        };
+        return () => cancelToken.cancel("Cancelled");
       };
       fetchPostData(params.postId);
     }
@@ -77,16 +67,9 @@ const ForumItemPage = () => {
         const calculatedDuration = calculateDuration(postData);
         setDuration(calculatedDuration);
       }, 3000);
-
       return () => clearInterval(intervalId);
     }
   }, [postData]);
-
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const Dropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -100,6 +83,33 @@ const ForumItemPage = () => {
     setEditButtonVisible(true);
   };
 
+  // const handleUpdate = async () => {
+  //   try {
+  //     if (!editedTitle.trim() || !editedContent.trim()) {
+  //       toast.error("Title and content cannot be empty");
+  //       return;
+  //     }
+  //     console.log(editedContent);
+  //     console.log(editedTitle);
+  //     console.log(params.postId);
+  //     console.log(isAnonymous);
+  //     console.log(photoPost);
+  //     const response = await apiInstance.put(`/posts/${params.postId}`, {
+  //       Title: editedTitle,
+  //       Content: editedContent,
+  //       IsAnonymous: isAnonymous,
+  //       PhotoPost: photoPost || "",
+  //     });
+
+  //     setForum(response.data);
+  //     setIsEditing(false);
+  //     toast.success("Post updated successfully");
+  //     setEditButtonVisible(true);
+  //   } catch (error) {
+  //     console.error("Error updating post:", error);
+  //     toast.error("Failed to update post");
+  //   }
+  // };
   const handleUpdate = async () => {
     try {
       if (!editedTitle.trim() || !editedContent.trim()) {
@@ -108,8 +118,10 @@ const ForumItemPage = () => {
       }
 
       const response = await apiInstance.put(`/posts/${params.postId}`, {
-        title: editedTitle,
-        content: editedContent,
+        Title: editedTitle,
+        Content: editedContent,
+        IsAnonymous: isAnonymous,
+        PhotoPost: photoPost || " ",
       });
 
       setForum(response.data);
@@ -118,7 +130,19 @@ const ForumItemPage = () => {
       setEditButtonVisible(true);
     } catch (error) {
       console.error("Error updating post:", error);
-      toast.error("Failed to update post");
+
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+        toast.error(error.response.data?.message || "Failed to update post");
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+        toast.error("No response received from server");
+      } else {
+        console.error("Error message:", error.message);
+        toast.error("Error setting up request");
+      }
     }
   };
 
@@ -130,6 +154,7 @@ const ForumItemPage = () => {
       if (response.status === 200) {
         console.log("Forum post deleted successfully");
         setForum(null);
+        navigate("/forums/forumlist");
       } else {
         console.error("Failed to delete forum post");
       }
@@ -144,6 +169,15 @@ const ForumItemPage = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoPost(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <>
       <NavUser />
@@ -151,7 +185,7 @@ const ForumItemPage = () => {
         <div style={{ display: "flex", width: "100%" }}>
           {forum ? (
             <div
-              className="flex-direction-column "
+              className="flex-direction-column"
               style={{ width: "100%", flex: "3" }}
             >
               <div className="cont p-3 mt-3 w-100">
@@ -161,20 +195,11 @@ const ForumItemPage = () => {
                     alt="user img"
                     className="userImage"
                   />
-                  {/* {console.log(forum.username)} */}
                 </div>
-                <div
-                  className="py-2"
-                  style={{
-                    flexGrow: "1",
-                    width: "100%",
-                  }}
-                >
+                <div className="py-2" style={{ flexGrow: "1", width: "100%" }}>
                   <span style={{ fontWeight: "bold" }}>
                     {forum.username ? forum.username : "Anonymous"}
                   </span>
-                  {/* {console.log(forum.username)} */}
-
                   <br />
                   <p className="text-muted">{duration}</p>
                   <div>
@@ -186,13 +211,12 @@ const ForumItemPage = () => {
                         className="form-control mb-2"
                       />
                     ) : (
-                      // Display post title
                       <h2 style={{ fontWeight: "bold" }} className="py-2">
                         {forum.title}
                       </h2>
                     )}
                   </div>
-                  <div className="py-3 ">
+                  <div className="py-3">
                     {isEditing ? (
                       <>
                         <textarea
@@ -200,6 +224,22 @@ const ForumItemPage = () => {
                           onChange={(e) => setEditedContent(e.target.value)}
                           className="form-control"
                         />
+                        <input
+                          type="file"
+                          onChange={handleFileChange}
+                          className="form-control mt-2"
+                        />
+                        <div className="form-check mt-2">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            checked={isAnonymous}
+                            onChange={(e) => setIsAnonymous(e.target.checked)}
+                          />
+                          <label className="form-check-label">
+                            Post as Anonymous
+                          </label>
+                        </div>
                         <div className="d-flex">
                           <button
                             className="btn text-muted me-2"
@@ -218,7 +258,6 @@ const ForumItemPage = () => {
                         </div>
                       </>
                     ) : (
-                      // Display post content
                       forum.content
                     )}
                     {forum.postPhotoUrl && (
@@ -227,7 +266,6 @@ const ForumItemPage = () => {
                       </div>
                     )}
                     <div className="py-2 mt-2">
-                      {" "}
                       <TfiCommentsSmiley
                         style={{
                           fontSize: "2rem",
@@ -241,12 +279,12 @@ const ForumItemPage = () => {
                 </div>
                 {editButtonVisible && isMyPost && (
                   <div
-                    className="fw-bold "
+                    className="fw-bold"
                     style={{ flexGrow: "1", direction: "rtl" }}
                   >
                     <button
                       className="btn btn-link text-muted"
-                      onClick={Dropdown}
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
                       aria-expanded={dropdownOpen ? "true" : "false"}
                       style={{ textDecoration: "none" }}
                     >
@@ -275,7 +313,7 @@ const ForumItemPage = () => {
                 <div className="flex-row">
                   <p className="fw-bold p-2">Comments ({commentsCount})</p>
                 </div>
-                <div className=" d-flex flex-row">
+                <div className="d-flex flex-row">
                   <div className="flex-column flex-grow-1">
                     <CommentSection postId={params.postId} />
                   </div>
@@ -283,13 +321,10 @@ const ForumItemPage = () => {
               </div>
             </div>
           ) : (
-            <>
-              {/* <div className="cont3 pt-3 ">
-            <p className="fw-bold ">Post has been deleted.</p>
-          </div> */}
-            </>
+            <div className="cont3 pt-3">
+              <p className="fw-bold">Post has been deleted.</p>
+            </div>
           )}
-
           <div
             style={{ width: "50%", flex: "2" }}
             className="mt-4 tips justify-content-center w-100"

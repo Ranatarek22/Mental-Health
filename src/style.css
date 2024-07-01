@@ -15,7 +15,7 @@ body {
 
   --fourth-color: #cae7ef;
   --fifth-color: #e8f1ff;
-  --new-color: #b0c5ff;
+  --new-color: #3699a2;
   --main-transition: 0.3s;
 }
 ::-webkit-scrollbar {
@@ -1753,6 +1753,7 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+
 .mypost .comments {
   width: 100%;
   text-align: end;

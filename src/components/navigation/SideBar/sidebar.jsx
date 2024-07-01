@@ -62,17 +62,6 @@ const Sidebar = () => {
                 </a>
               </li>
 
-              <li className="nav-item  align-items-center w-100">
-                <a
-                  href="/depressiontest"
-                  className="nav-link px-0 align-middle m-2 w-100"
-                >
-                  <FaRegHandPointRight className="fs-4 mx-3 me-1 text-black" />
-                  <span className="ms-1text-black text-black user-link">
-                    Depression Test
-                  </span>
-                </a>
-              </li>
               <li className="nav-item align-items-center w-100">
                 <a
                   href="/forums/forumlist"
@@ -83,7 +72,7 @@ const Sidebar = () => {
                     className="ms-1  text-black user-link"
                     onClick={() => navigate("/forums/forumlist")}
                   >
-                    Forums
+                    Community
                   </span>{" "}
                 </a>
               </li>
