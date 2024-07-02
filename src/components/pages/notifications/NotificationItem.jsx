@@ -5,6 +5,15 @@ const NotificationItem = ({ notification }) => {
   const { markAsRead } = useNotifications();
   const handleClick = (e) => {
     if (!notification.isRead) {
+      if (
+        notification.type === "AppointmentRejection" ||
+        notification.type === "AppointmentConfirmation"
+      ) {
+        e.preventDefault();
+        markAsRead(notification.id).then(() => {
+          window.location.href = `/appointments`;
+        });
+      }
       e.preventDefault();
       markAsRead(notification.id).then(() => {
         window.location.href = `/forums/${notification.resources.postId}#${notification.resources.commentId}`;
@@ -13,7 +22,12 @@ const NotificationItem = ({ notification }) => {
   };
   return (
     <a
-      href={`/forums/${notification.resources.postId}#${notification.resources.commentId}`}
+      href={` ${
+        notification.type === "AppointmentRejection" ||
+        notification.type === "AppointmentConfirmation"
+          ? `/appointments`
+          : ` /forums/${notification.resources.postId}#${notification.resources.commentId}`
+      }`}
       className={`notification-item ${notification.isRead ? "" : "unread"}`}
       onClick={handleClick}
     >
