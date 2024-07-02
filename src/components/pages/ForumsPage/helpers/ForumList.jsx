@@ -285,7 +285,13 @@ function ForumList() {
             dataLength={posts.length}
             next={() => setPage((prevPage) => prevPage + 1)}
             hasMore={hasMore}
-            loader={<SyncLoader color={"#36D7B7"} css={override} size={15} />}
+            loader={
+              <SyncLoader
+                color={"var(--main-color)"}
+                css={override}
+                size={15}
+              />
+            }
             style={{ overflow: "hidden" }}
             endMessage={<p>No more posts</p>}
           >

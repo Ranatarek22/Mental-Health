@@ -15,7 +15,8 @@ const ForumItemPage = () => {
   const userId = useAuthStore((state) => state.userId);
   const params = useParams();
   const navigate = useNavigate();
-  const [forum, setForum] = useState();
+  const [forum, setForum] = useState(null);
+  const [postNotFound, setPostNotFound] = useState(false);
   const commentsCount = usePostStore((state) => state.totalComments);
   const token = useAuthStore((state) => state.token);
   const [editedTitle, setEditedTitle] = useState("");
@@ -47,7 +48,11 @@ const ForumItemPage = () => {
           if (axios.isCancel(error)) {
             console.error("Cancelled");
           } else {
-            toast.error(error.response?.data?.message || error.message);
+            if (error.response?.status === 404) {
+              setPostNotFound(true);
+            } else {
+              toast.error(error.response?.data?.message || error.message);
+            }
           }
         }
         return () => cancelToken.cancel("Cancelled");
@@ -83,46 +88,21 @@ const ForumItemPage = () => {
     setEditButtonVisible(true);
   };
 
-  // const handleUpdate = async () => {
-  //   try {
-  //     if (!editedTitle.trim() || !editedContent.trim()) {
-  //       toast.error("Title and content cannot be empty");
-  //       return;
-  //     }
-  //     console.log(editedContent);
-  //     console.log(editedTitle);
-  //     console.log(params.postId);
-  //     console.log(isAnonymous);
-  //     console.log(photoPost);
-  //     const response = await apiInstance.put(`/posts/${params.postId}`, {
-  //       Title: editedTitle,
-  //       Content: editedContent,
-  //       IsAnonymous: isAnonymous,
-  //       PhotoPost: photoPost || "",
-  //     });
-
-  //     setForum(response.data);
-  //     setIsEditing(false);
-  //     toast.success("Post updated successfully");
-  //     setEditButtonVisible(true);
-  //   } catch (error) {
-  //     console.error("Error updating post:", error);
-  //     toast.error("Failed to update post");
-  //   }
-  // };
   const handleUpdate = async () => {
     try {
       if (!editedTitle.trim() || !editedContent.trim()) {
         toast.error("Title and content cannot be empty");
         return;
       }
+      console.log(editedContent);
 
       const response = await apiInstance.put(`/posts/${params.postId}`, {
         Title: editedTitle,
         Content: editedContent,
         IsAnonymous: isAnonymous,
-        PhotoPost: photoPost || " ",
+        PhotoPost: photoPost,
       });
+      console.log(editedContent);
 
       setForum(response.data);
       setIsEditing(false);
@@ -130,7 +110,7 @@ const ForumItemPage = () => {
       setEditButtonVisible(true);
     } catch (error) {
       console.error("Error updating post:", error);
-
+      console.log(editedContent);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
@@ -183,7 +163,11 @@ const ForumItemPage = () => {
       <NavUser />
       <div className="p-2">
         <div style={{ display: "flex", width: "100%" }}>
-          {forum ? (
+          {postNotFound ? (
+            <div className="cont3 pt-3">
+              <p className="fw-bold">Post has been deleted.</p>
+            </div>
+          ) : (
             <div
               className="flex-direction-column"
               style={{ width: "100%", flex: "3" }}
@@ -191,14 +175,14 @@ const ForumItemPage = () => {
               <div className="cont p-3 mt-3 w-100">
                 <div>
                   <img
-                    src={forum.username ? forum.photoUrl : "/Anony.png"}
+                    src={forum?.username ? forum.photoUrl : "/Anony.png"}
                     alt="user img"
                     className="userImage"
                   />
                 </div>
                 <div className="py-2" style={{ flexGrow: "1", width: "100%" }}>
                   <span style={{ fontWeight: "bold" }}>
-                    {forum.username ? forum.username : "Anonymous"}
+                    {forum?.username ? forum.username : "Anonymous"}
                   </span>
                   <br />
                   <p className="text-muted">{duration}</p>
@@ -212,7 +196,7 @@ const ForumItemPage = () => {
                       />
                     ) : (
                       <h2 style={{ fontWeight: "bold" }} className="py-2">
-                        {forum.title}
+                        {forum?.title}
                       </h2>
                     )}
                   </div>
@@ -258,9 +242,9 @@ const ForumItemPage = () => {
                         </div>
                       </>
                     ) : (
-                      forum.content
+                      forum?.content
                     )}
-                    {forum.postPhotoUrl && (
+                    {forum?.postPhotoUrl && (
                       <div className="postImg">
                         <img alt="post img" src={forum.postPhotoUrl} />
                       </div>
@@ -320,10 +304,6 @@ const ForumItemPage = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="cont3 pt-3">
-              <p className="fw-bold">Post has been deleted.</p>
-            </div>
           )}
           <div
             style={{ width: "50%", flex: "2" }}
@@ -338,3 +318,4 @@ const ForumItemPage = () => {
 };
 
 export default ForumItemPage;
+
