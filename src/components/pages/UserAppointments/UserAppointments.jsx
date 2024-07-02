@@ -8,6 +8,15 @@ import AppointmentDetails from "./AppointmentDetails";
 import { Slider } from "@mui/material";
 import Select from "react-select";
 import debounce from "lodash.debounce";
+import { FaFilter } from "react-icons/fa";
+
+const appointmentStatuses = [
+  { value: "", label: "All" },
+  { value: "Confirmed", label: "Confirmed" },
+  { value: "Pending", label: "Pending" },
+  { value: "Cancelled", label: "Cancelled" },
+  { value: "Rejected", label: "Rejected" },
+];
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -19,31 +28,15 @@ const UserAppointments = () => {
   const { ref, inView } = useInView({ threshold: 1.0 });
   const navigate = useNavigate();
   const location = useLocation();
-
-  const appointmentStatuses = [
-    { value: "", label: "All" },
-    { value: "Confirmed", label: "Confirmed" },
-    { value: "Pending", label: "Pending" },
-    { value: "Cancelled", label: "Cancelled" },
-    { value: "Rejected", label: "Rejected" },
-  ];
-
-  const locations = [
-    { value: "", label: "All" },
-    { value: "Cairo", label: "Cairo" },
-    { value: "Alexandria", label: "Alexandria" },
-    { value: "Giza", label: "Giza" },
-    { value: "Port Said", label: "Port Said" },
-    // Add other locations as needed
-  ];
-
+  const [showFilters, setShowFilters] = useState(false);
   const getFiltersFromURL = () => {
     const searchParams = new URLSearchParams(location.search);
     return {
-      status: searchParams.get("status") || "",
-      location: searchParams.get("location") || "",
-      minFees: parseInt(searchParams.get("minFees")) || 0,
-      maxFees: parseInt(searchParams.get("maxFees")) || 1000,
+      ClientName: searchParams.get("ClientName") || "",
+      DoctorName: searchParams.get("DoctorName") || "",
+      StartDate: searchParams.get("StartDate") || "",
+      EndDate: searchParams.get("EndDate") || "",
+      Status: searchParams.get("Status") || "",
     };
   };
 
@@ -52,9 +45,9 @@ const UserAppointments = () => {
   const fetchAppointments = useCallback(
     debounce(async (page, filters) => {
       setLoading(true);
-      const response = await apiInstance.get(
-        `/appointments/clients/me?PageNumber=${page}&PageSize=${pageSize}&Status=${filters.status}&Location=${filters.location}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
-      );
+      const response = await apiInstance.get(`/appointments/clients/me`, {
+        params: { PageNumber: page, PageSize: pageSize, ...filters },
+      });
       const newData = response.data;
       setAppointments((prev) => (page === 1 ? newData : [...prev, ...newData]));
       setHasMore(newData.length === pageSize);
@@ -64,8 +57,11 @@ const UserAppointments = () => {
   );
 
   useEffect(() => {
+    fetchAppointments(1, filters);
+  }, [filters]);
+  useEffect(() => {
     fetchAppointments(page, filters);
-  }, [page, filters]);
+  }, [page]);
 
   useEffect(() => {
     if (inView && hasMore && !loading) {
@@ -74,26 +70,23 @@ const UserAppointments = () => {
   }, [inView, hasMore, loading]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(filters);
+    const searchParams = new URLSearchParams();
+
+    if (filters.ClientName) searchParams.set("ClientName", filters.ClientName);
+    if (filters.DoctorName) searchParams.set("DoctorName", filters.DoctorName);
+    if (filters.StartDate) searchParams.set("StartDate", filters.StartDate);
+    if (filters.EndDate) searchParams.set("EndDate", filters.EndDate);
+    if (filters.Status) searchParams.set("Status", filters.Status);
+
     navigate(`${location.pathname}?${searchParams.toString()}`, {
       replace: true,
     });
   }, [filters, navigate, location.pathname]);
 
-  const handleFilterChange = (selectedOption, actionMeta) => {
-    setFilters((prev) => ({
-      ...prev,
-      [actionMeta.name]: selectedOption.value,
-    }));
+  const handleFilterChange = (name, value) => {
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFeesChange = (event, newValue) => {
-    setFilters((prev) => ({
-      ...prev,
-      minFees: newValue[0],
-      maxFees: newValue[1],
-    }));
-  };
   const resetFilters = () => {
     setFilters({
       status: "",
@@ -101,74 +94,65 @@ const UserAppointments = () => {
       minFees: 0,
       maxFees: 1000,
     });
-    // navigate("/appointments", { replace: true });
   };
   return (
     <div className="user-appointments">
       <h1>Your Requested Appointments</h1>
-      <div className="user-appointments-filters">
-        <h4>Filter</h4>
-        <div className="holder-filter">
-          <label htmlFor="status">location</label>
-          <Select
-            name="status"
-            options={appointmentStatuses}
-            placeholder="Status"
-            value={appointmentStatuses.find(
-              (option) => option.value === filters.status
-            )}
-            onChange={handleFilterChange}
-          />
-        </div>
-        <div className="holder-filter">
-          <label htmlFor="location">location</label>
-          <Select
-            id="location"
-            name="location"
-            options={locations}
-            placeholder="Location"
-            value={locations.find(
-              (option) => option.value === filters.location
-            )}
-            onChange={handleFilterChange}
-          />
-        </div>
-        <div className="fees-filter">
-          <label htmlFor="fees">Fees</label>
-          <Slider
-            value={[filters.minFees, filters.maxFees]}
-            onChange={handleFeesChange}
-            valueLabelDisplay="auto"
-            min={0}
-            max={1000}
-          />
-          <div className="fees-inputs">
-            <input
-              type="number"
-              name="minFees"
-              placeholder="Min Fees"
-              value={filters.minFees}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  minFees: parseInt(e.target.value),
-                }))
-              }
-            />
-            <input
-              type="number"
-              name="maxFees"
-              placeholder="Max Fees"
-              value={filters.maxFees}
-              onChange={(e) =>
-                setFilters((prev) => ({
-                  ...prev,
-                  maxFees: parseInt(e.target.value),
-                }))
-              }
-            />
-          </div>
-        </div>
+
+      <button
+        className="filter-toggle"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        <FaFilter /> Filter
+      </button>
+      <div className={`filters ${showFilters ? "show" : ""}`}>
+        <h3>Filter</h3>
+        <label htmlFor="name">Client Name :</label>
+        <input
+          id="ClientName"
+          type="text"
+          name="ClientName"
+          placeholder="Client Name"
+          value={filters.ClientName}
+          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+        />
+        <label htmlFor="DoctorName">Doctor Name :</label>
+        <input
+          id="DoctorName"
+          type="text"
+          name="DoctorName"
+          placeholder="Doctor Name"
+          value={filters.DoctorName}
+          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+        />
+        <label htmlFor="status">Status :</label>
+        <Select
+          name="Status"
+          options={appointmentStatuses}
+          placeholder="Status"
+          value={appointmentStatuses.find(
+            (option) => option.value === filters.Status
+          )}
+          onChange={(option) =>
+            handleFilterChange("Status", option ? option.value : "")
+          }
+        />
+        <label htmlFor="StartTime">Start Time :</label>
+        <input
+          id="StartTime"
+          type="datetime-local"
+          name="StartTime"
+          value={filters.StartTime}
+          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+        />
+        <label htmlFor="EndTime">End Time :</label>
+        <input
+          id="EndTime"
+          type="datetime-local"
+          name="EndTime"
+          value={filters.EndTime}
+          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+        />
         <div className="">
           <button className="reset-button" onClick={resetFilters}>
             Reset Filters

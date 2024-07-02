@@ -118,8 +118,11 @@ const DoctorsList = () => {
   );
 
   useEffect(() => {
+    fetchDoctors(1, filters);
+  }, [filters]);
+  useEffect(() => {
     fetchDoctors(page, filters);
-  }, [page, filters]);
+  }, [page]);
 
   useEffect(() => {
     if (inView && hasMore && !isLoading) {
