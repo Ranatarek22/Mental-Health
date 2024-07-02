@@ -28,6 +28,9 @@ const CreateForumPage = lazy(() =>
 const ProfilePage = lazy(() =>
   import("./components/pages/ProfilePage/ProfilePage")
 );
+const ArticlesFeed = lazy(() =>
+  import("./components/pages/ArticlesFeed/ArticlesFeed")
+);
 const SingleForumPage = lazy(() =>
   import("./components/pages/singleForum/ForumItemPage")
 );
@@ -106,6 +109,7 @@ function App() {
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPostsPAge />} />
+              <Route path="/articles" element={<ArticlesFeed />} />
 
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/doctorschedule" element={<DoctorSchedule />} />

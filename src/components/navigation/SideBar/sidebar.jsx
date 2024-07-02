@@ -20,6 +20,7 @@ import { HiOutlineLogout } from "react-icons/hi";
 import { useRef, useState, useEffect } from "react";
 import { Postage } from "react-bootstrap-icons";
 import { FaCalendarAlt } from "react-icons/fa";
+import { Article } from "@mui/icons-material";
 const Sidebar = () => {
   const { removeActiveUser, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
@@ -110,6 +111,17 @@ const Sidebar = () => {
                     onClick={() => navigate("/appointments")}
                   >
                     Appointment
+                  </span>{" "}
+                </a>
+              </li>
+              <li className="nav-item align-items-center w-100">
+                <a href="/articles" className="nav-link px-0 align-middle m-2 ">
+                  <Article className="fs-4 mx-3 me-1 text-black " />{" "}
+                  <span
+                    className="ms-1  text-black user-link"
+                    onClick={() => navigate("/articles")}
+                  >
+                    Articles Feed
                   </span>{" "}
                 </a>
               </li>
