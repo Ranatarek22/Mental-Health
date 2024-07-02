@@ -91,9 +91,9 @@ const DoctorsList = () => {
     debounce(async (page, filters) => {
       setIsLoading(true);
       try {
-        const response = await apiInstance.get(
-          `/doctors?PageNumber=${page}&PageSize=${pageSize}&Name=${filters.name}&Specialization=${filters.specialization}&Gender=${filters.gender}&City=${filters.city}&MinFees=${filters.minFees}&MaxFees=${filters.maxFees}`
-        );
+        const response = await apiInstance.get(`/doctors`, {
+          params: { PageNumber: page, PageSize: pageSize, ...filters },
+        });
         let newData = response.data;
         console.log(newData);
 
@@ -128,7 +128,16 @@ const DoctorsList = () => {
   }, [hasMore, isLoading, inView]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(filters);
+    const searchParams = new URLSearchParams();
+    if (filters.city) searchParams.set("city", filters.city);
+    if (filters.gender) searchParams.set("gender", filters.gender);
+    if (filters.name) searchParams.set("name", filters.name);
+    if (filters.specialization)
+      searchParams.set("specialization", filters.specialization);
+    if (filters.maxFees)
+      searchParams.set("maxFees", filters.maxFees.toString());
+    if (filters.minFees)
+      searchParams.set("minFees", filters.minFees.toString());
     navigate(`${location.pathname}?${searchParams.toString()}`, {
       replace: true,
     });
@@ -169,14 +178,18 @@ const DoctorsList = () => {
         </button>
         <div className={`filters ${showFilters ? "show" : ""}`}>
           <h3>Filter</h3>
+          <label htmlFor="name">First Name :</label>
           <input
+            id="name"
             type="text"
             name="name"
             placeholder="Name"
             value={filters.name}
             onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
           />
+          <label htmlFor="specialization">Specialization :</label>
           <Select
+            id="specialization"
             name="specialization"
             options={specializations}
             placeholder="Specialization"
@@ -225,7 +238,10 @@ const DoctorsList = () => {
               Female
             </label>
           </div>
+          <label htmlFor="city">City :</label>
+
           <Select
+            id="city"
             name="city"
             options={egyptianCities}
             placeholder="City"
@@ -237,6 +253,7 @@ const DoctorsList = () => {
             }
           />
           <div className="fees-filter">
+            <label htmlFor="Fees">Fees :</label>
             <Slider
               value={[filters.minFees, filters.maxFees]}
               onChange={handleFeesChange}
