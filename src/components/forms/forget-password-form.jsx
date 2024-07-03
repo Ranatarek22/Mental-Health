@@ -80,8 +80,8 @@ const ForgetPasswordForm = () => {
       <Button
         className="px-3 py-2"
         style={{
-          backgroundColor: "#01579B",
-          borderColor: "#01579B",
+          backgroundColor: "var(--new-color)",
+          borderColor: "var(--new-color)",
           alignSelf: "center",
           width: "100%",
         }}
