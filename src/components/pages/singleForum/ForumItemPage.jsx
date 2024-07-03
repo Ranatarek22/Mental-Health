@@ -17,12 +17,13 @@ const ForumItemPage = () => {
   const navigate = useNavigate();
   const [forum, setForum] = useState(null);
   const [postNotFound, setPostNotFound] = useState(false);
+  const [loading, setLoading] = useState(true);
   const commentsCount = usePostStore((state) => state.totalComments);
   const token = useAuthStore((state) => state.token);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [photoPost, setPhotoPost] = useState("");
+  const [photoPost, setPhotoPost] = useState(null); // Update initial state to null
   const [isEditing, setIsEditing] = useState(false);
   const [editButtonVisible, setEditButtonVisible] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -43,7 +44,7 @@ const ForumItemPage = () => {
           setEditedTitle(postData.title);
           setEditedContent(postData.content);
           setIsAnonymous(postData.isAnonymous);
-          setPhotoPost(postData.postPhotoUrl);
+          setPhotoPost(postData.postPhotoUrl); // This should be the URL or null if no photo
         } catch (error) {
           if (axios.isCancel(error)) {
             console.error("Cancelled");
@@ -54,6 +55,8 @@ const ForumItemPage = () => {
               toast.error(error.response?.data?.message || error.message);
             }
           }
+        } finally {
+          setLoading(false); // Data fetch completed
         }
         return () => cancelToken.cancel("Cancelled");
       };
@@ -94,15 +97,24 @@ const ForumItemPage = () => {
         toast.error("Title and content cannot be empty");
         return;
       }
-      console.log(editedContent);
 
-      const response = await apiInstance.put(`/posts/${params.postId}`, {
-        Title: editedTitle,
-        Content: editedContent,
-        IsAnonymous: isAnonymous,
-        PhotoPost: photoPost,
-      });
-      console.log(editedContent);
+      const formData = new FormData();
+      formData.append("Title", editedTitle);
+      formData.append("Content", editedContent);
+      formData.append("IsAnonymous", isAnonymous);
+      if (photoPost) {
+        formData.append("PhotoPost", photoPost); // Append the file object
+      }
+
+      const response = await apiInstance.put(
+        `/posts/${params.postId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       setForum(response.data);
       setIsEditing(false);
@@ -110,7 +122,6 @@ const ForumItemPage = () => {
       setEditButtonVisible(true);
     } catch (error) {
       console.error("Error updating post:", error);
-      console.log(editedContent);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
@@ -151,13 +162,23 @@ const ForumItemPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPost(reader.result);
-    };
-    reader.readAsDataURL(file);
+    setPhotoPost(file); // Set the file object directly
   };
 
+  if (loading) {
+    return <div className="fw-bold">Loading...</div>; // Show loading indicator while fetching data
+  }
+
+  if (postNotFound) {
+    return (
+      <>
+        <NavUser />
+        <div className="cont3 pt-3">
+          <p className="fw-bold">Post has been deleted.</p>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <NavUser />
@@ -175,14 +196,20 @@ const ForumItemPage = () => {
               <div className="cont p-3 mt-3 w-100">
                 <div>
                   <img
-                    src={forum?.username ? forum.photoUrl : "/Anony.png"}
+                    src={
+                      isAnonymous || !forum?.username
+                        ? "/Anony.png"
+                        : forum.photoUrl
+                    }
                     alt="user img"
                     className="userImage"
                   />
                 </div>
                 <div className="py-2" style={{ flexGrow: "1", width: "100%" }}>
                   <span style={{ fontWeight: "bold" }}>
-                    {forum?.username ? forum.username : "Anonymous"}
+                    {isAnonymous || !forum?.username
+                      ? "Anonymous"
+                      : forum.username}
                   </span>
                   <br />
                   <p className="text-muted">{duration}</p>
@@ -242,7 +269,7 @@ const ForumItemPage = () => {
                         </div>
                       </>
                     ) : (
-                      forum?.content
+                      <p>{forum?.content}</p>
                     )}
                     {forum?.postPhotoUrl && (
                       <div className="postImg">
@@ -318,4 +345,3 @@ const ForumItemPage = () => {
 };
 
 export default ForumItemPage;
-
