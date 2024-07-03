@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { apiInstance } from "../../../../axios";
 import Comment from "./Comment";
@@ -6,7 +6,9 @@ import toast from "react-hot-toast";
 import CommentForm from "../../../forms/CommentForm";
 import { usePostStore } from "../../../../hooks/use-post-store";
 import { useAuthStore } from "../../../../hooks/use-auth-store";
+import { useNavigate } from "react-router-dom";
 const CommentSection = ({ postId }) => {
+  const commentRefs = useRef({});
   const [commentsData, setCommentsData] = useState([]);
   const intialActivePost = usePostStore((state) => state.intialActivePost);
   const addPostComment = usePostStore((state) => state.addPostComment);
@@ -106,6 +108,30 @@ const CommentSection = ({ postId }) => {
 
     updatePostComment(data);
   };
+  const handleHashChange = () => {
+    const hash = window.location.hash;
+    if (hash) {
+      const commentId = hash.substring(1);
+      const element = commentRefs.current[commentId];
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        element.style.backgroundColor = "#f0f0f0";
+        setTimeout(() => {
+          element.style.backgroundColor = "transparent";
+        }, 6000);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("hashchange", handleHashChange, false);
+    handleHashChange(); // Handle initial load
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange, false);
+    };
+  }, [commentsData]);
+
   return (
     <div
       style={{
@@ -142,6 +168,7 @@ const CommentSection = ({ postId }) => {
             postId={postId}
             onDeleteComment={onDeleteComment}
             onUpdateComment={onUpdateComment}
+            ref={(el) => (commentRefs.current[comment.id] = el)}
           />
         ))}
       </div>
