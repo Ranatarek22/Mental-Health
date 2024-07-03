@@ -2,164 +2,83 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { apiInstance } from "../../../../axios";
 import { useNavigate } from "react-router-dom";
-import Container from "react-bootstrap/Container";
 
 export function Articles() {
-  const [posts, setPosts] = useState([]);
-  const pageSize = 6;
   const navigate = useNavigate();
-  // const commentsCount = usePostStore((state) => state.totalComments);
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const pageSize = 2;
+  const page = 1;
 
-  const fetchPosts = async () => {
+  const fetchArticles = async () => {
+    setLoading(true);
     try {
-      debugger;
-      const response = await apiInstance.get(
-        `/posts?PageNumber=5&PageSize=${pageSize}`
+      const response = await apiInstance.get("/articles", {
+        params: {
+          Query:
+            " psychology OR Neuroscience OR Therapy OR Mental health OR Medical research OR Clinical psychology",
+          PageSize: pageSize,
+          Page: page,
+        },
+      });
+      const newArticles = response.data.articles;
+      setArticles((prev) =>
+        page === 1 ? newArticles : [...prev, ...newArticles]
       );
-      const newPosts = response.data;
-      //comment this sensitive data it show user id
-      // console.log(newPosts);
-
-      setPosts(newPosts);
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error fetching articles:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchArticles();
   }, []);
-
   return (
-    <div
-      className="container-fluid"
-      style={{
-        // marginLeft: "calc((100% - 100vw) / 2)",
-        width: "100vw",
-        // backgroundColor: "#fbfbfb",
-        background: "linear-gradient(rgb(202, 231, 239), rgb(255, 255, 255))",
-        padding: "100px",
-        marginLeft: "calc((100% - 100vw) / 2)",
-        paddingTop: 0,
-      }}
-    >
-      <section id="articles" className="articles">
-        <h3
-          className="mb-5"
-          style={{
-            fontSize: "4rem",
-            fontWeight: 300,
-          }}
-        >
-          Recent Articles
-        </h3>
-        <div
-          className="post-cards"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            flexWrap: "wrap",
-          }}
-        >
-          {posts.map((post) => {
-            return (
-              <>
-                <div
-                  key={post.id}
-                  className="post-card flex-column justify-content-center"
-                  style={{
-                    backgroundColor: "#fff",
-   
-                    margin: "20px",
-                    padding: "40px",
-                    borderRadius: "10px",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  <div
-                    className="post-author-info"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div className="image" style={{ display: "contents" }}>
-                      <img
-                        src={"/landingImages/medical1.png"}
-                        // alt="post"
-                        style={{
-                          width: "30%",
-                          borderRadius: "50%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </div>
-                    <div
-                      className="name"
-                      style={{
-                        fontSize: "1.2rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      David Ortiz
-                      {/* {post.username ?? "Anonymous"} */}
-                    </div>
-                  </div>
-                  <div className="content mt-3">
-                    <h3
-                      style={{
-                        fontSize: "1.1rem",
-                        fontWeight: 600,
-                        color: "rgb(104 110 116)",
-                      }}
-                    >
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Tenetur animi alias repudiandae quasi maxime odio.
-                    </h3>
-                  </div>
-                  <div
-                    className="date"
-                    style={{
-                      fontSize: "0.8rem",
-                      fontWeight: 500,
-                      color: "rgb(104 110 116)",
-                    }}
-                  >
-                    {post.postedOn.slice(0, 10)}
-                  </div>
-                  {/* <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        <button
-                                            type="button"
-                                            style={{
-                                                backgroundColor: "transparent",
-                                                border: "2px solid black",
-                                                padding: "10px",
-                                                color: "black",
-                                                borderRadius: "10px",
-                                                fontSize: "1rem",
-                                                fontWeight: 700,
-                                                cursor: "pointer",
-                                            }}
-                                        >
-                                            Comment Now
-                                        </button>
-                                    </div> */}
-                </div>
-              </>
-            );
-          })}
-        </div>
-      </section>
+    <div id="articles" className="articles-feed">
+      <h1 children="">Articles Feed</h1>
+      <div className="holder">
+        {articles.map((article, index) => (
+          <div key={index} className="article-card">
+            <img
+              src={article.urlToImage}
+              alt={article.title}
+              className="article-image"
+            />
+            <div className="article-content">
+              <h2 className="article-title">{article.title}</h2>
+              <p className="article-description">{article.description}</p>
+              <a
+                href={article.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="article-link"
+              >
+                Read more
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      {loading && <LoadingSkeleton />}
+      <a href="/articles">
+        <button>See More</button>
+      </a>
     </div>
   );
 }
+const LoadingSkeleton = () => (
+  <div className="loading-skeleton">
+    {[...Array(2)].map((_, index) => (
+      <div key={index} className="skeleton-card">
+        <div className="skeleton-image"></div>
+        <div className="skeleton-content">
+          <div className="skeleton-title"></div>
+          <div className="skeleton-description"></div>
+          <div className="skeleton-link"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+);

@@ -106,10 +106,10 @@ function App() {
               />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/depressiontest" element={<MentalHealthTest />} />
+              <Route path="/articles" element={<ArticlesFeed />} />
               <Route path="/appointments" element={<UserAppointments />} />
               <Route path="/doctors" element={<DoctorsList />} />
               <Route path="/myposts" element={<MyPostsPAge />} />
-              <Route path="/articles" element={<ArticlesFeed />} />
 
               <Route path="/createforum" element={<CreateForumPage />} />
               <Route path="/doctorschedule" element={<DoctorSchedule />} />

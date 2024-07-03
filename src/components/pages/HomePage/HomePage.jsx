@@ -3,11 +3,8 @@ import Hero from "./components/Hero";
 import Services from "./components/Services";
 import { Doctors } from "./components/Doctors";
 import { Articles } from "./components/Articles";
-import Footer from "./components/Footer";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import MentalHealthTest from "../MentalHealthTest/MentalHealthTest";
-import Scheduling from "./components/DepressionTest";
 import DepressionTest from "./components/DepressionTest";
 
 const AnimatedSection = ({ children, delay = 0 }) => {

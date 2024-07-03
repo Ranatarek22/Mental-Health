@@ -5,4 +5,5 @@ export const main_routes = [
   "/forgetpassword",
   "/forgetpassword/resetpassword",
   "/depressiontest",
+  "/articles",
 ];

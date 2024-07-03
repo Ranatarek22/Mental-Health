@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaArrowTurnDown } from "react-icons/fa6";
 
 function DepressionTest() {
   return (
