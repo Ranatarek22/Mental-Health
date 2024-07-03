@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { apiInstance } from "../../axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,18 +8,47 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/use-auth-store";
+import moment from "moment";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
   const updateActiveUser = useAuthStore((state) => state.updateActiveUser);
+  const [showPassword, setShowPassword] = useState(false);
+
   const signupschema = object().shape({
-    firstName: string("The email must be a string").required(),
-    lastName: string("The email must be a string").required(),
-    email: string("The email must be a string").required().email(),
-    birthDate: date().required(),
-    gender: string().required(),
-    password: string().required().min(8).max(100),
+    firstName: string("The email must be a string").required(
+      "First name is required"
+    ),
+    lastName: string("The email must be a string").required(
+      "Last name is required"
+    ),
+    email: string("The email must be a string")
+      .required("Email is required")
+      .email("Invalid email format"),
+    birthDate: date()
+      .required("Birth date is required")
+      .test(
+        "is-date-not-in-future",
+        "Birth date shouldn't be in the future",
+        (value) => moment(value).isBefore(moment(), "day")
+      ),
+    gender: string().required("Gender is required"),
+    password: string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(100, "Password cannot exceed 100 characters")
+      .matches(/(?=.*[0-9])/, "Password must contain at least one number")
+      .matches(
+        /(?=.*[!@#$%^&*])/,
+        "Password must contain at least one special character"
+      )
+      .matches(
+        /(?=.*[A-Z])/,
+        "Password must contain at least one uppercase letter"
+      ),
   });
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -28,10 +57,10 @@ const SignUpForm = () => {
       password: "",
       birthDate: "",
       gender: "",
+      role: "User",
     },
     validationSchema: signupschema,
     onSubmit: async (values) => {
-      //   alert(JSON.stringify(values));
       const cancelToken = axios.CancelToken.source();
       try {
         const tokenPromise = await apiInstance.post(`/auth/register`, values, {
@@ -48,16 +77,18 @@ const SignUpForm = () => {
         const user_token = tokenPromise.data;
 
         localStorage.setItem("mental_auth", JSON.stringify(user_token));
-        // updateActiveUser(user_token);
         navigate("/login");
-        // window.location.reload();
       } catch (error) {
         if (axios.isCancel(error)) {
           console.error("cancelled");
         } else {
           console.error("Error details:", error);
-          if (typeof error === "object") {
-            toast.error(Object.values(error.response.data.errors[0])[1]);
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.errors
+          ) {
+            toast.error(Object.values(error.response.data.errors)[0][1]);
           } else {
             toast.error(String(error));
           }
@@ -70,7 +101,7 @@ const SignUpForm = () => {
     },
   });
 
-  const isSubmiting = formik.isSubmitting;
+  const isSubmitting = formik.isSubmitting;
 
   return (
     <Form onSubmit={formik.handleSubmit} className="signform">
@@ -121,17 +152,35 @@ const SignUpForm = () => {
       </Form.Group>
       <Form.Group className="mb-3 inputfield" controlId="password">
         <Form.Label>Enter your password</Form.Label>
-        <Form.Control
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          onBlur={formik.handleBlur}
-        />
+        <div style={{ position: "relative" }}>
+          <Form.Control
+            name="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            onBlur={formik.handleBlur}
+          />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {formik.touched["password"] && Boolean(formik.errors["password"]) && (
           <p className="error">{formik.errors["password"]}</p>
         )}
+        <p className="text-muted">
+          Password must contain at least one special character, one number, and
+          one capital letter.
+        </p>
       </Form.Group>
       <Form.Group className="mb-3 inputfield" controlId="birthDate">
         <Form.Label>Enter your birth date</Form.Label>
@@ -173,7 +222,7 @@ const SignUpForm = () => {
           inline
         />
         {formik.touched["gender"] && Boolean(formik.errors["gender"]) && (
-          <p>{formik.errors["gender"]}</p>
+          <p className="error">{formik.errors["gender"]}</p>
         )}
       </Form.Group>
 
@@ -181,7 +230,7 @@ const SignUpForm = () => {
         className="BTN"
         style={{ backgroundColor: "#4caf50", borderColor: "#4caf50" }}
         type="submit"
-        disabled={isSubmiting}
+        disabled={isSubmitting}
       >
         Sign up
       </Button>

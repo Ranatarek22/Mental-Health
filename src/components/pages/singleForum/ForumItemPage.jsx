@@ -23,7 +23,7 @@ const ForumItemPage = () => {
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [photoPost, setPhotoPost] = useState(null); // Update initial state to null
+  const [photoPost, setPhotoPost] = useState(null); 
   const [isEditing, setIsEditing] = useState(false);
   const [editButtonVisible, setEditButtonVisible] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -44,7 +44,7 @@ const ForumItemPage = () => {
           setEditedTitle(postData.title);
           setEditedContent(postData.content);
           setIsAnonymous(postData.isAnonymous);
-          setPhotoPost(postData.postPhotoUrl); // This should be the URL or null if no photo
+          setPhotoPost(postData.postPhotoUrl); 
         } catch (error) {
           if (axios.isCancel(error)) {
             console.error("Cancelled");
@@ -103,7 +103,7 @@ const ForumItemPage = () => {
       formData.append("Content", editedContent);
       formData.append("IsAnonymous", isAnonymous);
       if (photoPost) {
-        formData.append("PhotoPost", photoPost); // Append the file object
+        formData.append("PhotoPost", photoPost); 
       }
 
       const response = await apiInstance.put(
@@ -162,11 +162,11 @@ const ForumItemPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setPhotoPost(file); // Set the file object directly
+    setPhotoPost(file); 
   };
 
   if (loading) {
-    return <div className="fw-bold">Loading...</div>; // Show loading indicator while fetching data
+    return <div className="fw-bold">Loading...</div>; 
   }
 
   if (postNotFound) {

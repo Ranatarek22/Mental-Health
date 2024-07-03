@@ -10,7 +10,7 @@ const ResetPasswordPage = () => {
       <Container className="page-container">
         <Row className="h-100 ">
           <Col className="containerform" sm={12} md={12}>
-            <div className="rectangle" style={{ width: "100%" }}>
+            <div className="rectangle">
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img src="/headache.png" srcSet="/headache.png" />
               </div>
