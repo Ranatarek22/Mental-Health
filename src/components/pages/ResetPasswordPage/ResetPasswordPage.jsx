@@ -15,7 +15,7 @@ const ResetPasswordPage = () => {
                 <img src="/headache.png" srcSet="/headache.png" />
               </div>
               <div className="group-3">
-                <p className="fw-bold" style={{ color: "#01579B" }}>
+                <p className="fw-bold" style={{ color: "var(--new-color)" }}>
                   New Password
                 </p>
               </div>
