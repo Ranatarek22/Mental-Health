@@ -44,13 +44,14 @@ export const NotificationsProvider = ({ token, children }) => {
       const newNotifications = await response.json();
       setNotifications((prev) => [...prev, ...newNotifications]);
       setHasMore(newNotifications.length === pageSize);
-      setLoading(false);
 
       // Update unread count
       const unreadCount = newNotifications.filter((n) => !n.isRead).length;
       setNewNotificationCount((prev) => prev + unreadCount);
     } catch (error) {
       console.error("Error fetching notifications:", error);
+    } finally {
+      setLoading(false);
     }
   };
 

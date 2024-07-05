@@ -10,7 +10,7 @@ const NotificationsDropdown = ({
   setPage,
 }) => {
   const { ref, inView } = useInView({
-    threshold: 1.0,
+    threshold: 0.1,
   });
   const { markAllAsRead, toggleUnreadFilter } = useNotifications();
 
@@ -18,7 +18,7 @@ const NotificationsDropdown = ({
     if (inView && hasMore && !loading) {
       setPage((prevPage) => prevPage + 1);
     }
-  }, [inView, hasMore, loading, setPage]);
+  }, [inView, hasMore, loading]);
 
   return (
     <div className="notifications-dropdown">
@@ -26,10 +26,11 @@ const NotificationsDropdown = ({
         <button onClick={markAllAsRead}>Mark All as Read</button>
         <button onClick={toggleUnreadFilter}>Unread Only</button>
       </div>
+
       {notifications.map((notification) => (
         <NotificationItem key={notification.id} notification={notification} />
       ))}
-      <div ref={ref} />
+      <div ref={ref} className="p-3"></div>
       {loading && (
         <>
           <NotificationSkeleton />

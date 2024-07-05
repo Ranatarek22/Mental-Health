@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import CommentForm from "../../../forms/CommentForm";
 import { apiInstance } from "../../../../axios";
 import axios from "axios";
@@ -7,7 +7,7 @@ import { usePostStore } from "../../../../hooks/use-post-store";
 import { useAuthStore } from "../../../../hooks/use-auth-store";
 import useForceRerender from "../../../../hooks/useForceRerender";
 
-const Comment = (props) => {
+const Comment = forwardRef((props, ref) => {
   const {
     comment,
     postId,
@@ -156,6 +156,7 @@ const Comment = (props) => {
   return (
     <div>
       <div
+        ref={ref}
         id={comment.id}
         className="d-flex gap-2 p-2 align-items-start justify-content-start"
       >
@@ -248,6 +249,6 @@ const Comment = (props) => {
       )}
     </div>
   );
-};
+});
 
 export default Comment;
