@@ -293,8 +293,7 @@ const questions = [
   // },
 
   {
-    question:
-      "Tell us your opinion about suicide ",
+    question: "Tell us your opinion about suicide ",
     type: "textarea",
   },
 ];
@@ -360,7 +359,11 @@ const MentalHealthTest = () => {
           }
         );
         console.log(response);
-        setIsDepressed(response.data.isDepressed);
+        if (response.data == "Depressed") {
+          setIsDepressed(true);
+        } else {
+          setIsDepressed(false);
+        }
         setShowResult(true);
         toast.success("Form submitted successfully!");
       } catch (error) {
