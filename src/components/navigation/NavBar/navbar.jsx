@@ -71,7 +71,7 @@ const AppHeader = () => {
                       src={image ? image : "/user.png"}
                       alt="user profile"
                       className="rounded-circle"
-                      style={{ width: "10px", height: "10px" }}
+                      style={{ width: "50px", height: "50px" }}
                     />
                     <p>{userName}</p>
                   </div>

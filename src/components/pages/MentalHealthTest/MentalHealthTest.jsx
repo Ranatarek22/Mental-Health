@@ -266,35 +266,35 @@ const questions = [
       { label: "I have lost interest in sex completely.", score: 3 },
     ],
   },
-  {
-    question: "How did your father and mother punish you?",
-    type: "textarea",
-  },
-  {
-    question: "What is your impression of the atmosphere of the house?",
-    type: "textarea",
-  },
-  {
-    question: "Who are the most important people in your life?",
-    type: "textarea",
-  },
-  {
-    question: "Tell us your problem",
-    type: "textarea",
-  },
-  {
-    question:
-      "Mention the most important events that you believe are related to this problem",
-    type: "textarea",
-  },
-  {
-    question: "What solutions do you think will help solve your problem?",
-    type: "textarea",
-  },
+  // {
+  //   question: "How did your father and mother punish you?",
+  //   type: "textarea",
+  // },
+  // {
+  //   question: "What is your impression of the atmosphere of the house?",
+  //   type: "textarea",
+  // },
+  // {
+  //   question: "Who are the most important people in your life?",
+  //   type: "textarea",
+  // },
+  // {
+  //   question: "Tell us your problem",
+  //   type: "textarea",
+  // },
+  // {
+  //   question:
+  //     "Mention the most important events that you believe are related to this problem",
+  //   type: "textarea",
+  // },
+  // {
+  //   question: "What solutions do you think will help solve your problem?",
+  //   type: "textarea",
+  // },
 
   {
     question:
-      "Tell us your opinion about suicide and what is your experience with it",
+      "Tell us your opinion about suicide ",
     type: "textarea",
   },
 ];
