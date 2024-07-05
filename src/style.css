@@ -446,6 +446,7 @@ main {
   .tips {
     display: none;
   }
+
   #navbar {
     height: 78px;
     max-width: calc(100% - 80px);
@@ -675,7 +676,12 @@ textarea {
   border: 1px solid var(--fourth-color);
   margin-top: -39px;
 }
-
+hr {
+  position: absolute;
+  left: 41%;
+  width: 20%;
+  color: grey;
+}
 .centered-container {
   display: flex;
   justify-content: center;
@@ -1979,14 +1985,18 @@ textarea {
 /* test */
 
 .MentalHealthTest {
-  max-width: 800px;
+  max-width: 80%;
   margin: 20px auto;
   padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-block: 100px;
   padding-block: 60px;
   border: 2px solid #ececec;
   border-radius: 8px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
@@ -1994,9 +2004,10 @@ textarea {
 }
 .MentalHealthTest h3 {
   margin-bottom: 80px;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
   font-weight: 400;
+  color: var(--new-color);
 }
 .q {
   display: flex;
@@ -2005,6 +2016,7 @@ textarea {
   display: flex;
   gap: 20px;
   flex-direction: column;
+  align-items: center;
 }
 
 .form-group {
@@ -2013,8 +2025,9 @@ textarea {
 
 .MentalHealthTest label {
   margin-bottom: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 400;
+  text-align: center;
 }
 
 .input,
@@ -2033,6 +2046,28 @@ textarea {
 .radio-input {
   margin-right: 5px;
 }
+.options-container {
+  margin-top: 40px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  text-align: center;
+}
+
+.option {
+  flex: 1 1 45%;
+}
+
+.option-1,
+.option-2 {
+  order: 1;
+}
+
+.option-3,
+.option-4 {
+  order: 2;
+}
 
 .submit-btn {
   padding: 10px 20px;
@@ -2042,7 +2077,16 @@ textarea {
   border-radius: 4px;
   cursor: pointer;
 }
-
+.test-btn {
+  background-color: var(--new-color);
+  border-color: var(--new-color);
+  color: white;
+  border-radius: 15px;
+}
+.test-btn:hover {
+  background-color: grey;
+  color: white;
+}
 .submit-btn:hover {
   background-color: #0056b3;
 }
@@ -2056,7 +2100,6 @@ textarea {
   }
 }
 .MentalHealthTest {
-  max-width: 800px;
   margin: 100px auto;
   padding: 20px;
 }
@@ -2068,9 +2111,15 @@ textarea {
 label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-size: 26px;
+  font-weight: 300px;
 }
-
+.form-check-input[type="radio"] {
+  border-color: black;
+}
+.form-check-input:checked {
+  background-color: var(--new-color);
+}
 .textarea {
   width: 100%;
   min-height: 100px;
@@ -2804,4 +2853,32 @@ label {
   width: 50%;
   height: 16px;
 }
+@media (max-width: 768px) {
+  .articles-feed {
+    display: none;
+  }
+}
 /* end articles */
+.forum-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.forum-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.articles-feed {
+  flex: 2;
+  overflow-y: auto;
+}
+
+.tips-content {
+  padding: 1rem;
+}
+
+.tips-content h3 {
+  margin-bottom: 1rem;
+}

@@ -114,7 +114,7 @@ const Sidebar = () => {
                   </span>{" "}
                 </a>
               </li>
-              <li className="nav-item align-items-center w-100">
+              {/* <li className="nav-item align-items-center w-100">
                 <a href="/articles" className="nav-link px-0 align-middle m-2 ">
                   <Article className="fs-4 mx-3 me-1 text-black " />{" "}
                   <span
@@ -124,7 +124,7 @@ const Sidebar = () => {
                     Articles Feed
                   </span>{" "}
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 

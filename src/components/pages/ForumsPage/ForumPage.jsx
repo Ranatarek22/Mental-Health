@@ -4,6 +4,7 @@ import ForumList from "./helpers/ForumList";
 import Tips from "./helpers/Tips";
 import { Container, Row, Col } from "react-bootstrap";
 import NavUser from "../../navigation/NavUser/NavUser";
+import ArticlesFeed from "../ArticlesFeed/ArticlesFeed";
 
 const ForumPage = () => {
   const recentArticles = (
@@ -16,6 +17,7 @@ const ForumPage = () => {
       </ul>
     </div>
   );
+
   return (
     <>
       <NavUser />
@@ -23,13 +25,19 @@ const ForumPage = () => {
         style={{
           display: "flex",
           flexDirection: "row",
+          height: "100vh", // Make sure the parent container has a height defined
         }}
       >
-        <div style={{ flex: "3" }}>
+        <div style={{ overflowY: "auto" }}>
           <ForumList />
         </div>
-        <div style={{ flex: " 2 2 0" }} className="mt-4  w-100 tips">
-          <Tips content={recentArticles} />
+        <div className="d-flex flex-column">
+          {/* <div className="mt-4 w-100 tips">
+            <Tips content={recentArticles} />
+          </div> */}
+          <div style={{ flex: 1, overflowY: "auto" }}>
+            <ArticlesFeed />
+          </div>
         </div>
       </div>
     </>

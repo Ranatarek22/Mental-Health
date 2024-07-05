@@ -21,18 +21,17 @@ const AppHeader = () => {
   };
 
   return (
-    <Navbar className="w-100" id="home" expand="md">
+    <Navbar className="w-100 justify-content-center" id="home" expand="md">
+      <img
+        src={"/logooo.png"}
+        alt="logo"
+        style={{ width: "100px", marginLeft: "5%" }}
+      />
       <Container className="navbar-custom">
-        <img
-          src={"/nexus.png"}
-          alt="logo"
-          style={{ width: "200px", marginTop: "1%" }}
-        />
-
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="nav-links">
           <Nav
-            className="me-auto"
+            className="me-auto mx-auto"
             style={{
               fontSize: "1.2rem",
             }}
@@ -61,7 +60,7 @@ const AppHeader = () => {
                 <img
                   src={image ? image : "/user.png"}
                   alt="user profile"
-                  className="rounded-circle p-2 ml-2 m-2 mt-4 user-img"
+                  className="rounded-circle user-img"
                   style={{ width: "60px", height: "60px" }}
                 />
               </Dropdown.Toggle>
@@ -72,7 +71,7 @@ const AppHeader = () => {
                       src={image ? image : "/user.png"}
                       alt="user profile"
                       className="rounded-circle"
-                      style={{ width: "60px", height: "60px" }}
+                      style={{ width: "10px", height: "10px" }}
                     />
                     <p>{userName}</p>
                   </div>

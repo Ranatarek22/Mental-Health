@@ -45,7 +45,7 @@ const ArticlesFeed = () => {
 
   return (
     <div className="articles-feed">
-      <h1 children="">Articles Feed</h1>
+      <h1 children="">Popular Articles</h1>
       {articles.map((article, index) => (
         <div key={index} className="article-card">
           <img

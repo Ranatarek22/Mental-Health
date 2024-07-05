@@ -5,50 +5,308 @@ import toast, { Toaster } from "react-hot-toast";
 import { apiInstance } from "../../../axios";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const questions = [
   {
-    type: "select",
-    question: "How often do you feel hopeless or helpless?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
+    question: "Question 1",
+    options: [
+      { label: "I do not feel sad.", score: 0 },
+      { label: "I feel sad.", score: 1 },
+      { label: "I am sad all the time and I can't snap out of it.", score: 2 },
+      { label: "I am so sad and unhappy that I can't stand it.", score: 3 },
+    ],
   },
   {
-    type: "select",
+    question: "Question 2",
+    options: [
+      {
+        label: "I am not particularly discouraged about the future.",
+        score: 0,
+      },
+      { label: "I feel discouraged about the future.", score: 1 },
+      { label: "I feel I have nothing to look forward to.", score: 2 },
+      {
+        label: "I feel the future is hopeless and that things cannot improve.",
+        score: 3,
+      },
+    ],
+  },
+  {
+    question: "Question 3",
+    options: [
+      { label: "I do not feel like a failure.", score: 0 },
+      { label: "I feel I have failed more than the average person.", score: 1 },
+      {
+        label: "As I look back on my life, all I can see is a lot of failures.",
+        score: 2,
+      },
+      { label: "I feel I am a complete failure as a person.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 4",
+    options: [
+      {
+        label: "I get as much satisfaction out of things as I used to.",
+        score: 0,
+      },
+      { label: "I don't enjoy things the way I used to.", score: 1 },
+      {
+        label: "I don't get real satisfaction out of anything anymore.",
+        score: 2,
+      },
+      { label: "I am dissatisfied or bored with everything.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 5",
+    options: [
+      { label: "I don't feel particularly guilty", score: 0 },
+      { label: "I feel guilty a good part of the time.", score: 1 },
+      { label: "I feel quite guilty most of the time.", score: 2 },
+      { label: "I feel guilty all of the time.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 6",
+    options: [
+      { label: "I don't feel I am being punished.", score: 0 },
+      { label: "I feel I may be punished.", score: 1 },
+      { label: "I expect to be punished.", score: 2 },
+      { label: "I feel I am being punished.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 7",
+    options: [
+      { label: "I don't feel disappointed in myself.", score: 0 },
+      { label: "I am disappointed in myself.", score: 1 },
+      { label: "I am disgusted with myself.", score: 2 },
+      { label: "I hate myself.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 8",
+    options: [
+      { label: "I don't feel I am any worse than anybody else.", score: 0 },
+      {
+        label: "I am critical of myself for my weaknesses or mistakes.",
+        score: 1,
+      },
+      { label: "I blame myself all the time for my faults.", score: 2 },
+      { label: "I blame myself for everything bad that happens.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 9",
+    options: [
+      { label: "I don't have any thoughts of killing myself.", score: 0 },
+      {
+        label:
+          "I have thoughts of killing myself, but I would not carry them out.",
+        score: 1,
+      },
+      { label: "I would like to kill myself.", score: 2 },
+      { label: "I would kill myself if I had the chance.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 10",
+    options: [
+      { label: "I don't cry any more than usual.", score: 0 },
+      { label: "I cry more now than I used to.", score: 1 },
+      { label: "I cry all the time now.", score: 2 },
+      {
+        label:
+          "I used to be able to cry, but now I can't cry even though I want to.",
+        score: 3,
+      },
+    ],
+  },
+  {
+    question: "Question 11",
+    options: [
+      { label: "I am no more irritated by things than I ever was.", score: 0 },
+      { label: "I am slightly more irritated now than usual.", score: 1 },
+      {
+        label: "I am quite annoyed or irritated a good deal of the time.",
+        score: 2,
+      },
+      { label: "I feel irritated all the time.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 12",
+    options: [
+      { label: "I have not lost interest in other people.", score: 0 },
+      {
+        label: "I am less interested in other people than I used to be.",
+        score: 1,
+      },
+      { label: "I have lost most of my interest in other people.", score: 2 },
+      { label: "I have lost all of my interest in other people.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 13",
+    options: [
+      { label: "I make decisions about as well as I ever could.", score: 0 },
+      { label: "I put off making decisions more than I used to.", score: 1 },
+      {
+        label:
+          "I have greater difficulty in making decisions more than I used to.",
+        score: 2,
+      },
+      { label: "I can't make decisions at all anymore.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 14",
+    options: [
+      { label: "I don't feel that I look any worse than I used to.", score: 0 },
+      {
+        label: "I am worried that I am looking old or unattractive.",
+        score: 1,
+      },
+      {
+        label:
+          "I feel there are permanent changes in my appearance that make me look unattractive.",
+        score: 2,
+      },
+      { label: "I believe that I look ugly.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 15",
+    options: [
+      { label: "I can work about as well as before.", score: 0 },
+      {
+        label: "It takes an extra effort to get started at doing something.",
+        score: 1,
+      },
+      { label: "I have to push myself very hard to do anything.", score: 2 },
+      { label: "I can't do any work at all.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 16",
+    options: [
+      { label: "I can sleep as well as usual.", score: 0 },
+      { label: "I don't sleep as well as I used to.", score: 1 },
+      {
+        label:
+          "I wake up 1-2 hours earlier than usual and find it hard to get back to sleep.",
+        score: 2,
+      },
+      {
+        label:
+          "I wake up several hours earlier than I used to and cannot get back to sleep.",
+        score: 3,
+      },
+    ],
+  },
+  {
+    question: "Question 17",
+    options: [
+      { label: "I don't get more tired than usual.", score: 0 },
+      { label: "I get tired more easily than I used to.", score: 1 },
+      { label: "I get tired from doing almost anything.", score: 2 },
+      { label: "I am too tired to do anything.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 18",
+    options: [
+      { label: "My appetite is no worse than usual.", score: 0 },
+      { label: "My appetite is not as good as it used to be.", score: 1 },
+      { label: "My appetite is much worse now.", score: 2 },
+      { label: "I have no appetite at all anymore.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 19",
+    options: [
+      { label: "I haven't lost much weight, if any, lately.", score: 0 },
+      { label: "I have lost more than five pounds.", score: 1 },
+      { label: "I have lost more than ten pounds.", score: 2 },
+      { label: "I have lost more than fifteen pounds.", score: 3 },
+    ],
+  },
+  {
+    question: "Question 20",
+    options: [
+      { label: "I am no more worried about my health than usual.", score: 0 },
+      {
+        label:
+          "I am worried about physical problems like aches, pains, upset stomach, or constipation.",
+        score: 1,
+      },
+      {
+        label:
+          "I am very worried about physical problems and it's hard to think of much else.",
+        score: 2,
+      },
+      {
+        label:
+          "I am so worried about my physical problems that I cannot think of anything else.",
+        score: 3,
+      },
+    ],
+  },
+  {
+    question: "Question 21",
+    options: [
+      {
+        label: "I have not noticed any recent change in my interest in sex.",
+        score: 0,
+      },
+      { label: "I am less interested in sex than I used to be.", score: 1 },
+      { label: "I have almost no interest in sex.", score: 2 },
+      { label: "I have lost interest in sex completely.", score: 3 },
+    ],
+  },
+  {
+    question: "How did your father and mother punish you?",
+    type: "textarea",
+  },
+  {
+    question: "What is your impression of the atmosphere of the house?",
+    type: "textarea",
+  },
+  {
+    question: "Who are the most important people in your life?",
+    type: "textarea",
+  },
+  {
+    question: "Tell us your problem",
+    type: "textarea",
+  },
+  {
     question:
-      "How often do you have trouble sleeping or experience changes in your sleep patterns (e.g., insomnia or oversleeping)?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
+      "Mention the most important events that you believe are related to this problem",
+    type: "textarea",
   },
   {
-    type: "select",
-    question: "How often do you feel excessively tired or lack energy?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
+    question: "What solutions do you think will help solve your problem?",
+    type: "textarea",
   },
+
   {
-    type: "select",
     question:
-      "How often do you lose interest or pleasure in activities you used to enjoy?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
+      "Tell us your opinion about suicide and what is your experience with it",
+    type: "textarea",
   },
-  {
-    type: "select",
-    question:
-      "How often do you experience difficulty concentrating or making decisions?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
-  },
-  {
-    type: "select",
-    question: "How often do you feel worthless or excessively guilty?",
-    options: ["Sometimes", "Always", "Never", "Usually"],
-  },
-  { type: "textarea", question: "Tell us your story" },
 ];
 
-const validationSchema = Yup.object(
-  questions.reduce((acc, curr, idx) => {
-    if (curr.type !== "textarea") {
-      acc[`question${idx}`] = Yup.string().required("This field is required");
+const validationSchema = Yup.object().shape(
+  questions.reduce((acc, question, index) => {
+    if (question.type === "textarea") {
+      acc[`question${index}`] = Yup.string().required("This field is required");
     } else {
-      acc[`question${idx}`] = Yup.string().required("This field is required");
+      acc[`question${index}`] = Yup.string().required(
+        "Please select an option"
+      );
     }
     return acc;
   }, {})
@@ -61,24 +319,35 @@ const MentalHealthTest = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
 
   const formik = useFormik({
-    initialValues: questions.reduce((acc, curr, idx) => {
-      acc[`question${idx}`] = "";
+    initialValues: questions.reduce((acc, question, index) => {
+      acc[`question${index}`] = "";
       return acc;
     }, {}),
     validationSchema,
     onSubmit: async (values) => {
-      const responseCounts = { sometimes: 0, always: 0, never: 0, usually: 0 };
+      let sum = 0;
+      let textResponses = [];
 
       questions.forEach((q, idx) => {
-        if (q.type !== "textarea") {
-          responseCounts[values[`question${idx}`].toLowerCase()] += 1;
+        if (q.options) {
+          const selectedOption = q.options.find(
+            (option) => option.label === values[`question${idx}`]
+          );
+          if (selectedOption) {
+            sum += selectedOption.score;
+          }
+        } else if (q.type === "textarea") {
+          textResponses.push(values[`question${idx}`]);
         }
       });
 
+      const text = textResponses.join(" ");
       const payload = {
-        text: values[`question6`],
-        ...responseCounts,
+        sum,
+        text,
       };
+
+      console.log(payload);
 
       try {
         const response = await apiInstance.post(
@@ -90,7 +359,8 @@ const MentalHealthTest = () => {
             },
           }
         );
-        setIsDepressed(response.data);
+        console.log(response);
+        setIsDepressed(response.data.isDepressed);
         setShowResult(true);
         toast.success("Form submitted successfully!");
       } catch (error) {
@@ -106,13 +376,13 @@ const MentalHealthTest = () => {
   return (
     <div id="MentalHealthTest">
       <Toaster />
-      <motion.div
-        id="depressiontest" // Adding the id attribute here
+      {/* <motion.div
+        id="depressiontest"
         className="landing container-fluid"
         style={{
           width: "100vw",
           marginLeft: "calc((100% - 100vw) / 2)",
-          backgroundColor: "var(--fourth-color)",
+          backgroundColor: "white",
           paddingTop: "24px",
         }}
         initial={{ opacity: 0 }}
@@ -120,234 +390,221 @@ const MentalHealthTest = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeIn" }}
       >
-        <div className="container">
-          <div className="image">
-            <img
-              src="/landingImages/Doctor5.png"
-              alt="hero"
-              style={{ width: "55%" }}
-            />
-          </div>
-          <div className="text">
-            <h1> Take Depression Test</h1>
-            <p>
-              This Test will help you to know if you're depressed or not and if
-              you're depressed will assist you to have treatments
-            </p>
-            <a href="#test">
-              <button>Test</button>
-            </a>
+        <div className=" text-center">
+          <div className="row">
+            <div className="col">
+              <img
+                src="/LandingImages/Doctor5.png"
+                alt="hero"
+                className="img-fluid"
+                style={{ width: "55%" }}
+              />
+            </div>
+            <div className="col align-self-center">
+              <h1>Take Depression Test</h1>
+              <p>
+                This Test will help you to know if you're depressed or not and
+                if you're depressed will assist you to have treatments
+              </p>
+              <a href="#test" className="d-flex justify-content-center">
+                <button className="btn test-btn">Test</button>
+              </a>
+            </div>
+            <div className="col">
+              <img
+                src="/LandingImages/Doctor5.png"
+                alt="hero"
+                className="img-fluid"
+                style={{ width: "55%", transform: "scaleX(-1)" }}
+              />
+            </div>
           </div>
         </div>
-      </motion.div>
-      <motion.section
+      </motion.div> */}
+      <motion.div
+        id="depressiontest"
+        className="landing container-fluid"
+        style={{
+          width: "100vw",
+          marginLeft: "calc((100% - 100vw) / 2)",
+          backgroundColor: "white",
+          paddingTop: "24px",
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        id="test"
-        className="MentalHealthTest"
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: "easeIn" }}
       >
-        <h3>Depression Test</h3>
-        <form onSubmit={formik.handleSubmit} className="form">
-          {questions.map((q, idx) => (
-            <div key={idx} className="form-group">
-              <label>{q.question}</label>
-              {q.type === "textarea" ? (
-                <div>
-                  <textarea
-                    name={`question${idx}`}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values[`question${idx}`]}
-                    className="textarea"
-                  />
-                  {formik.touched[`question${idx}`] &&
-                  formik.errors[`question${idx}`] ? (
-                    <div className="error">
-                      {formik.errors[`question${idx}`]}
-                    </div>
-                  ) : null}
-                </div>
-              ) : (
-                <div className="select-wrapper">
-                  <select
-                    name={`question${idx}`}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values[`question${idx}`]}
-                    className="select"
-                  >
-                    <option value="">Select an option</option>
-                    {q.options.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched[`question${idx}`] &&
-                  formik.errors[`question${idx}`] ? (
-                    <div className="error">
-                      {formik.errors[`question${idx}`]}
-                    </div>
-                  ) : null}
-                </div>
-              )}
-              <hr />
-            </div>
-          ))}
-          <button type="submit" className="submit-btn">
-            Submit
-          </button>
-        </form>
-      </motion.section>
-
-      <AnimatePresence>
-        {showResult && (
-          <motion.section
-            id="result"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.5 }}
-            className="result-section"
-          >
-            <h3>Test Results</h3>
-            <div className="result-card">
-              <div className="result-header">
-                <h4>
+        =
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          id="test"
+          className="MentalHealthTest"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "33px",
+          }}
+        >
+          <img
+            src="https://cdn2.psychologytoday.com/assets/styles/manual_crop_287_139_1148x556/public/hero_image/pt_self_test/2024-05/tests-depression-hero-large.jpg.webp?itok=K0rS3jPG"
+            alt="Depression Test"
+            className="img-fluid mb-4"
+            style={{ width: "100%", borderRadius: "33px" }}
+          />
+          <div style={{ width: "80%", textAlign: "center" }}>
+            <form onSubmit={formik.handleSubmit} className="form">
+              <ol>
+                {questions.map((q, idx) => (
+                  <li key={idx} className="form-group mb-4">
+                    {q.type === "textarea" ? (
+                      <div>
+                        <label
+                          style={{ textAlign: "center" }}
+                          className="label"
+                        >
+                          {q.question}
+                        </label>
+                        <textarea
+                          name={`question${idx}`}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values[`question${idx}`]}
+                          className="form-control"
+                          placeholder="Your comments"
+                        />
+                        {formik.touched[`question${idx}`] &&
+                        formik.errors[`question${idx}`] ? (
+                          <div className="text-danger">
+                            {formik.errors[`question${idx}`]}
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : (
+                      <div className="options-container option">
+                        {q.options.map((option, optionIdx) => (
+                          <div
+                            key={option.label}
+                            className="form-check form-check-inline option"
+                          >
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              name={`question${idx}`}
+                              value={option.label}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              checked={
+                                formik.values[`question${idx}`] === option.label
+                              }
+                              id={`question${idx}_option${optionIdx}`}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor={`question${idx}_option${optionIdx}`}
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                        {formik.touched[`question${idx}`] &&
+                        formik.errors[`question${idx}`] ? (
+                          <div className="text-danger">
+                            {formik.errors[`question${idx}`]}
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
+                    <hr />
+                  </li>
+                ))}
+              </ol>
+              <button type="submit" className="btn test-btn w-75">
+                Submit
+              </button>
+            </form>
+          </div>
+        </motion.section>
+        <AnimatePresence>
+          {showResult && (
+            <motion.section
+              id="result"
+              className="MentalHealthTest"
+              style={{ backgroundColor: "white", borderRadius: "33px" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div>
+                <h3 className="text-center">
+                  Result
+                  <hr />
+                </h3>
+              </div>
+              <div className="text-center">
+                <p>
                   {isDepressed
-                    ? "Depression Indicated"
-                    : "No Depression Indicated"}
-                </h4>
-              </div>
-              <p className="result-description">
-                {isDepressed
-                  ? "Based on your responses, there are indications of depression. It's important to consult with a mental health professional for a proper diagnosis and support."
-                  : "Your responses suggest no significant indicators of depression. However, if you have concerns, don't hesitate to speak with a mental health professional."}
-              </p>
-              {isDepressed && (
-                <div className="result-actions">
-                  <button
-                    onClick={() => navigate("/doctors", { replace: true })}
-                  >
-                    Find a Doctor
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate("/forums/forumlist", { replace: true })
-                    }
-                  >
-                    Join Support Community
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="accordion">
-              <div className="accordion-item">
-                <button
-                  className={`accordion-title ${
-                    activeAccordion === 0 ? "active" : ""
-                  }`}
-                  onClick={() => toggleAccordion(0)}
-                >
-                  How our test works
-                </button>
-                <AnimatePresence>
-                  {activeAccordion === 0 && (
-                    <motion.div
-                      className="accordion-content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <h4>Our 3-Phase Analysis Process:</h4>
-                      <ol>
-                        <li>
-                          <strong>Response Weighting:</strong> We assign weights
-                          to your responses to determine if the overall
-                          sentiment tends to be more negative.
-                        </li>
-                        <li>
-                          <strong>Sentiment Analysis:</strong> We use advanced
-                          techniques like VADER and RoBERTa, combined with user
-                          analysis, to assess if your responses indicate
-                          potential issues.
-                        </li>
-                        <li>
-                          <strong>Depression Analysis:</strong> We compare your
-                          responses against a database of over 10,000 depression
-                          cases using machine learning models (decision trees,
-                          logistic regression, and support vector machines) to
-                          identify similarities.
-                        </li>
-                      </ol>
-                      <p>
-                        This multi-phase approach allows us to provide a
-                        comprehensive assessment. However, it's important to
-                        note that this test is not a clinical diagnosis. Always
-                        consult with a mental health professional for a proper
-                        evaluation.
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <div className="accordion-item">
-                <button
-                  className={`accordion-title ${
-                    activeAccordion === 1 ? "active" : ""
-                  }`}
-                  onClick={() => toggleAccordion(1)}
-                >
-                  Let's take action now
-                </button>
-                <AnimatePresence>
-                  {activeAccordion === 1 && (
-                    <motion.div
-                      className="accordion-content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <h4>Access our Nexus community</h4>
-                      <p>
-                        Join our supportive community to connect with others who
-                        understand what you're going through. Share experiences
-                        and find support.
-                      </p>
+                    ? "Based on your answers, you might be experiencing symptoms of depression. Please consider reaching out to a mental health professional for further evaluation and support."
+                    : "Your responses do not indicate symptoms of depression at this time. If you have concerns, please consult with a mental health professional."}
+                </p>
+                <div>
+                  {isDepressed ? (
+                    <div>
                       <button
                         onClick={() =>
-                          navigate("/forums/forumlist", { replace: true })
+                          navigate("/user/findadoctor", { replace: true })
                         }
+                        className="btn btn-primary"
                       >
-                        Join Community
+                        Find a Doctor
                       </button>
-
-                      <h4>Access pro doctors</h4>
-                      <p>
-                        Consult with professional doctors who specialize in
-                        mental health. Book appointments and get the help you
-                        need.
-                      </p>
                       <button
-                        onClick={() => navigate("/doctors", { replace: true })}
+                        onClick={() =>
+                          navigate("/user/courses", { replace: true })
+                        }
+                        className="btn btn-secondary"
                       >
-                        Find Doctors
+                        Explore Self-Help Resources
                       </button>
-                    </motion.div>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        onClick={() =>
+                          navigate("/user/findadoctor", { replace: true })
+                        }
+                        className="btn btn-primary"
+                      >
+                        Find a Doctor
+                      </button>
+                      <button
+                        onClick={() =>
+                          navigate("/user/courses", { replace: true })
+                        }
+                        className="btn btn-secondary"
+                      >
+                        Explore Self-Help Resources
+                      </button>
+                    </div>
                   )}
-                </AnimatePresence>
+                </div>
               </div>
-            </div>
-          </motion.section>
-        )}
-      </AnimatePresence>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };
 
 export default MentalHealthTest;
+// they are punished my with candles and belt and I felt scary and sad
+// my house always in stress and my dad and my mam always fights
+// my friends
+// I feel lost and i don't want to do anything in my life
+// My childhood ,it was awful
+// someone to talk to
+// i have never go to a therapist
+// I think suicide is better than living in this life , I have no experience in suicide
