@@ -405,7 +405,6 @@ const MentalHealthTest = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 1, ease: "easeIn" }}
       >
-        =
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -417,12 +416,33 @@ const MentalHealthTest = () => {
             borderRadius: "33px",
           }}
         >
-          <img
+          <div style={{ position: "relative", textAlign: "center" }}>
+            <h2
+              style={{
+                color: "white",
+                position: "absolute",
+
+                bottom: "30%",
+                fontSize: "5vw",
+                width: "100%",
+                zIndex: 1,
+              }}
+            >
+              Depression Test
+            </h2>
+            <img
+              src="https://cdn2.psychologytoday.com/assets/styles/manual_crop_287_139_1148x556/public/hero_image/pt_self_test/2024-05/tests-depression-hero-large.jpg.webp?itok=K0rS3jPG"
+              alt="Depression Test"
+              className="img-fluid mb-4"
+              style={{ width: "100%", borderRadius: "33px" }}
+            />
+          </div>
+          {/* <img
             src="https://cdn2.psychologytoday.com/assets/styles/manual_crop_287_139_1148x556/public/hero_image/pt_self_test/2024-05/tests-depression-hero-large.jpg.webp?itok=K0rS3jPG"
             alt="Depression Test"
             className="img-fluid mb-4"
             style={{ width: "100%", borderRadius: "33px" }}
-          />
+          /> */}
           <div style={{ width: "80%", textAlign: "center" }}>
             <form onSubmit={formik.handleSubmit} className="form">
               <ol>
@@ -523,21 +543,17 @@ const MentalHealthTest = () => {
                   {isDepressed ? (
                     <div>
                       <button
-                        onClick={() =>
-                          navigate("/user/findadoctor", { replace: true })
-                        }
+                        onClick={() => navigate("/signup", { replace: true })}
                         className="btn test-btn"
                       >
                         Find a Doctor
                       </button>
                       <button
-                        onClick={() =>
-                          navigate("/user/courses", { replace: true })
-                        }
+                        onClick={() => navigate("/articles", { replace: true })}
                         className="btn btn-secondary m-1 "
                         style={{ borderRadius: "15px" }}
                       >
-                        Explore Self-Help Resources
+                        Explore Articles
                       </button>
                     </div>
                   ) : (
