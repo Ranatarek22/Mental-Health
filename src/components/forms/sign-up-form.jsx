@@ -107,7 +107,7 @@ const SignUpForm = () => {
     <Form onSubmit={formik.handleSubmit} className="signform">
       <div className="name-group">
         <Form.Group className="mb-3 inputfield" controlId="firstName">
-          <Form.Label>Enter your first name</Form.Label>
+          <Form.Label>First name</Form.Label>
           <Form.Control
             type="text"
             name="firstName"
@@ -122,7 +122,7 @@ const SignUpForm = () => {
             )}
         </Form.Group>
         <Form.Group className="mb-3 inputfield" controlId="lastName">
-          <Form.Label>Enter your last name</Form.Label>
+          <Form.Label>Last name</Form.Label>
           <Form.Control
             type="text"
             name="lastName"
@@ -137,7 +137,7 @@ const SignUpForm = () => {
         </Form.Group>
       </div>
       <Form.Group className="mb-3 inputfield" controlId="email">
-        <Form.Label>Enter your email</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
           name="email"
@@ -151,12 +151,12 @@ const SignUpForm = () => {
         )}
       </Form.Group>
       <Form.Group className="mb-3 inputfield" controlId="password">
-        <Form.Label>Enter your password</Form.Label>
+        <Form.Label>Password</Form.Label>
         <div style={{ position: "relative" }}>
           <Form.Control
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Enter your password"
             onChange={formik.handleChange}
             value={formik.values.password}
             onBlur={formik.handleBlur}
@@ -183,7 +183,7 @@ const SignUpForm = () => {
         </p>
       </Form.Group>
       <Form.Group className="mb-3 inputfield" controlId="birthDate">
-        <Form.Label>Enter your birth date</Form.Label>
+        <Form.Label>Birth date</Form.Label>
         <Form.Control
           name="birthDate"
           type="date"

@@ -6,6 +6,7 @@ import { apiInstance } from "../../../axios";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useAuthStore } from "../../../hooks/use-auth-store";
 
 const questions = [
   {
@@ -302,29 +303,41 @@ const questions = [
 ];
 
 const validationSchema = Yup.object().shape(
-  questions.reduce((acc, question, index) => {
-    if (question.type === "textarea") {
-      acc[`question${index}`] = Yup.string();
-    } else {
-      acc[`question${index}`] = Yup.string().required(
-        "Please select an option"
-      );
+  questions.reduce(
+    (acc, question, index) => {
+      if (question.type === "textarea") {
+        acc[`question${index}`] = Yup.string();
+      } else {
+        acc[`question${index}`] = Yup.string().required(
+          "Please select an option"
+        );
+      }
+      return acc;
+    },
+    {
+      age: Yup.number()
+        .required("Age is required")
+        .positive("Age must be positive")
+        .integer("Age must be an integer"),
+      gender: Yup.string().required("Gender is required"),
     }
-    return acc;
-  }, {})
+  )
 );
 
 const MentalHealthTest = () => {
   const navigate = useNavigate();
   const [isDepressed, setIsDepressed] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [activeAccordion, setActiveAccordion] = useState(null);
 
   const formik = useFormik({
-    initialValues: questions.reduce((acc, question, index) => {
-      acc[`question${index}`] = "";
-      return acc;
-    }, {}),
+    initialValues: {
+      age: "",
+      gender: "",
+      ...questions.reduce((acc, question, index) => {
+        acc[`question${index}`] = "";
+        return acc;
+      }, {}),
+    },
     validationSchema,
     onSubmit: async (values) => {
       let sum = 0;
@@ -342,6 +355,7 @@ const MentalHealthTest = () => {
           textResponses.push(values[`question${idx}`]);
         }
       });
+
       function isArrayContainingOnlySpaces(arr) {
         return arr.every((item) => item.trim() === "");
       }
@@ -352,17 +366,20 @@ const MentalHealthTest = () => {
       ) {
         textResponses = ["none"];
       }
+
       const text = textResponses.join(" ");
       const payload = {
         sum,
         text,
+        age: values.age,
+        gender: values.gender,
       };
 
       console.log(payload);
 
       try {
         const response = await apiInstance.post(
-          "/users/test-depression",
+          "/depression-tests",
           JSON.stringify(payload),
           {
             headers: {
@@ -371,7 +388,7 @@ const MentalHealthTest = () => {
           }
         );
         console.log(response);
-        if (response.data == "Depressed") {
+        if (response.data.result == "Depressed") {
           setIsDepressed(true);
         } else {
           setIsDepressed(false);
@@ -383,10 +400,6 @@ const MentalHealthTest = () => {
       }
     },
   });
-
-  const toggleAccordion = (index) => {
-    setActiveAccordion(activeAccordion === index ? null : index);
-  };
 
   return (
     <div id="MentalHealthTest">
@@ -421,7 +434,6 @@ const MentalHealthTest = () => {
               style={{
                 color: "white",
                 position: "absolute",
-
                 bottom: "30%",
                 fontSize: "5vw",
                 width: "100%",
@@ -437,15 +449,54 @@ const MentalHealthTest = () => {
               style={{ width: "100%", borderRadius: "33px" }}
             />
           </div>
-          {/* <img
-            src="https://cdn2.psychologytoday.com/assets/styles/manual_crop_287_139_1148x556/public/hero_image/pt_self_test/2024-05/tests-depression-hero-large.jpg.webp?itok=K0rS3jPG"
-            alt="Depression Test"
-            className="img-fluid mb-4"
-            style={{ width: "100%", borderRadius: "33px" }}
-          /> */}
+
           <div style={{ width: "80%", textAlign: "center" }}>
             <form onSubmit={formik.handleSubmit} className="form">
+              <div
+                style={{
+                  border: "1px solid #e6e6e6",
+                  padding: "10px",
+                  borderRadius: "15px",
+                  width: "55%",
+                }}
+              >
+                <div className="form-group mb-4">
+                  <label className="label">Age</label>
+                  <input
+                    type="number"
+                    name="age"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.age}
+                    className="form-control"
+                  />
+                  {formik.touched.age && formik.errors.age ? (
+                    <div className="text-danger">{formik.errors.age}</div>
+                  ) : null}
+                </div>
+
+                <div className="form-group mb-4">
+                  <label className="label">Gender</label>
+                  <select
+                    name="gender"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.gender}
+                    className="form-control"
+                  >
+                    <option value="" label="Select gender" />
+                    <option value="male" label="Male" />
+                    <option value="female" label="Female" />
+                    <option value="other" label="Other" />
+                  </select>
+                  {formik.touched.gender && formik.errors.gender ? (
+                    <div className="text-danger">{formik.errors.gender}</div>
+                  ) : null}
+                </div>
+              </div>
+
               <ol>
+                <hr />
                 {questions.map((q, idx) => (
                   <li key={idx} className="form-group mb-4">
                     {q.type === "textarea" ? (
