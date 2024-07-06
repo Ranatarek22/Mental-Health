@@ -41,7 +41,11 @@ const Sidebar = () => {
       <div className=" sidebar">
         <div className="d-flex flex-column align-items-center  text-white min-vh-100 ">
           <div className="user p-2">
-            <img src="/nexus.png" srcSet="/nexus.png" />
+            <img
+              src="/logooo.png"
+              srcSet="/logooo.png"
+              style={{ width: "100px", height: "33px" }}
+            />
           </div>
           <div className="logo p-2">
             <img src="/logo1.png" srcSet="/logo1.png" />

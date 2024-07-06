@@ -63,9 +63,6 @@ const ProfilePage = () => {
   return (
     <div className="profile-card">
       <div className="">
-        <div className="">
-          <h2>Profile Setting</h2>
-        </div>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="">
             <ImageComponent setUserData={setUserData} userData={userData} />
