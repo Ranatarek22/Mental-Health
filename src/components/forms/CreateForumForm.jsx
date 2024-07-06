@@ -11,10 +11,10 @@ import Spinner from "react-bootstrap/Spinner";
 import { BsUpload } from "react-icons/bs";
 
 const CreateForumForm = () => {
-  const [check, setChecked] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [check, setChecked] = useState(false);//to check if the post is anonymus
+  const [uploadedImage, setUploadedImage] = useState(null);//state to store the uploaded image 
   const handleToggle = () => {
-    setChecked((prev) => !prev);
+    setChecked((prev) => !prev);//change the value of anony from false to true when it's called
   };
   const userId = useAuthStore((state) => state.userId);
   const navigate = useNavigate();
@@ -57,7 +57,16 @@ const CreateForumForm = () => {
       }
     } catch (error) {
       console.error("Error creating forum:", error);
-      toast.error(error.response?.data?.message || "Error");
+      // toast.error(error.response?.data?.message || "Error");
+      if (typeof error === "object" && error.response) {
+        if (error.response.status === 401) {
+          toast.error("Unauthorized");
+        } else if (error.response.status === 403) {
+          toast.error("Your post violates our policies");
+        } else {
+          toast.error(Object.values(error.response.data)[0]);
+        }
+      }
     } finally {
       setSubmitting(false);
     }

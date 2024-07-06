@@ -78,7 +78,7 @@ const CommentForm = ({
             if (error.response.status === 401) {
               toast.error("Unauthorized");
             } else if (error.response.status === 403) {
-              toast.error("This is offensive comment");
+              toast.error("Your comment violates our policies");
             } else {
               toast.error(Object.values(error.response.data)[0]);
             }

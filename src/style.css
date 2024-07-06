@@ -159,8 +159,8 @@ body {
 .BTN {
   align-self: flex-end;
   width: 44%;
-  background-color: var(--main-color);
-  border-color: var(--main-color);
+  /* background-color: var(--main-color);
+  border-color: var(--main-color); */
 }
 .btn-primary :hover {
   background-color: red;
@@ -2025,9 +2025,24 @@ hr {
 
 .MentalHealthTest label {
   margin-bottom: 8px;
-  font-size: 26px;
+  font-size: 22 px;
   font-weight: 400;
   text-align: center;
+}
+
+.navbar > .container,
+.navbar > .container-fluid,
+.navbar > .container-lg,
+.navbar > .container-md,
+.navbar > .container-xxl,
+.navbar > .container-xl {
+  justify-content: end;
+}
+
+.navbar > .container,
+.navbar > .container-fluid,
+.navbar > .container-sm {
+  justify-content: center;
 }
 
 .input,
@@ -2739,7 +2754,7 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 200px 20px;
+  padding: 14px 20px;
 }
 .articles-feed .holder {
   display: flex;

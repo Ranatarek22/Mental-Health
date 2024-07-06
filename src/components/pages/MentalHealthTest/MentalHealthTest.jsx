@@ -266,34 +266,37 @@ const questions = [
       { label: "I have lost interest in sex completely.", score: 3 },
     ],
   },
-  // {
-  //   question: "How did your father and mother punish you?",
-  //   type: "textarea",
-  // },
-  // {
-  //   question: "What is your impression of the atmosphere of the house?",
-  //   type: "textarea",
-  // },
-  // {
-  //   question: "Who are the most important people in your life?",
-  //   type: "textarea",
-  // },
-  // {
-  //   question: "Tell us your problem",
-  //   type: "textarea",
-  // },
-  // {
-  //   question:
-  //     "Mention the most important events that you believe are related to this problem",
-  //   type: "textarea",
-  // },
-  // {
-  //   question: "What solutions do you think will help solve your problem?",
-  //   type: "textarea",
-  // },
+  {
+    question: "How did your father and mother punish you?",
+    type: "textarea",
+    skip: "22",
+  },
+  {
+    question: "What is your impression of the atmosphere of the house?",
+    type: "textarea",
+  },
+  {
+    question: "Who are the most important people in your life?",
+    type: "textarea",
+    skip: "22",
+  },
+  {
+    question: "Tell us your problem",
+    type: "textarea",
+  },
+  {
+    question:
+      "Mention the most important events that you believe are related to this problem",
+    type: "textarea",
+  },
+  {
+    question: "What solutions do you think will help solve your problem?",
+    type: "textarea",
+  },
 
   {
-    question: "Tell us your opinion about suicide ",
+    question:
+      "Tell us about your experience with suicidal thoughts or attempts if you have any (if you dont have any leave it blank)",
     type: "textarea",
   },
 ];
@@ -301,7 +304,7 @@ const questions = [
 const validationSchema = Yup.object().shape(
   questions.reduce((acc, question, index) => {
     if (question.type === "textarea") {
-      acc[`question${index}`] = Yup.string().required("This field is required");
+      acc[`question${index}`] = Yup.string();
     } else {
       acc[`question${index}`] = Yup.string().required(
         "Please select an option"
@@ -335,11 +338,20 @@ const MentalHealthTest = () => {
           if (selectedOption) {
             sum += selectedOption.score;
           }
-        } else if (q.type === "textarea") {
+        } else if (q.type === "textarea" && q.skip !== "22") {
           textResponses.push(values[`question${idx}`]);
         }
       });
+      function isArrayContainingOnlySpaces(arr) {
+        return arr.every((item) => item.trim() === "");
+      }
 
+      if (
+        textResponses.length === 0 ||
+        isArrayContainingOnlySpaces(textResponses)
+      ) {
+        textResponses = ["none"];
+      }
       const text = textResponses.join(" ");
       const payload = {
         sum,
@@ -379,51 +391,6 @@ const MentalHealthTest = () => {
   return (
     <div id="MentalHealthTest">
       <Toaster />
-      {/* <motion.div
-        id="depressiontest"
-        className="landing container-fluid"
-        style={{
-          width: "100vw",
-          marginLeft: "calc((100% - 100vw) / 2)",
-          backgroundColor: "white",
-          paddingTop: "24px",
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1, ease: "easeIn" }}
-      >
-        <div className=" text-center">
-          <div className="row">
-            <div className="col">
-              <img
-                src="/LandingImages/Doctor5.png"
-                alt="hero"
-                className="img-fluid"
-                style={{ width: "55%" }}
-              />
-            </div>
-            <div className="col align-self-center">
-              <h1>Take Depression Test</h1>
-              <p>
-                This Test will help you to know if you're depressed or not and
-                if you're depressed will assist you to have treatments
-              </p>
-              <a href="#test" className="d-flex justify-content-center">
-                <button className="btn test-btn">Test</button>
-              </a>
-            </div>
-            <div className="col">
-              <img
-                src="/LandingImages/Doctor5.png"
-                alt="hero"
-                className="img-fluid"
-                style={{ width: "55%", transform: "scaleX(-1)" }}
-              />
-            </div>
-          </div>
-        </div>
-      </motion.div> */}
       <motion.div
         id="depressiontest"
         className="landing container-fluid"
@@ -559,7 +526,7 @@ const MentalHealthTest = () => {
                         onClick={() =>
                           navigate("/user/findadoctor", { replace: true })
                         }
-                        className="btn btn-primary"
+                        className="btn test-btn"
                       >
                         Find a Doctor
                       </button>
@@ -567,7 +534,8 @@ const MentalHealthTest = () => {
                         onClick={() =>
                           navigate("/user/courses", { replace: true })
                         }
-                        className="btn btn-secondary"
+                        className="btn btn-secondary m-1 "
+                        style={{ borderRadius: "15px" }}
                       >
                         Explore Self-Help Resources
                       </button>
@@ -578,17 +546,9 @@ const MentalHealthTest = () => {
                         onClick={() =>
                           navigate("/user/findadoctor", { replace: true })
                         }
-                        className="btn btn-primary"
+                        className="btn test-btn"
                       >
-                        Find a Doctor
-                      </button>
-                      <button
-                        onClick={() =>
-                          navigate("/user/courses", { replace: true })
-                        }
-                        className="btn btn-secondary"
-                      >
-                        Explore Self-Help Resources
+                        You can Join our Community
                       </button>
                     </div>
                   )}
