@@ -487,7 +487,6 @@ const MentalHealthTest = () => {
                     <option value="" label="Select gender" />
                     <option value="male" label="Male" />
                     <option value="female" label="Female" />
-                    <option value="other" label="Other" />
                   </select>
                   {formik.touched.gender && formik.errors.gender ? (
                     <div className="text-danger">{formik.errors.gender}</div>
