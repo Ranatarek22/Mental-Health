@@ -2086,7 +2086,8 @@ hr {
 
 .submit-btn {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: var(--new-color);
+  border-color: var(--new-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -2240,13 +2241,13 @@ label {
 
 .result-actions button:first-child,
 .accordion-content button {
-  background-color: #007bff;
+  background-color: var(--new-color);
   color: white;
 }
 
 .result-actions button:last-child,
 .accordion-content button:last-child {
-  background-color: #28a745;
+  background-color: var(--third-color);
   color: white;
 }
 
