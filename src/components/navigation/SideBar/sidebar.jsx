@@ -45,6 +45,7 @@ const Sidebar = () => {
               src="/logooo.png"
               srcSet="/logooo.png"
               style={{ width: "100px", height: "33px" }}
+              onClick={() => navigate("/")}
             />
           </div>
           <div className="logo p-2">

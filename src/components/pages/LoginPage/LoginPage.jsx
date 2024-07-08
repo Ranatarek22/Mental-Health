@@ -1,8 +1,11 @@
 import React from "react";
 import AuthBackground from "../../UI/AuthBackground";
-import { Box } from "./LoginBox";
+import LoginBox from "./LoginBox";
 import { Col, Container, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+
 const LoginPage = () => {
+  const location = useLocation();
   return (
     <>
       <Container className="page-container">
@@ -11,7 +14,7 @@ const LoginPage = () => {
             <AuthBackground imgUrl={`/Login.png`} />
           </Col>
           <Col className="containerform" sm={12} md={6}>
-            <Box />
+            <LoginBox key={location.search} />
           </Col>
         </Row>
       </Container>

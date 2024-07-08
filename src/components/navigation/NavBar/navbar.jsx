@@ -26,6 +26,7 @@ const AppHeader = () => {
         src={"/logooo.png"}
         alt="logo"
         style={{ width: "100px", marginLeft: "5%" }}
+        onClick={() => navigate("/")}
       />
       <Container className="navbar-custom">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

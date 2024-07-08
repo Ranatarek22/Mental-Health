@@ -9,10 +9,12 @@ import { Spinner } from "react-bootstrap";
 import MentalHealthTest from "./components/pages/MentalHealthTest/MentalHealthTest";
 import DoctorsList from "./components/pages/doctors/Doctors";
 import UserAppointments from "./components/pages/UserAppointments/UserAppointments";
+import LoginBox from "./components/pages/LoginPage/LoginBox.jsx";
 import "../src/style.css";
 
 import Footer from "./components/pages/HomePage/components/Footer";
 import MyPostsPAge from "./components/pages/MyPosts/MyPostsPAge";
+
 
 const LoginPage = lazy(() => import("./components/pages/LoginPage/LoginPage"));
 const ForumsPage = lazy(() =>
@@ -93,6 +95,10 @@ function App() {
                 element={
                   <BlockRoute>
                     <LoginPage />
+                    {/* <Route
+                      path="/loginbox"
+                      element={<LoginBox key={window.location.search} />}
+                    /> */}
                   </BlockRoute>
                 }
               />
@@ -101,6 +107,7 @@ function App() {
                 element={
                   <BlockRoute>
                     <SignUpPage />
+
                   </BlockRoute>
                 }
               />

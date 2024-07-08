@@ -1,17 +1,20 @@
 import React from "react";
-// import { Facebook } from "./Facebook";
-// import { Google } from "./Google";
 import Button from "react-bootstrap/Button";
 import LoginForm from "../../forms/login-form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import TokenHandler from "./TokenHandler";
 
-export const Box = () => {
+const LoginBox = () => {
+  const navigate = useNavigate();
+
   const SignInWithGoogle = () => {
     window.location.href =
       "https://nexus-api-h3ik.onrender.com/api/auth/external-login";
   };
+
   return (
     <div className="rectangle">
+      <TokenHandler />
       <div className="content p-4">
         <div className="group-2">
           <p className="welcome-to-mental">
@@ -24,8 +27,9 @@ export const Box = () => {
           <p>
             <span>No Account ?</span>
             <br />
-            {/* <a href="#">Sign up</a> */}
-            <Link to="/signup"> Sign up</Link>
+            <a href="#" onClick={() => navigate("/signup")}>
+              Sign up
+            </a>
           </p>
         </div>
       </div>
@@ -43,14 +47,17 @@ export const Box = () => {
           Sign in with Google
         </Button>
       </div>
-
       <LoginForm />
       <div className="content-one">
         <p>
           <span>No Account ? </span>
-          <Link to="/signup"> Sign up</Link>
+          <a href="#" onClick={() => navigate("/signup")}>
+            Sign up
+          </a>
         </p>
       </div>
     </div>
   );
 };
+
+export default LoginBox;

@@ -23,10 +23,20 @@ const ForumItemPage = () => {
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [photoPost, setPhotoPost] = useState(null); 
+  const [photoPost, setPhotoPost] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editButtonVisible, setEditButtonVisible] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const guidelines = (
+    <div className="tips-content p-2">
+      <h3>Guidelines</h3>
+      <ul>
+        <li>Don't insult or curse anyone </li>
+        <li>Be free to express your feelings but be polite </li>
+        <li>If your post is rude or insult anyone it will be rejected </li>
+      </ul>
+    </div>
+  );
 
   useEffect(() => {
     if (!forum && params.postId) {
@@ -44,7 +54,7 @@ const ForumItemPage = () => {
           setEditedTitle(postData.title);
           setEditedContent(postData.content);
           setIsAnonymous(postData.isAnonymous);
-          setPhotoPost(postData.postPhotoUrl); 
+          setPhotoPost(postData.postPhotoUrl);
         } catch (error) {
           if (axios.isCancel(error)) {
             console.error("Cancelled");
@@ -103,7 +113,7 @@ const ForumItemPage = () => {
       formData.append("Content", editedContent);
       formData.append("IsAnonymous", isAnonymous);
       if (photoPost) {
-        formData.append("PhotoPost", photoPost); 
+        formData.append("PhotoPost", photoPost);
       }
 
       const response = await apiInstance.put(
@@ -162,11 +172,11 @@ const ForumItemPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setPhotoPost(file); 
+    setPhotoPost(file);
   };
 
   if (loading) {
-    return <div className="fw-bold">Loading...</div>; 
+    return <div className="fw-bold">Loading...</div>;
   }
 
   if (postNotFound) {
@@ -336,7 +346,7 @@ const ForumItemPage = () => {
             style={{ width: "50%", flex: "2" }}
             className="mt-4 tips justify-content-center w-100"
           >
-            <Tips />
+            <Tips content={guidelines} />
           </div>
         </div>
       </div>

@@ -379,8 +379,7 @@ const MentalHealthTest = () => {
 
       console.log(payload);
 
-      setShowResult(true); // Set showResult to true to render the result section
-
+      setShowResult(true);
       try {
         const response = await apiInstance.post(
           "/depression-tests",
@@ -393,7 +392,10 @@ const MentalHealthTest = () => {
         );
         console.log(response.status);
         if (response.status === 200) {
-          if (response.data.result === "Depressed") {
+          if (
+            response.data.result === "Depressed" ||
+            response.data.result === "Negative"
+          ) {
             setIsDepressed(true);
           } else {
             setIsDepressed(false);
