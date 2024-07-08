@@ -63,7 +63,7 @@ const DoctorsList = () => {
   const [hasMore, setHasMore] = useState(false);
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
-  const pageSize = 10;
+  const pageSize = 30;
   const AddDoc = useDoctorStore((state) => state.setDocs);
 
   const navigate = useNavigate();
@@ -121,6 +121,7 @@ const DoctorsList = () => {
     fetchDoctors(1, filters);
   }, [filters]);
   useEffect(() => {
+    // console.log(page);
     fetchDoctors(page, filters);
   }, [page]);
 
@@ -307,7 +308,7 @@ const DoctorsList = () => {
             ))}
           </div>
         )}
-        <div ref={ref} />
+        <div ref={ref} className="p-4" />
       </div>
     </>
   );
