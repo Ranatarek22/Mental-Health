@@ -108,29 +108,6 @@ const CommentSection = ({ postId }) => {
 
     updatePostComment(data);
   };
-  const handleHashChange = () => {
-    const hash = window.location.hash;
-    if (hash) {
-      const commentId = hash.substring(1);
-      const element = commentRefs.current[commentId];
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        element.style.backgroundColor = "#f0f0f0";
-        setTimeout(() => {
-          element.style.backgroundColor = "transparent";
-        }, 6000);
-      }
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("hashchange", handleHashChange, false);
-    handleHashChange(); // Handle initial load
-
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange, false);
-    };
-  }, [commentsData]);
 
   return (
     <div

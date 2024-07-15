@@ -8,9 +8,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-export const DoctorCard = ({ doctor}) => {
+export const DoctorCard = ({ doctor }) => {
   const hasSchedule = doctor.weekDays;
-  // console.log(hasSchedule);
+
   return (
     <>
       <div
@@ -23,7 +23,11 @@ export const DoctorCard = ({ doctor}) => {
       >
         <div className="p-2">
           <img
-            src={doctor.photoUrl ? doctor.photoUrl : "/doctor.png"}
+            src={
+              doctor.photoUrl
+                ? "/landingImages/Doctors/Doc6.png"
+                : "/landingImages/Doctors/Doc6.png"
+            }
             alt={doctor.firstName}
             className="rounded-circle"
           />
@@ -55,7 +59,11 @@ export const DoctorCard = ({ doctor}) => {
           </div>
         </div>
         <div className="flex-grow-1 d-flex justify-content-center text-center">
-          <DoctorSchedule doctorId={doctor.id} doctorFirstName={doctor.firstName} doctorLastName={doctor.lastName} />
+          <DoctorSchedule
+            doctorId={doctor.id}
+            doctorFirstName={doctor.firstName}
+            doctorLastName={doctor.lastName}
+          />
         </div>
       </div>
     </>

@@ -27,7 +27,6 @@ const ResetPasswordForm = () => {
           return urlParams.get(name);
         }
 
-        // Extract email and token from the URL
         const encodedEmail = getQueryParameter("email");
         const endcodedToken = getQueryParameter("token");
         const email = decodeURIComponent(encodedEmail);

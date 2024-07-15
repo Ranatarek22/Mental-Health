@@ -210,6 +210,7 @@ const Comment = forwardRef((props, ref) => {
       </div>
 
       <div style={{ marginLeft: "8%" }}>
+        {/* to show edit form for replies */}
         {showForm && !showEditForm && (
           <CommentForm
             postId={postId}
@@ -220,6 +221,7 @@ const Comment = forwardRef((props, ref) => {
             style={{ marginLeft: "23%" }}
           />
         )}
+        {/* to show edit form for comment */}
         {!showForm && showEditForm && comment && (
           <CommentForm
             postId={postId}

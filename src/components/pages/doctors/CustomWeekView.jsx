@@ -3,12 +3,16 @@ import moment from "moment";
 import CustomDay from "./CustomDay";
 import { apiInstance } from "../../../axios";
 
-const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstName}) => {
-  const [events, setEvents] = useState([]);
+const CustomWeekView = ({
+  doctorId,
+  appointments,
+  doctorLastName,
+  doctorFirstName,
+}) => {
   const [displayedDays, setDisplayedDays] = useState([]);
   const [formattedDates, setFormattedDates] = useState({});
-  const [weeksAhead, setWeeksAhead] = useState(0);
-  const [weekDays, setWeekDays] = useState([]);
+  const [weeksAhead, setWeeksAhead] = useState(0); //Keeps track of how many weeks ahead are currently displayed. two weeks three weeks
+  const [weekDays, setWeekDays] = useState([]); //Stores the weekdays on which the doctor is available. tuesday
   const DAYS_PER_LOAD = 3;
 
   useEffect(() => {
@@ -40,20 +44,13 @@ const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstNam
 
   const updateDisplayedDaysAndEvents = (
     weekDaysData = weekDays,
-    startWeek = weeksAhead,
-    daysCount = DAYS_PER_LOAD
+    startWeek = weeksAhead
   ) => {
     const newDays = calculateDates(
       weekDaysData,
       startWeek,
-      daysCount,
+
       displayedDays
-    );
-    const newEvents = calculateEvents(
-      weekDaysData,
-      startWeek,
-      daysCount,
-      events
     );
 
     const updatedDays = [...displayedDays, ...newDays].sort((a, b) =>
@@ -61,7 +58,6 @@ const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstNam
     );
 
     setDisplayedDays(updatedDays);
-    setEvents((prevEvents) => [...prevEvents, ...newEvents]);
     setFormattedDates((prevFormatted) => ({
       ...prevFormatted,
       ...formatDates(newDays),
@@ -85,17 +81,17 @@ const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstNam
     return formatted;
   };
 
-  const calculateDates = (weekDays, weeksToAdd, limit, existingDays) => {
+  const calculateDates = (weekDays, weeksToAdd, existingDays) => {
     const result = [];
     const daysToShow = new Set(existingDays.map((day) => day.toISOString()));
 
-    while (result.length < limit) {
+    while (result.length < DAYS_PER_LOAD) {
       weekDays.forEach((day) => {
         const dayOfWeek = day.dayOfWeek.toLowerCase();
         let targetDay = moment()
           .startOf("week")
           .day(dayOfWeek)
-          .add(weeksToAdd, "weeks");
+          .add(weeksToAdd, "weeks"); //get the date of wednesday of the week
         if (targetDay.isBefore(moment(), "day")) {
           targetDay.add(1, "week");
         }
@@ -107,52 +103,7 @@ const CustomWeekView = ({ doctorId, appointments, doctorLastName ,doctorFirstNam
       });
       weeksToAdd++;
     }
-    return result.slice(0, limit);
-  };
-
-  const calculateEvents = (weekDays, weeksToAdd, limit, existingEvents) => {
-    const allEvents = [...existingEvents];
-    for (let i = 0; i < limit; i++) {
-      weekDays.forEach((day) => {
-        const dayOfWeek = day.dayOfWeek.toLowerCase();
-        let targetDay = moment()
-          .startOf("week")
-          .day(dayOfWeek)
-          .add(weeksToAdd + Math.floor(i / weekDays.length), "weeks");
-
-        const startHour = day.startTime.substring(0, 2);
-        const startMinute = day.startTime.substring(3, 5);
-        const endHour = day.endTime.substring(0, 2);
-        const endMinute = day.endTime.substring(3, 5);
-        const sessionDuration = moment.duration(day.sessionDuration);
-
-        let currentStartTime = targetDay.clone().set({
-          hour: startHour,
-          minute: startMinute,
-        });
-        const currentEndTime = targetDay.clone().set({
-          hour: endHour,
-          minute: endMinute,
-        });
-
-        while (currentStartTime.isBefore(currentEndTime)) {
-          const eventEndTime = currentStartTime.clone().add(sessionDuration);
-          if (eventEndTime.isAfter(currentEndTime)) {
-            break;
-          }
-
-          const event = {
-            start: currentStartTime.toDate(),
-            end: eventEndTime.toDate(),
-            color: "var(--third-color)",
-          };
-
-          allEvents.push(event);
-          currentStartTime.add(sessionDuration).add(15, "minutes");
-        }
-      });
-    }
-    return allEvents;
+    return result.slice(0, DAYS_PER_LOAD);
   };
 
   const handleNextClick = () => {

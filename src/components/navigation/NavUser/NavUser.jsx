@@ -31,15 +31,15 @@ const NavUser = () => {
 
   return (
     <Navbar className="p-2" id="navbar" expand="md">
-      <div className="d-flex align-items-center justify-content-between w-100 position-relative">
-        <div style={{ width: "30%" }}>
+      <div className="d-flex align-items-center justify-content-end w-100 position-relative">
+        {/* <div style={{ width: "30%" }}>
           <input
             type="text"
             className="p-2 pe-3 m-2 cont4"
             placeholder="Search "
             style={{ backgroundColor: "#e0dede" }}
           />
-        </div>
+        </div> */}
         <div className="ml-auto p-2 d-flex align-items-center">
           <FaPlus
             className="pr-2"

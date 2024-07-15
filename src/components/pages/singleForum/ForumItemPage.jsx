@@ -194,154 +194,146 @@ const ForumItemPage = () => {
       <NavUser />
       <div className="p-2">
         <div style={{ display: "flex", width: "100%" }}>
-          {postNotFound ? (
-            <div className="cont3 pt-3">
-              <p className="fw-bold">Post has been deleted.</p>
-            </div>
-          ) : (
-            <div
-              className="flex-direction-column"
-              style={{ width: "100%", flex: "3" }}
-            >
-              <div className="cont p-3 mt-3 w-100">
+          <div
+            className="flex-direction-column"
+            style={{ width: "100%", flex: "3" }}
+          >
+            <div className="cont p-3 mt-3 w-100">
+              <div>
+                <img
+                  src={
+                    isAnonymous || !forum?.username
+                      ? "/Anony.png"
+                      : forum.photoUrl
+                  }
+                  alt="user img"
+                  className="userImage"
+                />
+              </div>
+              <div className="py-2" style={{ flexGrow: "1", width: "100%" }}>
+                <span style={{ fontWeight: "bold" }}>
+                  {isAnonymous || !forum?.username
+                    ? "Anonymous"
+                    : forum.username}
+                </span>
+                <br />
+                <p className="text-muted">{duration}</p>
                 <div>
-                  <img
-                    src={
-                      isAnonymous || !forum?.username
-                        ? "/Anony.png"
-                        : forum.photoUrl
-                    }
-                    alt="user img"
-                    className="userImage"
-                  />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editedTitle}
+                      onChange={(e) => setEditedTitle(e.target.value)}
+                      className="form-control mb-2"
+                    />
+                  ) : (
+                    <h2 style={{ fontWeight: "bold" }} className="py-2">
+                      {forum?.title}
+                    </h2>
+                  )}
                 </div>
-                <div className="py-2" style={{ flexGrow: "1", width: "100%" }}>
-                  <span style={{ fontWeight: "bold" }}>
-                    {isAnonymous || !forum?.username
-                      ? "Anonymous"
-                      : forum.username}
-                  </span>
-                  <br />
-                  <p className="text-muted">{duration}</p>
-                  <div>
-                    {isEditing ? (
+                <div className="py-3">
+                  {isEditing ? (
+                    <>
+                      <textarea
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                        className="form-control"
+                      />
                       <input
-                        type="text"
-                        value={editedTitle}
-                        onChange={(e) => setEditedTitle(e.target.value)}
-                        className="form-control mb-2"
+                        type="file"
+                        onChange={handleFileChange}
+                        className="form-control mt-2"
                       />
-                    ) : (
-                      <h2 style={{ fontWeight: "bold" }} className="py-2">
-                        {forum?.title}
-                      </h2>
-                    )}
-                  </div>
-                  <div className="py-3">
-                    {isEditing ? (
-                      <>
-                        <textarea
-                          value={editedContent}
-                          onChange={(e) => setEditedContent(e.target.value)}
-                          className="form-control"
-                        />
+                      <div className="form-check mt-2">
                         <input
-                          type="file"
-                          onChange={handleFileChange}
-                          className="form-control mt-2"
+                          type="checkbox"
+                          className="form-check-input"
+                          checked={isAnonymous}
+                          onChange={(e) => setIsAnonymous(e.target.checked)}
                         />
-                        <div className="form-check mt-2">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            checked={isAnonymous}
-                            onChange={(e) => setIsAnonymous(e.target.checked)}
-                          />
-                          <label className="form-check-label">
-                            Post as Anonymous
-                          </label>
-                        </div>
-                        <div className="d-flex">
-                          <button
-                            className="btn text-muted me-2"
-                            style={{ textDecoration: "none" }}
-                            onClick={handleUpdate}
-                          >
-                            Save
-                          </button>
-                          <button
-                            className="btn text-muted"
-                            style={{ textDecoration: "none" }}
-                            onClick={handleCancelEdit}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </>
-                    ) : (
-                      <p>{forum?.content}</p>
-                    )}
-                    {forum?.postPhotoUrl && (
-                      <div className="postImg">
-                        <img alt="post img" src={forum.postPhotoUrl} />
+                        <label className="form-check-label">
+                          Post as Anonymous
+                        </label>
                       </div>
-                    )}
-                    <div className="py-2 mt-2">
-                      <TfiCommentsSmiley
-                        style={{
-                          fontSize: "2rem",
-                          flexGrow: "1",
-                          direction: "rtl",
-                        }}
-                      />
-                      <span className="ms-2 fw-bold">{commentsCount}</span>
-                    </div>
-                  </div>
-                </div>
-                {editButtonVisible && isMyPost && (
-                  <div
-                    className="fw-bold"
-                    style={{ flexGrow: "1", direction: "rtl" }}
-                  >
-                    <button
-                      className="btn btn-link text-muted"
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                      aria-expanded={dropdownOpen ? "true" : "false"}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <span className="fw-bold">...</span>
-                    </button>
-                    {dropdownOpen && (
-                      <div
-                        className="dropdown-menu"
-                        style={{ display: "block", height: "11%", width: "6%" }}
-                      >
-                        <button className="dropdown-item" onClick={handleEdit}>
-                          Edit
+                      <div className="d-flex">
+                        <button
+                          className="btn text-muted me-2"
+                          style={{ textDecoration: "none" }}
+                          onClick={handleUpdate}
+                        >
+                          Save
                         </button>
                         <button
-                          className="dropdown-item"
-                          onClick={onDeleteClick}
+                          className="btn text-muted"
+                          style={{ textDecoration: "none" }}
+                          onClick={handleCancelEdit}
                         >
-                          Delete
+                          Cancel
                         </button>
                       </div>
-                    )}
+                    </>
+                  ) : (
+                    <p>{forum?.content}</p>
+                  )}
+                  {forum?.postPhotoUrl && (
+                    <div className="postImg">
+                      <img alt="post img" src={forum.postPhotoUrl} />
+                    </div>
+                  )}
+                  <div className="py-2 mt-2">
+                    <TfiCommentsSmiley
+                      style={{
+                        fontSize: "2rem",
+                        flexGrow: "1",
+                        direction: "rtl",
+                      }}
+                    />
+                    <span className="ms-2 fw-bold">{commentsCount}</span>
                   </div>
-                )}
-              </div>
-              <div className="cont2 flex-column p-3 mt-3">
-                <div className="flex-row">
-                  <p className="fw-bold p-2">Comments ({commentsCount})</p>
                 </div>
-                <div className="d-flex flex-row">
-                  <div className="flex-column flex-grow-1">
-                    <CommentSection postId={params.postId} />
-                  </div>
+              </div>
+              {editButtonVisible && isMyPost && (
+                <div
+                  className="fw-bold"
+                  style={{ flexGrow: "1", direction: "rtl" }}
+                >
+                  <button
+                    className="btn btn-link text-muted"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    aria-expanded={dropdownOpen ? "true" : "false"}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <span className="fw-bold">...</span>
+                  </button>
+                  {dropdownOpen && (
+                    <div
+                      className="dropdown-menu"
+                      style={{ display: "block", height: "11%", width: "6%" }}
+                    >
+                      <button className="dropdown-item" onClick={handleEdit}>
+                        Edit
+                      </button>
+                      <button className="dropdown-item" onClick={onDeleteClick}>
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="cont2 flex-column p-3 mt-3">
+              <div className="flex-row">
+                <p className="fw-bold p-2">Comments ({commentsCount})</p>
+              </div>
+              <div className="d-flex flex-row">
+                <div className="flex-column flex-grow-1">
+                  <CommentSection postId={params.postId} />
                 </div>
               </div>
             </div>
-          )}
+          </div>
+
           <div
             style={{ width: "50%", flex: "2" }}
             className="mt-4 tips justify-content-center w-100"

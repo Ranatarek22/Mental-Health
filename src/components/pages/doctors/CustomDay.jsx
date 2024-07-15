@@ -27,9 +27,7 @@ const CustomDay = ({
   const fetchSlots = async () => {
     try {
       const formattedDate = moment(date).format("YYYY-MM-DD");
-      // console.log(
-      //   `Fetching slots for doctor ID: ${doctorId} on date: ${formattedDate}`
-      // );
+
 
       const response = await apiInstance.get(`/doctors/${doctorId}/slots`, {
         params: { dateTime: formattedDate },

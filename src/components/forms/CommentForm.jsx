@@ -133,9 +133,7 @@ const CommentForm = ({
             <p className="error">{formik.errors["content"]}</p>
           )}
         </div>
-        {/* <button type="submit" disabled={isSubmiting}>
-          comment
-        </button> */}
+
       </form>
     </div>
   );
