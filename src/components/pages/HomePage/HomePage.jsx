@@ -49,9 +49,9 @@ const HomePage = () => {
   return (
     <>
       <Hero />
-      <AnimatedSection delay={0.3}>
-        <Services />
-      </AnimatedSection>
+      {/* <AnimatedSection delay={0.3}> */}
+      <Services />
+      {/* </AnimatedSection> */}
       <AnimatedSection delay={0.4}>
         <DepressionTest />
       </AnimatedSection>
