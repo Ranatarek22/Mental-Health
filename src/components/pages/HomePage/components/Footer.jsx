@@ -1,62 +1,65 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import { FaFacebook, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
+  const navigate = useNavigate();
   return (
     <div
       className="container-fluid"
       style={{
         width: "100vw",
         marginLeft: "calc((100% - 100vw) / 2)",
-        // backgroundImage: "url('/landingImages/d.png')",
-        backgroundSize: "cover",
-        backgroundColor: "var(--fourth-color)",
-        backgroundPosition: "center",
-        color: "black",
+        backgroundColor: "#282c34",
+        color: "white",
+        padding: "40px 0",
       }}
     >
-      <div className="footer">
-        <footer>
-          <div className="info">
-            <div className="footer-logo "></div>
-            <div className="footer-links">
-              <h1>Important Links</h1>
-              <div className="">
-                <p>Meetings</p>
-                <p>Doctors</p>
-                <p>Services</p>
-                <p>About Us</p>
+      <Container>
+        <div className="footer">
+          <footer>
+            <div className="info row">
+              <div className="footer-logo col-md-4 mb-4">
+                {/* <h2 style={{ color: "var(--primary-color)" }}>Nexus</h2> */}
+                <img
+                  src="/logooo.png"
+                  srcSet="/logooo.png"
+                  className="m-2"
+                  style={{ width: "100px", height: "33px" }}
+                  onClick={() => navigate("/")}
+                />
+              </div>
+              <div className="footer-links col-md-4 mb-4">
+                <h3>Important Links</h3>
+                <ul style={{ listStyle: "none", padding: 0 }}>
+                  <li>Meetings</li>
+                  <li>Doctors</li>
+                  <li>Services</li>
+                  <li>About Us</li>
+                </ul>
+              </div>
+              <div className="footer-contact col-md-4 mb-4">
+                <h3>Contact Us</h3>
+                <ul style={{ listStyle: "none", padding: 0 }}>
+                  <li>Call: (237) 681-812-255</li>
+                  <li>Email: fildineesoe@gmail.com</li>
+                  <li>Address: 0123 Some place, Some country</li>
+                </ul>
               </div>
             </div>
-            <div className="footer-contact">
-              <h1>Contact Us</h1>
-              <div className="">
-                <p>Call: (237) 681-812-255</p>
-                <p>Email: fildineesoe@gmail.com</p>
-                <p>Address: 0123 Some place</p>
-                <p>Some country</p>
-              </div>
-            </div>
-          </div>
-          <span />
-          <div className="rights text-dark">
-            <p>© 2024 Nexus All Rights Reserved</p>
-            <div className="social">
+            <hr style={{ borderColor: "rgba(255, 255, 255, 0.2)" }} />
+            <div className="rights text-center mt-4">
+              <p>© 2024 Nexus. All Rights Reserved.</p>
               <div className="social">
-                <div className="">
-                  <img src="/landingImages/facebook.png" alt="facebook" />
-                </div>
-                <div className="">
-                  <img src="/landingImages/linkedin.png" alt="linkedin" />
-                </div>
-                <div className="">
-                  <img src="/landingImages/instagram.png" alt="facebook" />
-                </div>
+                <FaFacebook size={24} style={{ margin: "0 10px" }} />
+                <FaLinkedin size={24} style={{ margin: "0 10px" }} />
+                <FaInstagram size={24} style={{ margin: "0 10px" }} />
               </div>
             </div>
-          </div>
-        </footer>
-      </div>
+          </footer>
+        </div>
+      </Container>
     </div>
   );
 }

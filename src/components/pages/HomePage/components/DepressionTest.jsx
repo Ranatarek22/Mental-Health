@@ -26,7 +26,7 @@ function DepressionTest() {
           />
         </div>
         <div className="text">
-          <h1> Take Depression Test</h1>
+          <h1 style={{ color: "var(--new-color)" }}> Take Depression Test</h1>
           <p>
             This Test will help you to know if you're depressed or not and if
             you're depressed will assist you to have treatments

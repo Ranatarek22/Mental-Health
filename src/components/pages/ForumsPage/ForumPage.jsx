@@ -21,10 +21,10 @@ const ForumPage = () => {
   );
 
   useEffect(() => {
-    // Simulate loading for ForumList
+ 
     setTimeout(() => {
       setForumListLoaded(true);
-    }, 1000); // Replace with actual loading logic
+    }, 1000); 
   }, []);
 
   return (

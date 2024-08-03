@@ -4,6 +4,7 @@ import { apiInstance } from "../../../axios";
 import { ImageComponent } from "./helper/ImageComponent";
 import { GenderComponent } from "./helper/GenderComponent";
 import { DateComponent } from "./helper/DateComponent";
+import NavUser from "../../navigation/NavUser/NavUser";
 const ProfilePage = () => {
   const [userData, setUserData] = useState({
     email: "",
@@ -61,64 +62,67 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="profile-card">
-      <div className="">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="">
-            <ImageComponent setUserData={setUserData} userData={userData} />
-            <div className="form-row">
-              <label htmlFor="email">Email</label>
-              <input
-                required
-                readOnly
-                type="email"
-                value={userData.email}
-                placeholder="example@gmail.com"
-                disabled
-                className="email"
-              />
-            </div>
-            <div className="form-row name">
-              <div className="">
-                <label htmlFor="firstName">First Name</label>
+    <>
+      <NavUser />
+      <div className="profile-card">
+        <div className="">
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className="">
+              <ImageComponent setUserData={setUserData} userData={userData} />
+              <div className="form-row">
+                <label htmlFor="email">Email</label>
                 <input
                   required
-                  minLength={2}
-                  maxLength={20}
-                  type="text"
-                  name="firstName"
-                  id="firstName"
-                  value={userData.firstName}
-                  placeholder="firstName"
-                  onChange={(e) =>
-                    setUserData({ ...userData, firstName: e.target.value })
-                  }
+                  readOnly
+                  type="email"
+                  value={userData.email}
+                  placeholder="example@gmail.com"
+                  disabled
+                  className="email"
                 />
               </div>
-              <div className="">
-                <label htmlFor="firstName">Last Name</label>
-                <input
-                  required
-                  minLength={2}
-                  maxLength={20}
-                  type="text"
-                  name="lastName"
-                  id="lastName"
-                  placeholder="lastName"
-                  value={userData.lastName}
-                  onChange={(e) =>
-                    setUserData({ ...userData, lastName: e.target.value })
-                  }
-                />
+              <div className="form-row name">
+                <div className="">
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    required
+                    minLength={2}
+                    maxLength={20}
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    value={userData.firstName}
+                    placeholder="firstName"
+                    onChange={(e) =>
+                      setUserData({ ...userData, firstName: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="">
+                  <label htmlFor="firstName">Last Name</label>
+                  <input
+                    required
+                    minLength={2}
+                    maxLength={20}
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="lastName"
+                    value={userData.lastName}
+                    onChange={(e) =>
+                      setUserData({ ...userData, lastName: e.target.value })
+                    }
+                  />
+                </div>
               </div>
+              <DateComponent userData={userData} setUserData={setUserData} />
+              <GenderComponent userData={userData} setUserData={setUserData} />
             </div>
-            <DateComponent userData={userData} setUserData={setUserData} />
-            <GenderComponent userData={userData} setUserData={setUserData} />
-          </div>
-          <button>Save</button>
-        </form>
+            <button className="savebtn">Save</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

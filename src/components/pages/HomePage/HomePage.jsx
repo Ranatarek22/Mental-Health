@@ -58,9 +58,9 @@ const HomePage = () => {
       <AnimatedSection delay={0.2}>
         <Doctors />
       </AnimatedSection>
-      <AnimatedSection delay={0.5}>
+      {/* <AnimatedSection delay={0.5}>
         <Articles />
-      </AnimatedSection>
+      </AnimatedSection> */}
     </>
   );
 };

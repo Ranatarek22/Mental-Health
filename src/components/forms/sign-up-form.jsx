@@ -15,7 +15,6 @@ const SignUpForm = () => {
   const navigate = useNavigate();
   const updateActiveUser = useAuthStore((state) => state.updateActiveUser);
   const [showPassword, setShowPassword] = useState(false);
-
   const signupschema = object().shape({
     firstName: string("The email must be a string").required(
       "First name is required"

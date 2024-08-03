@@ -3,13 +3,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { apiInstance } from "../../../axios";
 import LoadingSkeleton from "./LoadingSkeleton";
-import AppointmentCard from "./AppointmentCard";
 import AppointmentDetails from "./AppointmentDetails";
-import { Slider } from "@mui/material";
 import Select from "react-select";
 import debounce from "lodash.debounce";
 import { FaFilter } from "react-icons/fa";
+import { useTable } from "react-table";
+import styled from "styled-components";
+import NavUser from "../../navigation/NavUser/NavUser";
 
+// Sample appointment statuses
 const appointmentStatuses = [
   { value: "", label: "All" },
   { value: "Confirmed", label: "Confirmed" },
@@ -95,9 +97,30 @@ const UserAppointments = () => {
       maxFees: 1000,
     });
   };
+
+  const columns = React.useMemo(
+    () => [
+      { Header: "Client Name", accessor: "clientName" },
+      { Header: "Doctor Name", accessor: "doctorName" },
+      // { Header: "Date", accessor: "date" },
+      // { Header: "Time", accessor: "time" },
+      { Header: "Status", accessor: "status" },
+    ],
+    []
+  );
+
+  const tableInstance = useTable({
+    columns,
+    data: appointments,
+  });
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
+
   return (
     <div className="user-appointments">
-      <h1>Your Requested Appointments</h1>
+      <NavUser />
+      {/* <h1>Your Requested Appointments</h1> */}
 
       <button
         className="filter-toggle"
@@ -107,7 +130,7 @@ const UserAppointments = () => {
       </button>
       <div className={`filters ${showFilters ? "show" : ""}`}>
         <h3>Filter</h3>
-        <label htmlFor="name">Client Name :</label>
+        <label htmlFor="ClientName">Client Name :</label>
         <input
           id="ClientName"
           type="text"
@@ -137,20 +160,20 @@ const UserAppointments = () => {
             handleFilterChange("Status", option ? option.value : "")
           }
         />
-        <label htmlFor="StartTime">Start Time :</label>
+        <label htmlFor="StartDate">Start Date :</label>
         <input
-          id="StartTime"
+          id="StartDate"
           type="datetime-local"
-          name="StartTime"
-          value={filters.StartTime}
+          name="StartDate"
+          value={filters.StartDate}
           onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
         />
-        <label htmlFor="EndTime">End Time :</label>
+        <label htmlFor="EndDate">End Date :</label>
         <input
-          id="EndTime"
+          id="EndDate"
           type="datetime-local"
-          name="EndTime"
-          value={filters.EndTime}
+          name="EndDate"
+          value={filters.EndDate}
           onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
         />
         <div className="">
@@ -159,13 +182,32 @@ const UserAppointments = () => {
           </button>
         </div>
       </div>
-      {appointments.map((appointment) => (
-        <AppointmentCard
-          key={appointment.id}
-          appointment={appointment}
-          onClick={() => setSelectedAppointment(appointment.id)}
-        />
-      ))}
+      <StyledTable {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr
+                {...row.getRowProps()}
+                onClick={() => setSelectedAppointment(row.original.id)}
+              >
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
+      </StyledTable>
       {loading && (
         <div className="DoctorCardSkeleton-list">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((_, idx) => (
@@ -187,3 +229,25 @@ const UserAppointments = () => {
 };
 
 export default UserAppointments;
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+
+  th,
+  td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+
+  thead {
+    background-color: var(--new-color);
+  }
+
+  tbody tr:hover {
+    background-color: var(--fourth-color);
+  }
+`;

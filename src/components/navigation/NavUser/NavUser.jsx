@@ -31,7 +31,7 @@ const NavUser = () => {
 
   return (
     <Navbar className="p-2" id="navbar" expand="md">
-      <div className="d-flex align-items-center justify-content-end w-100 position-relative">
+      <div className="d-flex align-items-center justify-content-between w-100 position-relative">
         {/* <div style={{ width: "30%" }}>
           <input
             type="text"
@@ -40,6 +40,15 @@ const NavUser = () => {
             style={{ backgroundColor: "#e0dede" }}
           />
         </div> */}
+        <div>
+          <img
+            src="/logooo.png"
+            srcSet="/logooo.png"
+            className="m-2"
+            style={{ width: "100px", height: "33px" }}
+            onClick={() => navigate("/")}
+          />
+        </div>
         <div className="ml-auto p-2 d-flex align-items-center">
           <FaPlus
             className="pr-2"

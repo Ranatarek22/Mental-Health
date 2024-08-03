@@ -41,16 +41,16 @@ const Sidebar = () => {
       <div className=" sidebar">
         <div className="d-flex flex-column align-items-center  text-white min-vh-100 ">
           <div className="user p-2">
-            <img
+            {/* <img
               src="/logooo.png"
               srcSet="/logooo.png"
               style={{ width: "100px", height: "33px" }}
               onClick={() => navigate("/")}
-            />
+            /> */}
           </div>
-          <div className="logo p-2">
+          {/* <div className="logo p-2">
             <img src="/logo1.png" srcSet="/logo1.png" />
-          </div>
+          </div> */}
           <div className="links  pe-2">
             <ul
               className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"

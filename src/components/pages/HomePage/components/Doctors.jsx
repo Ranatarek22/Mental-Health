@@ -10,6 +10,7 @@ export function Doctors() {
             fontSize: "4rem",
             fontWeight: "40px",
             letterSpacing: "-2px",
+            color: "var(--new-color)",
           }}
         >
           Top Rated Experts
