@@ -10,15 +10,45 @@ import { FaFilter } from "react-icons/fa";
 import { useTable } from "react-table";
 import styled from "styled-components";
 import NavUser from "../../navigation/NavUser/NavUser";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
-// Sample appointment statuses
+// Sample appointment statuses with colors
 const appointmentStatuses = [
-  { value: "", label: "All" },
-  { value: "Confirmed", label: "Confirmed" },
-  { value: "Pending", label: "Pending" },
-  { value: "Cancelled", label: "Cancelled" },
-  { value: "Rejected", label: "Rejected" },
+  { value: "", label: "All", color: "black" },
+  { value: "Confirmed", label: "Confirmed", color: "green" },
+  { value: "Pending", label: "Pending", color: "orange" },
+  { value: "Cancelled", label: "blue", color: "blue" },
+  { value: "Rejected", label: "Rejected", color: "red" },
 ];
+
+// Custom styles for react-select
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    color: state.data.color,
+  }),
+  singleValue: (provided, state) => ({
+    ...provided,
+    color: state.data.color,
+  }),
+};
+
+// Modal style
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const UserAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -31,6 +61,7 @@ const UserAppointments = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showFilters, setShowFilters] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const getFiltersFromURL = () => {
     const searchParams = new URLSearchParams(location.search);
     return {
@@ -61,6 +92,7 @@ const UserAppointments = () => {
   useEffect(() => {
     fetchAppointments(1, filters);
   }, [filters]);
+
   useEffect(() => {
     fetchAppointments(page, filters);
   }, [page]);
@@ -91,23 +123,36 @@ const UserAppointments = () => {
 
   const resetFilters = () => {
     setFilters({
-      status: "",
-      location: "",
-      minFees: 0,
-      maxFees: 1000,
+      ClientName: "",
+      DoctorName: "",
+      StartDate: "",
+      EndDate: "",
+      Status: "",
     });
   };
+
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   const columns = React.useMemo(
     () => [
       { Header: "Client Name", accessor: "clientName" },
       { Header: "Doctor Name", accessor: "doctorName" },
-      // { Header: "Date", accessor: "date" },
-      // { Header: "Time", accessor: "time" },
-      { Header: "Status", accessor: "status" },
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ cell: { value } }) => (
+          <span style={{ color: getStatusColor(value) }}>{value}</span>
+        ),
+      },
     ],
     []
   );
+
+  const getStatusColor = (status) => {
+    const statusObj = appointmentStatuses.find((s) => s.value === status);
+    return statusObj ? statusObj.color : "black";
+  };
 
   const tableInstance = useTable({
     columns,
@@ -120,68 +165,95 @@ const UserAppointments = () => {
   return (
     <div className="user-appointments">
       <NavUser />
-      {/* <h1>Your Requested Appointments</h1> */}
-
-      <button
-        className="filter-toggle"
-        onClick={() => setShowFilters(!showFilters)}
+      <Button
+        variant="contained"
+        style={{ backgroundColor: "var(--new-color)", width: "50%" }}
+        onClick={handleModalOpen}
       >
         <FaFilter /> Filter
-      </button>
-      <div className={`filters ${showFilters ? "show" : ""}`}>
-        <h3>Filter</h3>
-        <label htmlFor="ClientName">Client Name :</label>
-        <input
-          id="ClientName"
-          type="text"
-          name="ClientName"
-          placeholder="Client Name"
-          value={filters.ClientName}
-          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
-        />
-        <label htmlFor="DoctorName">Doctor Name :</label>
-        <input
-          id="DoctorName"
-          type="text"
-          name="DoctorName"
-          placeholder="Doctor Name"
-          value={filters.DoctorName}
-          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
-        />
-        <label htmlFor="status">Status :</label>
-        <Select
-          name="Status"
-          options={appointmentStatuses}
-          placeholder="Status"
-          value={appointmentStatuses.find(
-            (option) => option.value === filters.Status
-          )}
-          onChange={(option) =>
-            handleFilterChange("Status", option ? option.value : "")
-          }
-        />
-        <label htmlFor="StartDate">Start Date :</label>
-        <input
-          id="StartDate"
-          type="datetime-local"
-          name="StartDate"
-          value={filters.StartDate}
-          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
-        />
-        <label htmlFor="EndDate">End Date :</label>
-        <input
-          id="EndDate"
-          type="datetime-local"
-          name="EndDate"
-          value={filters.EndDate}
-          onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
-        />
-        <div className="">
-          <button className="reset-button" onClick={resetFilters}>
+      </Button>
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Filter
+          </Typography>
+          <label htmlFor="ClientName">Client Name :</label>
+          <TextField
+            id="ClientName"
+            name="ClientName"
+            placeholder="Client Name"
+            value={filters.ClientName}
+            onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <label htmlFor="DoctorName">Doctor Name :</label>
+          <TextField
+            id="DoctorName"
+            name="DoctorName"
+            placeholder="Doctor Name"
+            value={filters.DoctorName}
+            onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <label htmlFor="status">Status :</label>
+          <Select
+            name="Status"
+            options={appointmentStatuses}
+            placeholder="Status"
+            value={appointmentStatuses.find(
+              (option) => option.value === filters.Status
+            )}
+            onChange={(option) =>
+              handleFilterChange("Status", option ? option.value : "")
+            }
+            styles={customStyles}
+          />
+          <label htmlFor="StartDate">Start Date :</label>
+          <TextField
+            id="StartDate"
+            type="datetime-local"
+            name="StartDate"
+            value={filters.StartDate}
+            onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <label htmlFor="EndDate">End Date :</label>
+          <TextField
+            id="EndDate"
+            type="datetime-local"
+            name="EndDate"
+            value={filters.EndDate}
+            onChange={(e) => handleFilterChange(e.target.name, e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              resetFilters();
+              handleModalClose();
+            }}
+          >
             Reset Filters
-          </button>
-        </div>
-      </div>
+          </Button>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "grey" }}
+            onClick={handleModalClose}
+          >
+            Apply Filters
+          </Button>
+        </Box>
+      </Modal>
       <StyledTable {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -240,7 +312,8 @@ const StyledTable = styled.table`
   th,
   td {
     padding: 12px;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
   }
 
   thead {

@@ -1796,11 +1796,13 @@ hr {
   flex-direction: column;
 }
 
-.mypost .comments {
+.comments button {
   width: 100%;
-  text-align: end;
+  /* text-align: end; */
   padding: 10px;
   font-weight: 600;
+  border: none;
+  background-color: white;
 }
 .postImg {
   display: flex;
